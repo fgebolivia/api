@@ -2,6 +2,7 @@
 
 namespace App\Models\Rrhh;
 
+//use App\Http\Resources\CasoJuridicaResource;
 use Illuminate\Database\Eloquent\Model;
 
 class RrhhPersonaJuridica extends Model
@@ -18,4 +19,8 @@ class RrhhPersonaJuridica extends Model
     ];
 
     protected $guarded  = [];
+
+    //public $resource = CasoJuridicaResource::class;
+
+    protected $hidden = ['pivot','updated_at','id','estado'];
 }

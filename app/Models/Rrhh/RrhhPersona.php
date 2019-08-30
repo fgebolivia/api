@@ -2,6 +2,7 @@
 
 namespace App\Models\Rrhh;
 
+//use App\Http\Resources\CasoPersonaResource;
 use Illuminate\Database\Eloquent\Model;
 
 class RrhhPersona extends Model
@@ -26,30 +27,32 @@ class RrhhPersona extends Model
         'celular',
         'estado_segip',
         'certificacion_segip',
-        'nombre_completo'
-        //'certificacion_file_segip',
-        //'profesion_ocupacion',
-        //'pueblo_originario',
-        //'lugar_trabajo',
-        //'domicilio_laboral',
-        //'telf_laboral',
-        //'alias',
-        // 'estatura',
-        // 'tez',
-        // 'edad',
-        // 'vestimenta',
-        // 'senia',
-        // 'peso',
-        // 'cabello',
-        // 'estado_persona',
-        // 'nombre_completo',
-        // 'genero',
-        // 'email'
+        'nombre_completo',
+        'certificacion_file_segip',
+        'profesion_ocupacion',
+        'pueblo_originario',
+        'lugar_trabajo',
+        'domicilio_laboral',
+        'telf_laboral',
+        'alias',
+        'estatura',
+        'tez',
+        'edad',
+        'vestimenta',
+        'senia',
+        'peso',
+        'cabello',
+        'estado_persona',
+        'nombre_completo',
+        'genero',
+        'email'
 
     ];
     protected $guarded  = [];
 
-    protected $hidden = ['certificacion_segip']; 
+    //public $resource = CasoPersonaResource::class;
+
+    protected $hidden = ['certificacion_segip','pivot', 'updated_at','id','estado','certificacion_file_segip','fullname','idioma_id','pais_id','estado_persona','nombre_completo']; 
     /***relaciones**///
     //todo sus oficinas, activos e inactivos
     public function oficinas(){
@@ -72,4 +75,5 @@ class RrhhPersona extends Model
     public function getFullnameAttribute(){ //si esta registrado geolocalizacion
        return $this->nombre.' '.$this->ap_paterno.' '.$this->ap_materno;
     }
+
 }

@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models\Denuncias;
+namespace App\Models\Denuncia;
 
+use App\Http\Resources\CasoResource;
+//use App\Models\Denuncia\HechoPersona;
 use Illuminate\Database\Eloquent\Model;
 
 class Hecho extends Model
@@ -30,6 +32,8 @@ class Hecho extends Model
         'longitude',
     ];
 
+    public $resource = CasoResource::class;
+
     protected $guarded = [];
 
     /***relaciones**///
@@ -37,6 +41,7 @@ class Hecho extends Model
     {//verificar si se necesita usuario
       return $this->belongsTo('App\User','user_id');
     }*/
+
     public function municipio()
     {
       return $this->belongsTo('App\Models\UbicacionGeografica\UbgeMunicipio','municipio_id');
@@ -51,10 +56,33 @@ class Hecho extends Model
       return $this->hasMany('App\Models\Denuncia\HechoArchivo')->where('pol_archivo.estado', '=', 1);
     }
 
-     public function personas()
+    public function personas()
     {
-        return $this->belongsToMany('App\Models\Rrhh\RrhhPersona', 'pol_hechopersona',  'hecho_id', 'persona_id' );
-
+        return $this->belongsToMany('App\Models\Rrhh\RrhhPersona', 'pol_hechopersona',  'hecho_id', 'persona_id');
     } 
+
+    public function juridica()
+    {
+        return $this->belongsToMany('App\Models\Rrhh\RrhhPersonaJuridica', 'pol_hechopersona',  'hecho_id', 'persona_juridica_id' );
+    }
+
+    public function personaDesconocida()
+    {
+        return $this->belongsToMany('App\Models\Rrhh\RrhhPersonaDesconocida', 'pol_hechopersona',  'hecho_id', 'persona_desconocida_id' );
+    }
+
+    public function hechoPersonas()
+    {
+        return $this->hasMany('App\Models\Denuncia\HechoPersona',  'hecho_id' );
+    }
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'pivot','id','estado', 'updated_at','user_id'
+    ];
 
 }

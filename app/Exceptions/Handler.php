@@ -77,7 +77,7 @@ class Handler extends ExceptionHandler
         {
             $modelName =  class_basename($exception->getModel());
 
-            return $this->errorResponse("no existe la instancia especificada of { $modelName }con el id",404);
+            return $this->errorResponse('no existe la instancia especificada de modelo '.$modelName.' con el id especifico',404);
         }
 
         if ($exception instanceof NotFoundHttpException) 
@@ -92,7 +92,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof HttpException) 
         {
-            return $this->errorsResponse($exception->getMessage(), $exception->getStatusCode());
+            return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         }
 
         if (config('app.debug')) {
@@ -127,9 +127,9 @@ class Handler extends ExceptionHandler
 
     protected function convertValidationExceptionToResponse(ValidationException $e, $request)
     {
-        $errors = $e->validator->errors()->getMessages();
+        $errors1 = $e->validator->errors()->getMessages();
 
-        return $this->errorResponse($errors, 422);
+        return $this->errorResponse($errors1, 422);
     }
 
     //metodo que determina cuando una peticion proviene de HTML y cuando no

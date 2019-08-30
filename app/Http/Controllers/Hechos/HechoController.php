@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Hechos;
 
 use App\Http\Controllers\Controller;
-use App\Models\Denuncias\Hecho;
+use App\Models\Denuncia\Hecho;
 use Illuminate\Http\Request;
 
 class HechoController extends Controller
@@ -44,7 +44,7 @@ class HechoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Denuncias\Hecho  $hecho
+     * @param  \App\Models\Denuncia\Hecho  $hecho
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,7 +57,7 @@ class HechoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Denuncias\Hecho  $hecho
+     * @param  \App\Models\Denuncia\Hecho  $hecho
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -85,7 +85,7 @@ class HechoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Denuncias\Hecho  $hecho
+     * @param  \App\Models\Denuncia\Hecho  $hecho
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

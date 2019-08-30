@@ -19,11 +19,11 @@ use Illuminate\Http\Request;
 
 Route::apiResource('v2/hechos', 'Hechos\HechoController');
 
-Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);
+//Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);
 
 
-Route::apiResource('v2/casos', 'Casos\CasoController')->only(['index','show']);
+Route::apiResource('v2/casos', 'Casos\CasoController')->only(['index','show','store']);
 
-Route::apiResource('v2/casos.personas', 'Casos\CasoPersonasController')->only('index');
+Route::apiResource('v2/casos/{hecho}/sujetosProcesales', 'Casos\CasoPersonasController')->except(['show','destroy']);
 
 //Route::apiResource('v1/usuarios', 'UserController');

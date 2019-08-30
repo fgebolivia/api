@@ -11,6 +11,12 @@ trait ApiResponser
 {
 	function successResponse($data, $code = 200)
 	{	//dd($data);
+		//return $data;
+		return $data->response()->setStatusCode($code);
+	}
+
+	function successResponseCollection($data, $code = 200)
+	{	//dd($data);
 		return response()->json($data, $code);
 	}
 
@@ -29,21 +35,45 @@ trait ApiResponser
 		return response()->json($message,$code);
 	}
 
-	function showAll(Collection $collection, $code = 200)
+	function showAllCollection(Collection $collection, $code = 200)
 	{
 		//dd($collection);
 		if ($collection->isEmpty()) {
-			return $this->successResponse(['data'=> $collection], $code);
+			return $this->successResponseCollection(['data'=> $collection], $code);
 		}
+
 		$collection = $this->paginadorColecciones($collection);
 
-		return $this->successResponse($collection, $code);
+		return $this->successResponseCollection($collection, $code);
 		
+	}
+
+	function showAll($collection, $code = 200)
+	{
+		
+		if ($collection->isEmpty()) {
+			return $this->successResponse(['data'=> $collection], $code);
+		}
+
+		if ($collection instanceof Collection) {
+
+			$collection = $this->paginadorColecciones($collection);
+		}
+
+		//$collection = $this->paginadorColecciones($collection);
+		/*** metodos para transfrormas las colecciones y no tengan el mismo nombre que la BD ***/
+		$recurso = $collection->first()->resource;
+		$colecionTransformada = $recurso::collection($collection);
+		/**** paginador de colecciones  ****/
+
+		return $this->successResponse($colecionTransformada, $code);	
 	}
 
 	function showOne(Model $instance, $code = 200)
 	{
-		return $this->successResponse(['data' => $instance], $code);
+		$recurso = $instance->recurso;
+		$transInstance = new $recurso($instance);
+		return $this->successResponse(['data' => $transInstance], $code);
 	}
 
 	function paginadorColecciones(Collection $collection)
