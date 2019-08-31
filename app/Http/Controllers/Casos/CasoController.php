@@ -17,8 +17,10 @@ class CasoController extends Controller
     public function index()
     {
         $hechos = Hecho::all();
-        //return CasoResource::collection($hechos);
-        return $this->showAll($hechos);
+        return CasoResource::collection($hechos);
+        // $hechos1 = CasoResource::collection($hechos);
+        // dd($hechos1);
+        // return $this->showAll($hechos);
     }
 
     /**
@@ -62,6 +64,7 @@ class CasoController extends Controller
     public function show($id)
     {
         $hecho = Hecho::where('codigo', $id)->select('codigo','relato','conducta','resultado','circunstancia','direccion','zona','detallelocacion','municipio_id','created_at','longitude','latitude','tipo_denuncia_id','fechahorainicio','fechahorafin','aproximado','titulo')->first();
+        //dd($hecho);
         return $this->showOne($hecho);
     }
 

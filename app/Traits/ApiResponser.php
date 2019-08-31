@@ -11,12 +11,6 @@ trait ApiResponser
 {
 	function successResponse($data, $code = 200)
 	{	//dd($data);
-		//return $data;
-		return $data->response()->setStatusCode($code);
-	}
-
-	function successResponseCollection($data, $code = 200)
-	{	//dd($data);
 		return response()->json($data, $code);
 	}
 
@@ -25,55 +19,32 @@ trait ApiResponser
 		return response()->json(['error'=> $message, 'code' => $code],$code);
 	}
 
-	function successMesagesResponse ($message, $code)
-	{
-		return response()->json(['success'=> $message, 'code' => $code],$code);
-	}
-
 	function errorsResponse ($message, $code)
 	{
 		return response()->json($message,$code);
 	}
 
-	function showAllCollection(Collection $collection, $code = 200)
+	function showAll(Collection $collection, $code = 200)
 	{
 		//dd($collection);
 		if ($collection->isEmpty()) {
-			return $this->successResponseCollection(['data'=> $collection], $code);
+			return $this->successResponse(['data'=> $collection], $code);
 		}
-
 		$collection = $this->paginadorColecciones($collection);
 
-		return $this->successResponseCollection($collection, $code);
+
+		return $this->successResponse($collection, $code);
 		
 	}
 
-	function showAll($collection, $code = 200)
+	function showMessage($message, $code = 200)
 	{
-		
-		if ($collection->isEmpty()) {
-			return $this->successResponse(['data'=> $collection], $code);
-		}
-
-		if ($collection instanceof Collection) {
-
-			$collection = $this->paginadorColecciones($collection);
-		}
-
-		//$collection = $this->paginadorColecciones($collection);
-		/*** metodos para transfrormas las colecciones y no tengan el mismo nombre que la BD ***/
-		$recurso = $collection->first()->resource;
-		$colecionTransformada = $recurso::collection($collection);
-		/**** paginador de colecciones  ****/
-
-		return $this->successResponse($colecionTransformada, $code);	
+		return $this->seccessResponse($message, $code);
 	}
 
 	function showOne(Model $instance, $code = 200)
 	{
-		$recurso = $instance->recurso;
-		$transInstance = new $recurso($instance);
-		return $this->successResponse(['data' => $transInstance], $code);
+		return $this->successResponse($instance, $code);
 	}
 
 	function paginadorColecciones(Collection $collection)
@@ -90,7 +61,7 @@ trait ApiResponser
 
 		$paginated->appends(request()->query());
 		return $paginated;
-	}
+	}	
 
 	//funcion para determinar las paginas por defecto
 	/*function determinePageSize()

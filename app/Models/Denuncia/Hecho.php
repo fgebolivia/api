@@ -2,7 +2,7 @@
 
 namespace App\Models\Denuncia;
 
-use App\Http\Resources\CasoResource;
+//use App\Http\Resources\CasoResource;
 //use App\Models\Denuncia\HechoPersona;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,7 +32,7 @@ class Hecho extends Model
         'longitude',
     ];
 
-    public $resource = CasoResource::class;
+    //public $resource = CasoResource::class;
 
     protected $guarded = [];
 

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Casos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CasoPersonaResource;
 use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
 use App\Models\Denuncia\TipoSujeto;
 use Illuminate\Http\Request;
-//use Models\Rrhh\RrhhPersona;
+
 
 class CasoPersonasController extends Controller
 {
@@ -28,12 +29,18 @@ class CasoPersonasController extends Controller
         }
 
         $personas = Hecho::where('codigo',$hecho)->first()->personas()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
-        dd($personas);
+        $hechoPersona = Hecho::where('codigo',$hecho)->first()->hechoPersonas()->where('persona_id',$personas[0]->id)->get();
+        return CasoPersonaResource::collection($personas);
+        //$nose = $personas->concat(['echo_id'=> $hechoPersona[0]->id]);
+        //$nose1 = $nose->all();
+        //dd($personas->first()->pivot);
+        //return $nose1;
+        //return $personas->first()->pivot->hecho_id;
         
-        $personasJuridica = Hecho::where('codigo',$hecho)->first()->juridica()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
+       /* $personasJuridica = Hecho::where('codigo',$hecho)->first()->juridica()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
 
         $personasDesco = Hecho::where('codigo',$hecho)->first()->personaDesconocida()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
-
+        //dd($personas);
         if ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty()) {
             $sujetosx = $personas->merge($personasDesco);
             $sujetosProceales = $sujetosx->merge($personasJuridica);
@@ -60,7 +67,7 @@ class CasoPersonasController extends Controller
                 $sujetosProceales = $personasJuridica->merge($personasDesco);
                 return $this->showAll($sujetosProceales);
             }
-        }
+        }*/
           
     }
 
@@ -71,8 +78,9 @@ class CasoPersonasController extends Controller
      * @param  \App\Models\Denuncia\Hecho  $hecho
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $hecho, $tipo)
+    public function store(Request $request, $hecho)
     {
+        $tipo=  isset($_GET['tipo'])?$_GET['tipo']: 5;
         $casovalidate = Hecho::where('codigo',$hecho)->first()->hechoPersonas()->get();
         if ($casovalidate->isNotEmpty()) {
             return $this->errorResponse('error el codigo ya se encuentra registrado',422);
