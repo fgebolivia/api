@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Casos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CasoDesconocidaResource;
+use App\Http\Resources\CasoJuridicaResource;
 use App\Http\Resources\CasoPersonaResource;
 use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
@@ -29,23 +31,24 @@ class CasoPersonasController extends Controller
         }
 
         $personas = Hecho::where('codigo',$hecho)->first()->personas()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
-        $hechoPersona = Hecho::where('codigo',$hecho)->first()->hechoPersonas()->where('persona_id',$personas[0]->id)->get();
-        return CasoPersonaResource::collection($personas);
-        //$nose = $personas->concat(['echo_id'=> $hechoPersona[0]->id]);
-        //$nose1 = $nose->all();
-        //dd($personas->first()->pivot);
-        //return $nose1;
-        //return $personas->first()->pivot->hecho_id;
         
-       /* $personasJuridica = Hecho::where('codigo',$hecho)->first()->juridica()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
+        $perosonaTransform = CasoPersonaResource::collection($personas); //ok funcion corecta
+        
+        $personasJuridica = Hecho::where('codigo',$hecho)->first()->juridica()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
 
+        $perJuridTransform = CasoJuridicaResource::collection($personasJuridica);
+        
         $personasDesco = Hecho::where('codigo',$hecho)->first()->personaDesconocida()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
-        //dd($personas);
-        if ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty()) {
-            $sujetosx = $personas->merge($personasDesco);
-            $sujetosProceales = $sujetosx->merge($personasJuridica);
 
-            return $this->showAll($sujetosProceales);
+        
+        $perDescoTranform = CasoDesconocidaResource::collection($personasDesco);
+
+        if ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty()) {
+            
+            $sujetosx = $perosonaTransform->merge($perJuridTransform);
+            $sujetosProceales = $sujetosx->merge($perDescoTranform);
+
+            return array('data' => $sujetosProceales);
         }else
         {   
             if($personas->isEmpty() && $personasJuridica->isEmpty() && $personasDesco->isEmpty()){
@@ -54,20 +57,20 @@ class CasoPersonasController extends Controller
 
             }elseif ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() || $personasDesco->isEmpty()) {
 
-                $sujetosProceales = $personas->merge($personasJuridica);
-                return $this->showAll($sujetosProceales);
+                $sujetosProceales = $perosonaTransform->merge($perJuridTransform);
+                return array('data' => $sujetosProceales);
 
             }elseif ($personas->isNotEmpty() && $personasDesco->isNotEmpty() || $personasJuridica->isEmpty()) {
 
-                $sujetosProceales = $personas->merge($personasDesco);
-                return $this->showAll($sujetosProceales);
+                $sujetosProceales = $perosonaTransform->merge($perDescoTranform);
+                return array('data' => $sujetosProceales);
 
             }elseif ($personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty() || $personas->isNotEmpty()) {
 
-                $sujetosProceales = $personasJuridica->merge($personasDesco);
-                return $this->showAll($sujetosProceales);
+                $sujetosProceales = $perJuridTransform->merge($perDescoTranform);
+                return array('data' => $sujetosProceales);
             }
-        }*/
+        }
           
     }
 

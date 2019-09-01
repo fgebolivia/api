@@ -22,5 +22,5 @@ class RrhhPersonaJuridica extends Model
 
     //public $resource = CasoJuridicaResource::class;
 
-    protected $hidden = ['pivot','updated_at','id','estado'];
+    protected $hidden = ['updated_at','id','estado'];
 }

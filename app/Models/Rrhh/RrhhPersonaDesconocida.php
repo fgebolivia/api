@@ -19,5 +19,5 @@ class RrhhPersonaDesconocida extends Model
 
     protected $guarded  = [];
 
-    protected $hidden = ['pivot','updated_at','id','estado']; 
+    protected $hidden = ['updated_at','id','estado']; 
 }
