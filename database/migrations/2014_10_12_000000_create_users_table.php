@@ -29,6 +29,8 @@ class CreateUsersTable extends Migration
 
             $table->text('lugar_dependencia')->nullable();
 
+            //$tabke->string('api_token');
+
             $table->rememberToken();
             $table->timestamps();
 

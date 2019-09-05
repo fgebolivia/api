@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Traits\ApiResponser;
+use Asm89\Stack\CorsService;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -55,7 +56,7 @@ class Handler extends ExceptionHandler
     {
        $response = $this->HandleException($request, $exception);
 
-        //app(CorsService::class)->addActualRequestHeaders($response,$request);
+        app(CorsService::class)->addActualRequestHeaders($response,$request);
 
         return $response;
     }
@@ -68,10 +69,10 @@ class Handler extends ExceptionHandler
             return $this->convertValidationExceptionToResponse($exception, $request);
         }
         
-        // if ($exception instanceof AuthenticationException)
-        // {
-        //     return $this->unauthenticated($request, $exception);
-        // }
+        if ($exception instanceof AuthenticationException)
+        {
+            return $this->unauthenticated($request, $exception);
+        }
 
         if ($exception instanceof ModelNotFoundException) 
         {
@@ -104,38 +105,34 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Convert an authentication exception into an unauthenticated response.
+     * Convert an authentication exception into a response.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Auth\AuthenticationException  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        
-        /*if ($this->isFrontend($request))
-        {
+        if ($this->isFrontend($request)) {
             return redirect()->guest(route('login'));
         }
-
-        //if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.','code'=> 401], 401);
-        //}*/
-
-        
+        return $this->errorresponse ('unauthenticate',401);
     }
 
     protected function convertValidationExceptionToResponse(ValidationException $e, $request)
     {
-        $errors1 = $e->validator->errors()->getMessages();
+        $errors = $e->validator->errors()->getMessages();
 
-        return $this->errorResponse($errors1, 422);
+        if ($this->isFrontend($request)) {
+            return $request->ajax() ? response()->json($errors,422): redirect()->back()->withInput($request->input())->withErrors($errors);
+        }
+
+        return $this->errorResponse($errors, 422);
     }
 
     //metodo que determina cuando una peticion proviene de HTML y cuando no
     private function isFrontend($request)
-    { ///       capta HTML                  verifica que el middleware es el de web o no
-        //return $request->acceptsHtml() && collect($request->route()->middleware())->contains('web');
-
+    { /// capta HTML verifica que el middleware es el de web o no
+        return $request->acceptsHtml() && collect($request->route()->middleware())->contains('web');
     }
 }

@@ -22,8 +22,21 @@ class CasoJuridicaResource extends JsonResource
     public function toArray($request)
     {
         $municipio = UbgeMunicipio::where('id',$this->municipio_id)->first();
-        $provincia = UbgeProvincia::where('id',$municipio->provincia_id)->first();
+        
         $complementoHechoPersona = HechoPersona::where('hecho_id',$this->pivot->hecho_id)->where('persona_juridica_id',$this->id)->first();
+
+        $municipioNacido = UbgeMunicipio::where('id',$this->municipio_id_nacimiento)->first();
+        $municipioResidencia = UbgeMunicipio::where('id',$this->municipio_id_residencia)->first();
+        $complementoHechoPersona = HechoPersona::where('hecho_id',$this->pivot->hecho_id)->where('persona_juridica_id',$this->id)->first();
+
+        if ($municipio== null) {
+            $muni = null;
+            $provin = null;
+        }else{
+            $muni = $municipio->nombre;
+            $provin= UbgeProvincia::where('id',$municipio->provincia_id)->first()->nombre;
+        }
+        
         if ($complementoHechoPersona->relacion_victima_id == null) {
             $relacionVictima = null;
         }else{
@@ -46,8 +59,9 @@ class CasoJuridicaResource extends JsonResource
         }
 
         return [
-            'provincia' => $provincia->nombre,
-            'municipio' => $municipio->nombre,
+            'es_persona'=>0,
+            'provincia' => $provin,
+            'municipio' => $muni,
             'razon_social' => $this->razon_social,
             'nit' => $this->nit,
             'domicilio' => $this->domicilio,

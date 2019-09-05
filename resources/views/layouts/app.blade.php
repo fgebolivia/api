@@ -33,7 +33,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @auth
+                        <div class="container-fluid col-md-6">
+                        <li><a href="{{route('personal-tokens')}} ">{{ __('TOKENS PERSONALES') }}</a></li>
+                        </div>
+                        <div class="container-fluid col-md-8">
+                        <li><a href="{{route('clients')}} ">{{ __('ADMINISTRADOR DE CLIENTES') }}</a></li>
+                        </div>
+                       @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -53,7 +60,7 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
+                                
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

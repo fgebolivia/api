@@ -23,6 +23,13 @@ class CasoDesconocidaResource extends JsonResource
         $pais = UbgePais::where('id',$this->pais_id)->first();
         
         $complementoHechoPersona = HechoPersona::where('hecho_id',$this->pivot->hecho_id)->where('persona_desconocida_id',$this->id)->first();
+
+         if ($pais== null) {
+            $pa = null;
+        }else{
+            $pa = $pais->nombre;
+        }
+
         if ($complementoHechoPersona->relacion_victima_id == null) {
             $relacionVictima = null;
         }else{
@@ -45,7 +52,8 @@ class CasoDesconocidaResource extends JsonResource
         }
 
         return [
-            'pais' => $pais->nombre,
+            'es_persona'=>2,
+            'pais' => $pa,
             'nombre' => $this->nombre,
             'ap_paterno' => $this->ap_paterno,
             'ap_materno' => $this->ap_materno,

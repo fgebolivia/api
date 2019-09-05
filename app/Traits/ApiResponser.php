@@ -32,6 +32,8 @@ trait ApiResponser
 		}
 		$collection = $this->paginadorColecciones($collection);
 
+		//$resource = $collection->first()->resource
+
 
 		return $this->successResponse($collection, $code);
 		

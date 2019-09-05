@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
-Route::apiResource('v2/hechos', 'Hechos\HechoController');
+//Route::apiResource('v2/hechos', 'Hechos\HechoController');
 
 //Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);
 

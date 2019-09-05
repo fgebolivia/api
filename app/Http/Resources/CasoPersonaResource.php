@@ -23,9 +23,25 @@ class CasoPersonaResource extends JsonResource
     {
         $municipioNacido = UbgeMunicipio::where('id',$this->municipio_id_nacimiento)->first();
         $municipioResidencia = UbgeMunicipio::where('id',$this->municipio_id_residencia)->first();
-        $provinciaNacido = UbgeProvincia::where('id',$municipioNacido->provincia_id)->first();
-        $provinciaResidencia = UbgeProvincia::where('id',$municipioResidencia->provincia_id)->first();
         $complementoHechoPersona = HechoPersona::where('hecho_id',$this->pivot->hecho_id)->where('persona_id',$this->id)->first();
+
+        if ($municipioNacido== null) {
+            $muniNombreNacido = null;
+            $proviNombreNacido = null;
+        }else{
+            $muniNombreNacido = $municipioNacido->nombre;
+            $proviNombreNacido = UbgeProvincia::where('id',$municipioNacido->provincia_id)->first()->nombre;
+        }
+        
+
+        if ($municipioResidencia == null) {
+            $muniNombreResidencia = null;
+            $proviNombreResidencia = null;
+        }else{
+            $muniNombreResidencia = $municipioNacido->nombre;
+            $proviNombreResidencia = UbgeProvincia::where('id',$municipioResidencia->provincia_id)->first()->nombre;
+        }
+
         if ($complementoHechoPersona->relacion_victima_id == null) {
             $relacionVictima = null;
         }else{
@@ -49,10 +65,11 @@ class CasoPersonaResource extends JsonResource
         
 
         return [
-            'provincia_nacimiento' => $provinciaNacido->nombre,
-            'municipio_nacimiento' => $municipioNacido->nombre,
-            'provincia_residencia' => $provinciaResidencia->nombre,
-            'municipio_residencia' => $municipioResidencia->nombre,
+            'es_persona'=>1,
+            'provincia_nacimiento' => $proviNombreNacido,
+            'municipio_nacimiento' => $muniNombreNacido,
+            'provincia_residencia' => $proviNombreResidencia,
+            'municipio_residencia' => $muniNombreResidencia,
             'n_documento' => $this->n_documento,
             'nombre' => $this->nombre,
             'ap_paterno' => $this->ap_paterno,

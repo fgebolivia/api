@@ -8,16 +8,33 @@ use App\Http\Resources\CasoJuridicaResource;
 use App\Http\Resources\CasoPersonaResource;
 use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
+use App\Models\Denuncia\Sujeto;
 use App\Models\Denuncia\TipoSujeto;
+use App\Models\Rrhh\RrhhPersona;
+use App\Models\Rrhh\RrhhPersonaDesconocida;
+use App\Models\Rrhh\RrhhPersonaJuridica;
 use Illuminate\Http\Request;
 
-
+/**
+* @group Metodos Sujetos Procesales
+*
+*/
 class CasoPersonasController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * GET obtencion SujetosProcesales.
+     *
+     *  Para la Obtencion de los SujetoProcesales se debe mandar una peticon a la <b>url</b> descrita abajo
+     *  enviando los sigientes parametros a la variable tipo.<br>
+     *  <b>tipo=1 (Persona Denunciante)</b><br>
+     *  <b>tipo=2 (Persona Denunciado)</b><br>
+     *  <b>tipo=3 (Persona Victima)</b><br>
+     *  <b>tipo=4 (Persona Testigo)</b>
      *
      * @param  \App\Models\Denuncia\Hecho  $hecho
+     * @transformer \App\Resources\CasoPersonaResource
+     * @transformer \App\Resources\CasoJuridicaResource
+     * @transformer \App\Resources\CasoDesconocidaResource
      * @return \Illuminate\Http\Response
      */
     public function index($hecho)
@@ -48,34 +65,45 @@ class CasoPersonasController extends Controller
             $sujetosx = $perosonaTransform->merge($perJuridTransform);
             $sujetosProceales = $sujetosx->merge($perDescoTranform);
 
-            return array('data' => $sujetosProceales);
+            return $this->showAll($sujetosProceales);
         }else
         {   
             if($personas->isEmpty() && $personasJuridica->isEmpty() && $personasDesco->isEmpty()){
 
-                return $this->errorResponse('Does not exists any endpoint for this URL',422);
+                return $this->errorResponse('no existen sujetos en esta categoria',422);
 
             }elseif ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() || $personasDesco->isEmpty()) {
 
                 $sujetosProceales = $perosonaTransform->merge($perJuridTransform);
-                return array('data' => $sujetosProceales);
+                return $this->showAll($sujetosProceales);
 
             }elseif ($personas->isNotEmpty() && $personasDesco->isNotEmpty() || $personasJuridica->isEmpty()) {
 
                 $sujetosProceales = $perosonaTransform->merge($perDescoTranform);
-                return array('data' => $sujetosProceales);
+                return $this->showAll($sujetosProceales);
 
             }elseif ($personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty() || $personas->isNotEmpty()) {
 
                 $sujetosProceales = $perJuridTransform->merge($perDescoTranform);
-                return array('data' => $sujetosProceales);
+                return $this->showAll($sujetosProceales);
             }
         }
           
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Metodo POST para registro de Sujetos Procesales.
+     *
+     * En este metodo debe mandarse la informacion Generada en las Instituciones con acceso a esta API
+     * cade vez que se genere un nuevo tipo de Sujeto Procesal se de ma andar 2 parametros adicionales
+     * como ser el <b>tipo=</b> y el <b>es_persona=</b> donde los parametros van de acuerdo a lo sgt<br>
+     * <b>tipo=1 (Persona Denunciante)</b><br>
+     * <b>tipo=2 (Persona Denunciado)</b><br>
+     * <b>tipo=3 (Persona Victima)</b><br>
+     * <b>tipo=4 (Persona Testigo)</b><br>
+     * <b>es_persona=0 (Persona Juridica)</b><br>
+     * <b>es_persona=1 (Persona natural)</b><br>
+     * <b>es_persona=2 (Persona Desconocida y/o Extranjera)</b><br>
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Denuncia\Hecho  $hecho
@@ -84,15 +112,93 @@ class CasoPersonasController extends Controller
     public function store(Request $request, $hecho)
     {
         $tipo=  isset($_GET['tipo'])?$_GET['tipo']: 5;
-        $casovalidate = Hecho::where('codigo',$hecho)->first()->hechoPersonas()->get();
-        if ($casovalidate->isNotEmpty()) {
-            return $this->errorResponse('error el codigo ya se encuentra registrado',422);
-        }
-        //return Response()->json($casovalidate,200);
+        $tipo_persona=  isset($_GET['es_persona'])?$_GET['es_persona']: 5;
+
+        $tipoSujeto1 = TipoSujeto::where('id',intval($tipo))->select('id')->first()->id;
+        
+         if ($tipoSujeto1['id'] != $tipo && ($tipo_persona>2 || $tipo_persona<0 || $tipo_persona =='')) {
+            
+            return $this->errorResponse('Does not exists any endpoint for this Caso '.$hecho,422);
+        
+        }else{
+            $id_hechopersona = '';
+            $hecho_Persona = new Sujeto();
+            switch ($tipo_persona) {
+                case 1:
+                    $c_n_documento = RrhhPersona::where('n_documento', $request->n_documento)->first();
+                    //if para ver si existe el documento
+                    if($c_n_documento['id']<1)
+                    {
+                        $persona_id = $this->guardarPersonaNatural($request,$tipo);
+
+                    }else{
+                        $persona_id = $c_n_documento['id'];
+                    }
+
+                    $hecho_persona->persona_id = $persona_id;
+                    $hecho_persona->hecho_id = $hecho;
+                    $hecho_persona->tipo_sujeto_id = $tipo;
+                    $hecho_persona->relacion_victima_id = $request->relacion_victima_id;
+                    $hecho_persona->nivel_educacion_id = $request->nivel_educacion_id;
+                    $hecho_persona->grupo_vulnerable_id = $request->grupo_vulnerable_id;
+                    $hecho_persona->grado_discapacidad_id = $request->grado_discapacidad_id;
+                    $hecho_persona->autoidentificacion_id = $request->autoidentificacion_id;
+                    $hecho_persona->busqueda_ci = $request->n_documento;
+                    $hecho_persona->busqueda_nombre = $request->nombre.' '.$request->ap_paterno.' '.$request->ap_materno.' '.$request->ap_esposo;
+                    $hecho_persona->busqueda_edad = $request->edad;
+                    $hecho_persona->busqueda_sexo = $request->sexo;
+                    $hecho_persona->busqueda_celular = $request->celular;
+                    $hecho_persona->busqueda_domicilio = $request->domicilio;
+                    $hecho_persona->estado_procesal = $request->estado_procesal_id;
+                    if ($request->es_victima)
+                        {$hecho_persona->es_victima = 1;}
+                    //$hecho_persona->save();
+                    $id_hechopersona=$hecho_persona->busqueda_nombre; //ver si se inserto la persona
+                    break;
+                case 0:
+                    $persona_juridica_id = $this->guardarPersonaJuridica($request);
+                    $hecho_persona->persona_juridica_id = $persona_juridica_id;
+                    $hecho_persona->hecho_id = $hecho;
+                    $hecho_persona->tipo_sujeto_id = $tipo;
+                    $hecho_persona->busqueda_ci = $request->nit;
+                    $hecho_persona->busqueda_nombre = $request->razon_social;
+                    $hecho_persona->busqueda_domicilio = $request->domicilio;
+                    $hecho_persona->relacion_victima_id = $request->relacion_victima_id;
+                    $hecho_persona->estado_procesal = $request->estado_procesal_id;
+                    $hecho_persona->es_persona = 0;
+                    //$hecho_persona->save();
+                    $id_hechopersona=$hecho_persona->busqueda_nombre;
+                    break;
+                
+                case 2:
+                    $persona_desconocida_id = $this->guardarPersonaDesconocida($request);
+                    $hecho_persona->persona_id = $persona_desconocida_id;
+                    $hecho_persona->hecho_id = $hecho;
+                    $hecho_persona->tipo_sujeto_id = $tipo;
+                    $hecho_persona->busqueda_nombre = $request->nombre.' '.$request->ap_paterno.' '.$request->ap_materno;
+                    $hecho_persona->es_persona = 2;
+                    //$hecho_persona->save();
+                    $id_hechopersona=$hecho_persona->busqueda_nombre;
+                    break;
+            }
+            if ($id_hechopersona!= '')
+                return $this->successResponse('datos llenados correctamente en el caso '.$hecho.'de la persona '.$id_hechopersona,201 );
+            else
+            {
+                return $this->errorResponse('prevalidador',422);
+            }   
+        }        
     }
 
     /**
-     * Update the specified resource in storage.
+     * Metodo PUT para Actualizar los datos de un Sujeto Procesal.
+     *
+     * este metodo aceptamos 2 tipos de parametros extra que son el <b>Tipo de sujeto Procesal</b> y el <b>n_documento</b> 
+     * <b>tipo=1 (Persona Denunciante)</b><br>
+     * <b>tipo=2 (Persona Denunciado)</b><br>
+     * <b>tipo=3 (Persona Victima)</b><br>
+     * <b>tipo=4 (Persona Testigo)</b><br>
+     * <b>n_documento= 7864815 (Carnet de Identida, Pasaporte, etc)</b><br>  
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Denuncia\Hecho  $hecho
@@ -114,5 +220,68 @@ class CasoPersonasController extends Controller
     public function destroy(Hecho $hecho, RrhhPersona $rrhhPersona)
     {
         //
+    }
+
+    private function guardarPersonaNatural($request, $tipo)
+    {
+       /*  $segip = new SegipClass();
+        $array_segip = [
+            'n_documento'  => $request->n_documento,
+            'complemento'  => $request->complemento,
+            'nombre'       => $request->nombre,
+            'ap_paterno'   => $request->ap_paterno,
+            'ap_materno'   => $request->ap_materno,
+            'f_nacimiento' => $request->f_nacimiento
+        ];
+        $respuesta_segip = $segip->getCertificacionSegip($array_segip);
+        if ($respuesta_segip['sw'] == 1)
+        { */
+            $map_latitud=null;
+            $map_longitud=null;
+            if($tipo  === 1){ //mando boolean llega  si es true
+                $map_latitud=$request->map_latitud;
+                $map_longitud=$request->map_longitud;
+            }
+            if($tipo  === 2){ //mando boolean llega  si es true
+                $map_latitud=$request->map_latitud;
+                $map_longitud=$request->map_longitud;
+            }
+            if($tipo  === 3){ //mando boolean llega  si es true
+                $map_latitud=$request->map_latitud;
+                $map_longitud=$request->map_longitud;
+            }
+            $request->merge([
+                'map_latitud' => $map_latitud,
+                'map_longitud' => $map_longitud ,
+            ]);
+            $persona= (new RrhhPersona)->fill($request->all());
+            $persona->save();
+            return $persona->id;
+        /* } else {
+        } */
+    }
+
+    private function guardarPersonaJuridica($request)
+    {
+        $persona_juridica= new RrhhPersonaJuridica();
+        $persona_juridica->nit = $request->nit;
+        $persona_juridica->razon_social = $request->razon_social;
+        $persona_juridica->telefono = $request->telefono;
+        $persona_juridica->domicilio = $request->domicilio;
+        $persona_juridica->map_latitud = $request->map_latitud;
+        $persona_juridica->map_longitud = $request->map_latitud;
+        $persona_juridica->save();
+        return $persona_juridica->id;
+    }
+
+    private function guardarPersonaDesconocida($request)
+    {
+        $persona_desconocida = new RrhhPersonaDesconocida();
+        $persona_desconocida->nombre = $request->nombre;
+        $persona_desconocida->ap_paterno = $request->ap_paterno;
+        $persona_desconocida->ap_materno = $request->ap_materno;
+        $persona_desconocida->descripcion = $request->nombre.' '.$request->ap_paterno.' '.$request->ap_materno;
+        $persona_desconocida->save();
+        return $persona_desconocida->id;
     }
 }
