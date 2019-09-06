@@ -43,49 +43,57 @@ class CasoPersonasController extends Controller
         $tipo=  isset($_GET['tipo'])?$_GET['tipo']: 5;
         $tipoSujeto1 = TipoSujeto::where('id',intval($tipo))->select('id')->first();
         
+
         if ($tipoSujeto1['id'] != $tipo) {
             return $this->errorResponse('Does not exists any endpoint for this URL',422);
         }
 
-        $personas = Hecho::where('codigo',$hecho)->first()->personas()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
-        
-        $perosonaTransform = CasoPersonaResource::collection($personas); //ok funcion corecta
-        
-        $personasJuridica = Hecho::where('codigo',$hecho)->first()->juridica()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
-
-        $perJuridTransform = CasoJuridicaResource::collection($personasJuridica);
-        
-        $personasDesco = Hecho::where('codigo',$hecho)->first()->personaDesconocida()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
-
-        
-        $perDescoTranform = CasoDesconocidaResource::collection($personasDesco);
-
-        if ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty()) {
+        $reserva = Hecho::where('codigo',$hecho)->where('reserva',1)->select('reserva')->first();
+        //dd($reserva->id);
+        if($reserva['reserva'] === 1)
+        {
+            return $this->errorResponse('El caso es reservado no tiene acceso',401);
+        }else{
+            $personas = Hecho::where('codigo',$hecho)->first()->personas()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
             
-            $sujetosx = $perosonaTransform->merge($perJuridTransform);
-            $sujetosProceales = $sujetosx->merge($perDescoTranform);
+            $perosonaTransform = CasoPersonaResource::collection($personas); //ok funcion corecta
+            
+            $personasJuridica = Hecho::where('codigo',$hecho)->first()->juridica()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
 
-            return $this->showAll($sujetosProceales);
-        }else
-        {   
-            if($personas->isEmpty() && $personasJuridica->isEmpty() && $personasDesco->isEmpty()){
+            $perJuridTransform = CasoJuridicaResource::collection($personasJuridica);
+            
+            $personasDesco = Hecho::where('codigo',$hecho)->first()->personaDesconocida()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
 
-                return $this->errorResponse('no existen sujetos en esta categoria',422);
+            
+            $perDescoTranform = CasoDesconocidaResource::collection($personasDesco);
 
-            }elseif ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() || $personasDesco->isEmpty()) {
+            if ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty()) {
+                
+                $sujetosx = $perosonaTransform->merge($perJuridTransform);
+                $sujetosProceales = $sujetosx->merge($perDescoTranform);
 
-                $sujetosProceales = $perosonaTransform->merge($perJuridTransform);
                 return $this->showAll($sujetosProceales);
+            }else
+            {   
+                if($personas->isEmpty() && $personasJuridica->isEmpty() && $personasDesco->isEmpty()){
 
-            }elseif ($personas->isNotEmpty() && $personasDesco->isNotEmpty() || $personasJuridica->isEmpty()) {
+                    return $this->errorResponse('no existen sujetos en esta categoria',422);
 
-                $sujetosProceales = $perosonaTransform->merge($perDescoTranform);
-                return $this->showAll($sujetosProceales);
+                }elseif ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() || $personasDesco->isEmpty()) {
 
-            }elseif ($personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty() || $personas->isNotEmpty()) {
+                    $sujetosProceales = $perosonaTransform->merge($perJuridTransform);
+                    return $this->showAll($sujetosProceales);
 
-                $sujetosProceales = $perJuridTransform->merge($perDescoTranform);
-                return $this->showAll($sujetosProceales);
+                }elseif ($personas->isNotEmpty() && $personasDesco->isNotEmpty() || $personasJuridica->isEmpty()) {
+
+                    $sujetosProceales = $perosonaTransform->merge($perDescoTranform);
+                    return $this->showAll($sujetosProceales);
+
+                }elseif ($personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty() || $personas->isNotEmpty()) {
+
+                    $sujetosProceales = $perJuridTransform->merge($perDescoTranform);
+                    return $this->showAll($sujetosProceales);
+                }
             }
         }
           
@@ -111,6 +119,36 @@ class CasoPersonasController extends Controller
      */
     public function store(Request $request, $hecho)
     {
+         $datos = $request->validate([
+            'n_documento' => 'required|max:250|string',
+            'tipo_documento' => 'required|max:250|string',
+            'nombre'=> 'required|max:250|string',
+            'ap_paterno' => 'required|max:250|string',
+            'ap_materno' => 'required|max:250|string',
+            'ap_esposo' => 'required|max:250|string',
+            'sexo' => 'required|max:250|string',
+            'municipio_id_nacimiento' => 'required|max:250|string',
+            'fecha_nacimiento' => 'required|numeric',
+            'estado_civil' => 'required|date',
+            'nacionalidad' => 'required|numeric',
+            'profesion_ocupacion' => 'required|numeric',
+            'relacion_victima_id' => 'required|numeric',
+            'idioma_id' => 'required|date',
+            'autoidentificacion_id' => 'required|date',
+            'nivel_educacion_id' => 'string',
+            'domicilio' => 'required|numeric',
+            'telefono' => 'max:250',
+            'celular' => 'required|numeric',
+            'email' => 'required|numeric',
+            'lugar_trabajo' => 'required|numeric',
+            'domicilio_laboral' => 'required|numeric',
+            'telf_laboral' => 'required|numeric',
+            'es_victima' => 'required|numeric',
+            'map_latitud' => 'required|numeric',
+            'map_longitud' => 'required|numeric',
+            'estado_procesal_id' => 'required|numeric'
+            ]);
+
         $tipo=  isset($_GET['tipo'])?$_GET['tipo']: 5;
         $tipo_persona=  isset($_GET['es_persona'])?$_GET['es_persona']: 5;
 
@@ -186,7 +224,7 @@ class CasoPersonasController extends Controller
             else
             {
                 return $this->errorResponse('prevalidador',422);
-            }   
+            } 
         }        
     }
 
@@ -224,18 +262,6 @@ class CasoPersonasController extends Controller
 
     private function guardarPersonaNatural($request, $tipo)
     {
-       /*  $segip = new SegipClass();
-        $array_segip = [
-            'n_documento'  => $request->n_documento,
-            'complemento'  => $request->complemento,
-            'nombre'       => $request->nombre,
-            'ap_paterno'   => $request->ap_paterno,
-            'ap_materno'   => $request->ap_materno,
-            'f_nacimiento' => $request->f_nacimiento
-        ];
-        $respuesta_segip = $segip->getCertificacionSegip($array_segip);
-        if ($respuesta_segip['sw'] == 1)
-        { */
             $map_latitud=null;
             $map_longitud=null;
             if($tipo  === 1){ //mando boolean llega  si es true
@@ -257,8 +283,6 @@ class CasoPersonasController extends Controller
             $persona= (new RrhhPersona)->fill($request->all());
             $persona->save();
             return $persona->id;
-        /* } else {
-        } */
     }
 
     private function guardarPersonaJuridica($request)

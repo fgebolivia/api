@@ -24,7 +24,7 @@ class CasoController extends Controller
      */
     public function index()
     {
-        $hechos = Hecho::all();
+        $hechos = Hecho::where('reserva',0)->get();
         //rn CasoResource::collection($hechos);
         // $hechos1 = CasoResource::collection($hechos);
         // dd($hechos1);
@@ -99,7 +99,7 @@ class CasoController extends Controller
      */
     public function show($id)
     {
-        $hecho = Hecho::where('codigo', $id)->select('codigo','relato','conducta','resultado','circunstancia','direccion','zona','detallelocacion','municipio_id','created_at','longitude','latitude','tipo_denuncia_id','fechahorainicio','fechahorafin','aproximado','titulo')->first();
+        $hecho = Hecho::where('codigo', $id)->where('reserva',0)->select('codigo','relato','conducta','resultado','circunstancia','direccion','zona','detallelocacion','municipio_id','created_at','longitude','latitude','tipo_denuncia_id','fechahorainicio','fechahorafin','aproximado','titulo')->first();
         if ($hecho == null) {
             return $this->errorResponse('Does not exists any endpoint for this URL',404);
         }else{

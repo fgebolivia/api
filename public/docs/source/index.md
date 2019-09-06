@@ -23,7 +23,7 @@ toc_footers:
 
 
 <!-- START_a693ec0cce3fe5d623626615f51838bd -->
-## GET obtención Sujetos Procesales.
+## Metodo GET obtención Sujetos Procesales.
 
 Para la Obtención de los Sujeto Procesales se debe mandar una peticion a la <b>url</b> descrita abajo
  enviando los sigientes parametros a la variable tipo.<br>
@@ -193,67 +193,61 @@ fetch(url, {
 ```
 
 
-> Example response (201):
+> Example response (422):
 
 ```json
 {
     "error": {
         "n_documento": [
-            "El campo n_documento es obligatorio."
+            "El campo n documento es obligatorio."
         ],
         "tipo_documento": [
-            "El campo tipo_documento es obligatorio."
+            "El campo tipo documento es obligatorio."
         ],
         "nombre": [
             "El campo nombre es obligatorio."
         ],
         "ap_paterno": [
-            "El campo ap_paterno es obligatorio."
+            "El campo ap paterno es obligatorio."
         ],
         "ap_materno": [
-            "El campo ap_materno es obligatorio."
+            "El campo ap materno es obligatorio."
         ],
         "ap_esposo": [
-            "El campo ap_esposo es obligatorio."
+            "El campo ap esposo es obligatorio."
         ],
         "sexo": [
             "El campo sexo es obligatorio."
         ],
         "municipio_id_nacimiento": [
-            "El campo municipio_id_nacimiento es obligatorio."
+            "El campo municipio id nacimiento es obligatorio."
         ],
         "fecha_nacimiento": [
-            "El campo fecha_nacimiento id es obligatorio."
+            "El campo fecha nacimiento es obligatorio."
         ],
         "estado_civil": [
-            "El campo estado_civil at es obligatorio."
+            "El campo estado civil es obligatorio."
         ],
         "nacionalidad": [
             "El campo nacionalidad es obligatorio."
         ],
         "profesion_ocupacion": [
-            "El campo profesion_ocupacion es obligatorio."
+            "El campo profesion ocupacion es obligatorio."
         ],
         "relacion_victima_id": [
-            "El campo relacion_victima_id id es obligatorio."
+            "El campo relacion victima id es obligatorio."
         ],
         "idioma_id": [
-            "El campo idioma_id es obligatorio."
+            "El campo idioma id es obligatorio."
         ],
         "autoidentificacion_id": [
-            "El campo autoidentificacion_id es obligatorio."
+            "El campo autoidentificacion id es obligatorio."
         ],
         "nivel_educacion_id": [
-            "El campo nivel_educacion_id es obligatorio."
+            "El campo nivel educacion id debe contener sólo caracteres."
         ],
         "domicilio": [
-            "El campo user id es obligatorio."
-        ],
-        "user_id": [
             "El campo domicilio es obligatorio."
-        ],
-        "telefono": [
-            "El campo telefono es obligatorio."
         ],
         "celular": [
             "El campo celular es obligatorio."
@@ -262,14 +256,20 @@ fetch(url, {
             "El campo email es obligatorio."
         ],
         "lugar_trabajo": [
-            "El campo lugar_trabajo es obligatorio."
+            "El campo lugar trabajo es obligatorio."
         ],
         "domicilio_laboral": [
-            "El campo domicilio_laboral es obligatorio."
+            "El campo domicilio laboral es obligatorio."
         ],
-        "telf_laboral": [
-            "El campo telf_laboral es obligatorio."
+        "map_latitud": [
+            "El campo map latitud es obligatorio."
         ],
+        "map_longitud": [
+            "El campo map longitud es obligatorio."
+        ],
+        "estado_procesal_id": [
+            "El campo estado procesal id es obligatorio."
+        ]
     },
     "code": 422
 }
@@ -339,7 +339,7 @@ fetch(url, {
 
 
 <!-- START_a6c2bd4ae9bf91e1a036bdc87b71610e -->
-## Metodo Get Genera un listado de todos los Casos existentes
+## Metodo GET Genera un listado de todos los Casos existentes
 
 puede generar un listado de todos los casos existentes paginados cada 5 casos
 como se puede observar en el ejemplo
@@ -371,7 +371,7 @@ fetch(url, {
 ```
 
 
-> Example response (500):
+> Example response (200):
 
 ```json
 {
@@ -549,7 +549,7 @@ fetch(url, {
 ```
 
 
-> Example response (500):
+> Example response (422):
 
 ```json
 {
@@ -649,7 +649,7 @@ fetch(url, {
 ```
 
 
-> Example response (500):
+> Example response (200):
 
 ```json
 {
