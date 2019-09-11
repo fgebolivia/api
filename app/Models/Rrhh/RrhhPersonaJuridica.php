@@ -16,6 +16,8 @@ class RrhhPersonaJuridica extends Model
         'nit',
         'domicilio',
         'telefono',
+        'map_latitud',
+        'map_longitud'
     ];
 
     protected $guarded  = [];

@@ -22,6 +22,7 @@ class CasoPersonaResource extends JsonResource
     public function toArray($request)
     {
         $municipioNacido = UbgeMunicipio::where('id',$this->municipio_id_nacimiento)->first();
+
         $municipioResidencia = UbgeMunicipio::where('id',$this->municipio_id_residencia)->first();
         $complementoHechoPersona = HechoPersona::where('hecho_id',$this->pivot->hecho_id)->where('persona_id',$this->id)->first();
 
@@ -32,13 +33,12 @@ class CasoPersonaResource extends JsonResource
             $muniNombreNacido = $municipioNacido->nombre;
             $proviNombreNacido = UbgeProvincia::where('id',$municipioNacido->provincia_id)->first()->nombre;
         }
-        
-
+            //dd($municipioNacido);
         if ($municipioResidencia == null) {
             $muniNombreResidencia = null;
             $proviNombreResidencia = null;
         }else{
-            $muniNombreResidencia = $municipioNacido->nombre;
+            $muniNombreResidencia = $municipioResidencia->nombre;
             $proviNombreResidencia = UbgeProvincia::where('id',$municipioResidencia->provincia_id)->first()->nombre;
         }
 

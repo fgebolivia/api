@@ -119,36 +119,6 @@ class CasoPersonasController extends Controller
      */
     public function store(Request $request, $hecho)
     {
-         $datos = $request->validate([
-            'n_documento' => 'required|max:250|string',
-            'tipo_documento' => 'required|max:250|string',
-            'nombre'=> 'required|max:250|string',
-            'ap_paterno' => 'required|max:250|string',
-            'ap_materno' => 'required|max:250|string',
-            'ap_esposo' => 'required|max:250|string',
-            'sexo' => 'required|max:250|string',
-            'municipio_id_nacimiento' => 'required|max:250|string',
-            'fecha_nacimiento' => 'required|numeric',
-            'estado_civil' => 'required|date',
-            'nacionalidad' => 'required|numeric',
-            'profesion_ocupacion' => 'required|numeric',
-            'relacion_victima_id' => 'required|numeric',
-            'idioma_id' => 'required|date',
-            'autoidentificacion_id' => 'required|date',
-            'nivel_educacion_id' => 'string',
-            'domicilio' => 'required|numeric',
-            'telefono' => 'max:250',
-            'celular' => 'required|numeric',
-            'email' => 'required|numeric',
-            'lugar_trabajo' => 'required|numeric',
-            'domicilio_laboral' => 'required|numeric',
-            'telf_laboral' => 'required|numeric',
-            'es_victima' => 'required|numeric',
-            'map_latitud' => 'required|numeric',
-            'map_longitud' => 'required|numeric',
-            'estado_procesal_id' => 'required|numeric'
-            ]);
-
         $tipo=  isset($_GET['tipo'])?$_GET['tipo']: 5;
         $tipo_persona=  isset($_GET['es_persona'])?$_GET['es_persona']: 5;
 
@@ -160,21 +130,48 @@ class CasoPersonasController extends Controller
         
         }else{
             $id_hechopersona = '';
-            $hecho_Persona = new Sujeto();
+            $hecho_persona = new Sujeto();
             switch ($tipo_persona) {
                 case 1:
+
+                    $datos = $request->validate([
+                        'es_victima' => 'required|numeric',
+                        'n_documento' => 'required|max:250|string',
+                        'tipo_documento' => 'required|max:250|string',
+                        'nombre'=> 'required|max:250|string',
+                        'ap_paterno' => 'required|max:250|string',
+                        'ap_materno' => 'required|max:250|string',
+                        'sexo' => 'required|max:250|string',
+                        'genero' => 'numeric',
+                        'municipio_id_residencia' => 'required|max:250|string',
+                        'f_nacimiento' => 'required|date',
+                        'pais_id' => 'numeric',
+
+                        'idioma_id' => 'required|numeric',
+                        'autoidentificacion_id' => 'required|numeric',
+                        'nivel_educacion_id' => 'string',
+                        'domicilio' => 'required|string',
+                        'telefono' => 'max:250',
+                                    
+                        'map_latitud' => 'required|numeric',
+                        'map_longitud' => 'required|numeric',
+                    ]);
+
                     $c_n_documento = RrhhPersona::where('n_documento', $request->n_documento)->first();
-                    //if para ver si existe el documento
+
                     if($c_n_documento['id']<1)
                     {
+                        
                         $persona_id = $this->guardarPersonaNatural($request,$tipo);
 
                     }else{
                         $persona_id = $c_n_documento['id'];
-                    }
 
+                    }
+                   
                     $hecho_persona->persona_id = $persona_id;
-                    $hecho_persona->hecho_id = $hecho;
+                    $hecho_id = Hecho::where('codigo',$hecho)->select('id')->first();
+                    $hecho_persona->hecho_id = $hecho_id['id'];
                     $hecho_persona->tipo_sujeto_id = $tipo;
                     $hecho_persona->relacion_victima_id = $request->relacion_victima_id;
                     $hecho_persona->nivel_educacion_id = $request->nivel_educacion_id;
@@ -187,16 +184,43 @@ class CasoPersonasController extends Controller
                     $hecho_persona->busqueda_sexo = $request->sexo;
                     $hecho_persona->busqueda_celular = $request->celular;
                     $hecho_persona->busqueda_domicilio = $request->domicilio;
+                    $hecho_persona->busqueda_longitude = $request->map_longitud;
+                    $hecho_persona->busqueda_latitude = $request->map_latitud;
                     $hecho_persona->estado_procesal = $request->estado_procesal_id;
                     if ($request->es_victima)
                         {$hecho_persona->es_victima = 1;}
-                    //$hecho_persona->save();
+                    $hecho_persona->save();
                     $id_hechopersona=$hecho_persona->busqueda_nombre; //ver si se inserto la persona
                     break;
                 case 0:
-                    $persona_juridica_id = $this->guardarPersonaJuridica($request);
-                    $hecho_persona->persona_juridica_id = $persona_juridica_id;
-                    $hecho_persona->hecho_id = $hecho;
+
+                    $nit = RrhhPersonaJuridica::where('nit', $request->nit)->first();
+
+                    if($nit['id']<1)
+                    {
+                        
+                        $persona_juridica_id1 = $this->guardarPersonaJuridica($request);
+
+                    }else{
+                        $persona_juridica_id1 = $nit['id'];
+
+                    }
+
+                    $datos = $request->validate([
+                        'es_victima' => 'required|numeric',
+                        'nit' => 'required',
+                        'razon_social' => 'required',
+                        'domicilio' => 'required|string',
+                        'telefono' => 'max:250',
+                        'municipio_id' =>'numeric',
+                                    
+                        'map_latitud' => 'required|numeric',
+                        'map_longitud' => 'required|numeric',
+                    ]);
+
+                    $hecho_persona->persona_juridica_id = $persona_juridica_id1;
+                    $hecho_id = Hecho::where('codigo',$hecho)->select('id')->first();
+                    $hecho_persona->hecho_id = $hecho_id['id'];
                     $hecho_persona->tipo_sujeto_id = $tipo;
                     $hecho_persona->busqueda_ci = $request->nit;
                     $hecho_persona->busqueda_nombre = $request->razon_social;
@@ -204,23 +228,28 @@ class CasoPersonasController extends Controller
                     $hecho_persona->relacion_victima_id = $request->relacion_victima_id;
                     $hecho_persona->estado_procesal = $request->estado_procesal_id;
                     $hecho_persona->es_persona = 0;
-                    //$hecho_persona->save();
+                    $hecho_persona->save();
                     $id_hechopersona=$hecho_persona->busqueda_nombre;
                     break;
                 
                 case 2:
                     $persona_desconocida_id = $this->guardarPersonaDesconocida($request);
-                    $hecho_persona->persona_id = $persona_desconocida_id;
-                    $hecho_persona->hecho_id = $hecho;
+                    $hecho_persona->persona_desconocida_id = $persona_desconocida_id;
+                    $hecho_id = Hecho::where('codigo',$hecho)->select('id')->first();
+                    $hecho_persona->hecho_id = $hecho_id['id'];
                     $hecho_persona->tipo_sujeto_id = $tipo;
                     $hecho_persona->busqueda_nombre = $request->nombre.' '.$request->ap_paterno.' '.$request->ap_materno;
                     $hecho_persona->es_persona = 2;
-                    //$hecho_persona->save();
+                    $hecho_persona->relacion_victima_id = $request->relacion_victima_id;
+                    $hecho_persona->estado_procesal = $request->estado_procesal_id;
+                    $hecho_persona->grupo_vulnerable_id = $request->grupo_vulnerable_id;
+                    $hecho_persona->estado_libertad_id = $request->estado_libertad_id;
+                    $hecho_persona->save();
                     $id_hechopersona=$hecho_persona->busqueda_nombre;
                     break;
             }
             if ($id_hechopersona!= '')
-                return $this->successResponse('datos llenados correctamente en el caso '.$hecho.'de la persona '.$id_hechopersona,201 );
+                return $this->successConection('datos llenados correctamente en el caso '.$hecho.' de la persona '.$id_hechopersona,201 );
             else
             {
                 return $this->errorResponse('prevalidador',422);
@@ -262,17 +291,18 @@ class CasoPersonasController extends Controller
 
     private function guardarPersonaNatural($request, $tipo)
     {
-            $map_latitud=null;
-            $map_longitud=null;
-            if($tipo  === 1){ //mando boolean llega  si es true
+            $map_latitud='';
+            $map_longitud='';
+            if($tipo  == 1){ //mando boolean llega  si es true
+                $map_latitud=$request->map_latitud;
+                $map_longitud=$request->map_longitud;
+                
+            }
+            if($tipo  == 2){ //mando boolean llega  si es true
                 $map_latitud=$request->map_latitud;
                 $map_longitud=$request->map_longitud;
             }
-            if($tipo  === 2){ //mando boolean llega  si es true
-                $map_latitud=$request->map_latitud;
-                $map_longitud=$request->map_longitud;
-            }
-            if($tipo  === 3){ //mando boolean llega  si es true
+            if($tipo  == 3){ //mando boolean llega  si es true
                 $map_latitud=$request->map_latitud;
                 $map_longitud=$request->map_longitud;
             }
@@ -280,6 +310,7 @@ class CasoPersonasController extends Controller
                 'map_latitud' => $map_latitud,
                 'map_longitud' => $map_longitud ,
             ]);
+            //dd($request);
             $persona= (new RrhhPersona)->fill($request->all());
             $persona->save();
             return $persona->id;
@@ -304,7 +335,8 @@ class CasoPersonasController extends Controller
         $persona_desconocida->nombre = $request->nombre;
         $persona_desconocida->ap_paterno = $request->ap_paterno;
         $persona_desconocida->ap_materno = $request->ap_materno;
-        $persona_desconocida->descripcion = $request->nombre.' '.$request->ap_paterno.' '.$request->ap_materno;
+        $persona_desconocida->pais_id = $request->pais_id;
+        $persona_desconocida->descripcion = 'nombre: '.$request->nombre.', alias: '.$request->alias.', estatura: '.$request->estatura.', color de Tez: '.$request->tez.', Tipo de Veztimenta: '.$request->vestimenta.', Senia Particular: '.$request->senia.', peso Aproximado: '.$request->peso.', color de Cabello: '.$request->cabello;
         $persona_desconocida->save();
         return $persona_desconocida->id;
     }

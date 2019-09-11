@@ -14,14 +14,14 @@ trait ApiResponser
 		return response()->json($data, $code);
 	}
 
+	function successConection($message, $code = 200)
+	{	//dd($data);
+		return response()->json(['message'=> $message, 'code' => $code],$code);
+	}
+
 	function errorResponse ($message, $code)
 	{
 		return response()->json(['error'=> $message, 'code' => $code],$code);
-	}
-
-	function errorsResponse ($message, $code)
-	{
-		return response()->json($message,$code);
 	}
 
 	function showAll(Collection $collection, $code = 200)

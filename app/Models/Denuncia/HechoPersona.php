@@ -3,6 +3,7 @@
 namespace App\Models\Denuncia;
 
 use App\Models\Rrhh\RrhhPersona;
+use App\Models\Denuncia\PersonaMedidasProteccion;
 use Illuminate\Database\Eloquent\Model;
 
 class HechoPersona extends Model
@@ -15,7 +16,12 @@ class HechoPersona extends Model
         'nombre',
         'ci',
         'estado',
-        'descripcion'
+        'descripcion',
+        'fecha_estado_procesal',
+        'persona_juridica_id',
+        'persona_desconocida_id',
+        'estado_libertad_id',
+        'delete'
     ];
 
     protected $guarded = [];
@@ -27,6 +33,11 @@ class HechoPersona extends Model
 
     public function hechos()
     {
-        return $this->belongsTo('pp\Models\Denuncia\Hecho', 'hecho_id');
+        return $this->belongsTo('App\Models\Denuncia\Hecho', 'hecho_id');
+    }
+
+    public function medidas()
+    {
+        return $this->hasMany('App\Models\Denuncia\PersonaMedidasProteccion', 'hechopersona_id');
     } 
 }

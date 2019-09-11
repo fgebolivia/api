@@ -24,11 +24,11 @@ class CasoController extends Controller
      */
     public function index()
     {
-        $hechos = Hecho::where('reserva',0)->get();
-        //rn CasoResource::collection($hechos);
-        // $hechos1 = CasoResource::collection($hechos);
-        // dd($hechos1);
-        return $this->showAll($hechos);
+        $hechos = Hecho::where('reserva',0)->Paginate(5);
+        //return CasoResource::collection($hechos);
+         $hechos1 = CasoResource::collection($hechos);
+         //dd($hechos);
+        return  $hechos1;
     }
 
     /**
@@ -62,20 +62,16 @@ class CasoController extends Controller
     {
         $datos = $request->validate([
             'codigo' => 'required|max:250|string',
-            'relato' => 'required|max:250|string',
-            'conducta'=> 'required|max:250|string',
-            'resultado' => 'required|max:250|string',
-            'circunstancia' => 'required|max:250|string',
-            'direccion' => 'required|max:250|string',
-            'zona' => 'required|max:250|string',
-            'detallelocacion' => 'required|max:250|string',
+            'relato' => 'required|string',
+            'direccion' => 'required|max:550|string',
+            'zona' => 'required|max:550|string',
+            'detallelocacion' => 'required|max:550|string',
             'municipio_id' => 'required|numeric',
             'created_at' => 'required|date',
             'longitude' => 'required|numeric',
             'latitude' => 'required|numeric',
             'tipo_denuncia_id' => 'required|numeric',
-            'fechahorainicio' => 'required|date',
-            'fechahorafin' => 'required|date',
+            'fechahorainicio' => 'date',
             'aproximado' => 'string',
             'oficina_id' => 'required|numeric',
             'titulo' => 'max:250',

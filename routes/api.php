@@ -21,9 +21,12 @@ use Illuminate\Http\Request;
 
 //Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);
 
+Route::apiResource('v2/connection', 'Casos\ConnectionApiController')->only(['index']);
 
 Route::apiResource('v2/casos', 'Casos\CasoController')->only(['index','show','store']);
 
 Route::apiResource('v2/casos/{hecho}/sujetosProcesales', 'Casos\CasoPersonasController')->except(['show','destroy']);
+
+Route::apiResource('v2/casos/{hecho}/medidas', 'Casos\MedidasVictimaController')->except(['show','destroy']);
 
 //Route::apiResource('v1/usuarios', 'UserController');

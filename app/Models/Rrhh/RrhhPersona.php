@@ -45,7 +45,9 @@ class RrhhPersona extends Model
         'estado_persona',
         'nombre_completo',
         'genero',
-        'email'
+        'email',
+        'map_latitud',
+        'map_longitud'
 
     ];
     protected $guarded  = [];

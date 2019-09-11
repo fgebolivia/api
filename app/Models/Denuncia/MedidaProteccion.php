@@ -11,7 +11,10 @@ class MedidaProteccion extends Model
     protected $fillable = [
         'estado',
         'descripcion',
+        'tipo',
+        'inciso'
     ];
 
     protected $guarded = [];
+ 
 }
