@@ -67,7 +67,7 @@ class CasoController extends Controller
             'zona' => 'required|max:550|string',
             'detallelocacion' => 'required|max:550|string',
             'municipio_id' => 'required|numeric',
-            'created_at' => 'required|date',
+            'created_at' => 'date',
             'longitude' => 'required|numeric',
             'latitude' => 'required|numeric',
             'tipo_denuncia_id' => 'required|numeric',

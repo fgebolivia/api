@@ -63,6 +63,18 @@ return [
             ]) : [],
         ],
 
+        'comments'  => [
+            'driver'     => 'mysql',
+            'host'       => env('COMMENTS_HOST', '192.168.20.60'),
+            'database'   => env('COMMENTS_DATABASE', 'i4bol'),
+            'username'   => env('COMMENTS_USERNAME', 'paulcaihuara'),
+            'password'   => env('COMMETNS_PASSWORD', 'Paul2ol9'),
+            'charset'    => 'utf8',
+            'collation'  => 'utf8_unicode_ci',
+            'prefix'     => '',
+            'strict'     => false,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
