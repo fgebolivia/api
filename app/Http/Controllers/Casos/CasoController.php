@@ -95,11 +95,13 @@ class CasoController extends Controller
      */
     public function show($id)
     {
-        $hecho = Hecho::where('codigo', $id)->where('reserva',0)->select('codigo','relato','conducta','resultado','circunstancia','direccion','zona','detallelocacion','municipio_id','created_at','longitude','latitude','tipo_denuncia_id','fechahorainicio','fechahorafin','aproximado','titulo')->first();
+        $hecho = Hecho::where('codigo', $id)->where('reserva',0)->first();
         if ($hecho == null) {
             return $this->errorResponse('Does not exists any endpoint for this URL',404);
         }else{
-            return $this->showOne($hecho);
+            //dd($hecho);
+            $hechos1 = new CasoResource($hecho);
+            return $hechos1;
         }
         
     }
@@ -111,9 +113,96 @@ class CasoController extends Controller
      * @param  \App\Models\Denuncia\Hecho  $hecho
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Hecho $hecho)
+    public function update(Request $request, $id)
     {
-        //
+        $hecho = Hecho::where('codigo', $id)->where('reserva',0)->first();
+        //dd($hecho);
+        $data = $request->validate([
+
+            'codigo' => 'max:250|string',
+            'relato' => 'string',
+            'direccion' => 'max:550|string',
+            'zona' => 'max:550|string',
+            'detallelocacion' => 'max:550|string',
+            'municipio_id' => 'numeric',
+            'created_at' => 'date',
+            'longitude' => 'numeric',
+            'latitude' => 'numeric',
+            'tipo_denuncia_id' => 'numeric',
+            'fechahorainicio' => 'date',
+            'aproximado' => 'string',
+            'oficina_id' => 'numeric',
+            'titulo' => 'max:250',
+            'user_id' => 'numeric',
+        ]);
+
+        if ($request->has('relato')) {
+            $hecho->relato = $request->relato;
+        }
+        if ($request->has('conducta')) {
+            $hecho->conducta = $request->conducta;
+        }
+        if ($request->has('resultado')) {
+            $hecho->resultado = $request->resultado;
+        }
+        if ($request->has('circunstancia')) {
+            $hecho->circunstancia = $request->circunstancia;
+        }
+        if ($request->has('direccion')) {
+            $hecho->direccion = $request->direccion;
+        }
+        if ($request->has('zona')) {
+            $hecho->zona = $request->zona;
+        }
+        if ($request->has('detallelocacion')) {
+            $hecho->detallelocacion = $request->detallelocacion;
+        }
+        if ($request->has('municipio_id')) {
+            $hecho->municipio_id = $request->municipio_id;
+        }
+        if ($request->has('longitude')) {
+            $hecho->longitude = $request->longitude;
+        }
+        if ($request->has('latitude')) {
+            $hecho->latitude = $request->latitude;
+        }
+        if ($request->has('tipo_denuncia_id')) {
+            $hecho->tipo_denuncia_id = $request->tipo_denuncia_id;
+        }
+        if ($request->has('fechahorainicio')) {
+            $hecho->fechahorainicio = $request->fechahorainicio;
+        }
+        if ($request->has('fechahorafin')) {
+            $hecho->fechahorafin = $request->fechahorafin;
+        }
+        if ($request->has('aproximado')) {
+            $hecho->aproximado = $request->aproximado;
+        }
+        if ($request->has('quien_hizo')) {
+            $hecho->quien_hizo = $request->quien_hizo;
+        }
+        if ($request->has('que_hizo')) {
+            $hecho->que_hizo = $request->que_hizo;
+        }
+
+        if ($request->has('aquien_hizo')) {
+            $hecho->aquien_hizo = $request->aquien_hizo;
+        }
+        if ($request->has('como_hizo')) {
+            $hecho->como_hizo = $request->como_hizo;
+        }
+        if ($request->has('oficina_id')) {
+            $hecho->oficina_id = $request->oficina_id;
+        }
+
+        if (!$hecho->isDirty()) {
+            return $this->errorResponse('por favor especifique un valor diferente',422);
+        }
+
+        $hecho->save();
+
+        return $this->successConection('el caso se actualizo correctamente',200);
+
     }
 
     /**

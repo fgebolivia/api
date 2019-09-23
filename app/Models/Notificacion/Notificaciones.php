@@ -18,23 +18,23 @@ class Notificaciones extends Model
         'hecho_id',//este
         'actividad_solicitante_id',//este
         'actividad_notificacion_id',//este
-        'funcionario_solicitante_id',
+        'funcionario_solicitante_id',//este
         'funcionario_notificador_id',
         'funcionario_reparto_id',
         'tipo_notificacion_id',
         'estado_notificacion_id',
         'sujeto_situacion_id',
         'estado',
-        'codigo',
-        'solicitud_fh',
+        'codigo',// este return
+        'solicitud_fh',//este
         'solicitud_asunto',
-        'persona_hecho_suejeto_id',
-        'persona_hecho_sujeto_abogado_id',
+        'persona_hecho_suejeto_id',//este
+        'persona_hecho_sujeto_abogado_id',//este
         'persona_natural_juridica',
         'persona_es_abogado',
         'persona_es_ciudadano_digital',
-        'persona_n_documento',
-        'persona_nombre_completo',
+        'persona_n_documento',//este
+        'persona_nombre_completo',//este
         'persona_municipio_id',
         'persona_zona',
         'persona_direccion',
@@ -43,14 +43,14 @@ class Notificaciones extends Model
         'persona_email',
         'persona_map_latitud',
         'persona_map_longitud',
-        'notificacion_fh',
+        'notificacion_fh',//este
         'notificacion_ciudadania_digital',
-        'notificacion_ciudadania_digital_fh',
+        'notificacion_ciudadania_digital_fh',//este
         'notificacion_publicacion_estado',
         'notificacion_pdf_estado',
-        'notificacion_pdf_nombre',
-        'notificacion_pdf',
-        'notificacion_oficina_id',
+        'notificacion_pdf_nombre',//este
+        'notificacion_pdf',//este
+        'notificacion_oficina_id',//este
         'testigo_persona_id'
     ];
     protected $guarded  = [];

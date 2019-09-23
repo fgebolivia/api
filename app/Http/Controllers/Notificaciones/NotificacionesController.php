@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 class NotificacionesController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * obtines una lista de todas las Notificaciones.
+     * 
+     * 
+     * 
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -28,7 +30,29 @@ class NotificacionesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datos = $request->validate([
+            'codigo_FUD' => 'required|max:250|string',
+            'codigo_tipo_actividad' => 'required|string',
+            'fecha_Actividad_solicitud' => 'required|date',
+            'descripcion_actividad_solicitud' => 'required|max:550|string',
+            'archivo_actividad_solicitud' => 'required|json',
+            'nombre_archivo_solicitud' => 'required|string',
+            'codigo_institución_solicitante' => 'required|string',
+            'codigo_sujeto_solicitante' => 'required|numeric',
+            'Persona_ci_solicitante' => 'required|numeric',
+            'Persona_complemento_solicitante' => 'required|string',
+            'Persona_nombre_solicitante' => 'required|string',
+            'Persona_ap_paterno_solicitante' => 'required|string',
+            'Persona_ap_materno_solicitante' => 'required|string',
+            'Persona_fecha_nacimiento_solicitante' => 'required|date',
+            'Asunto' => 'required|max:550|string',
+            'codigo_notificacion' => 'required|numeric',
+            'notificacion_electronica' => 'required|boolean',
+            ]);
+
+        //Hecho::create($datos);
+
+        return $this->successResponse('se inserto satisfactoriamente', 201);
     }
 
     /**
@@ -39,13 +63,13 @@ class NotificacionesController extends Controller
      */
     public function show($id)
     {
-        /*$notifi = Notificaciones::where('codigo', $id)->first();
+        $notifi = Notificaciones::where('codigo', $id)->first();
 
         if ($notifi == null) {
             return $this->errorResponse('Does not exists any endpoint for this URL',404);
         }else{
             return $this->showOne($notifi);
-        }*/
+        }
     }
 
     /**
@@ -57,7 +81,8 @@ class NotificacionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //dsadasadasdasdasdasddsadsadsdsadsadsadsadsaasdasdasdasdddsadsadsadsaasdasddasdsadsdsadasdasdasdasdasdasdsadsadasdasasdasdasdasdsaddsadsadasdsadasdasddasdsddsadasdasdasdsadsadsaasdasddasdadasdadasdasdasdasdasdasdsddsdadsadsdasdasasdddddddddddddddasdasdasdasdasdasdasdsadasdasdasdasd
+        // fgnñlfkn
     }
 
     /**

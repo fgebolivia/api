@@ -20,15 +20,15 @@ use Illuminate\Http\Request;
 //Route::apiResource('v2/hechos', 'Hechos\HechoController');
 
 //Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);
-Route::apiResource('v2/abogados', 'Notificaciones\AbogadoController')->only(['index']);
+Route::apiResource('v2/abogados', 'Notificaciones\AbogadoController')->only(['index', 'show']);
 
-Route::apiResource('v2/notificaciones', 'Notificaciones\NotificacionesController')->only(['index', 'show']);
+Route::apiResource('v2/notificaciones', 'Notificaciones\NotificacionesController')->only(['index', 'show', 'store']);
 
 Route::apiResource('v2/connection', 'Casos\ConnectionApiController')->only(['index']);
 
-Route::apiResource('v2/casos', 'Casos\CasoController')->only(['index','show','store']);
+Route::apiResource('v2/casos', 'Casos\CasoController');
 
-Route::apiResource('v2/casos/{hecho}/sujetosProcesales', 'Casos\CasoPersonasController')->except(['show','destroy']);
+Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->except(['show','destroy']);
 
 Route::apiResource('v2/casos/{hecho}/medidas', 'Casos\MedidasVictimaController')->except(['show','destroy']);
 
