@@ -253,8 +253,8 @@ class CasoPersonasController extends Controller
             else
             {
                 return $this->errorResponse('prevalidador',422);
-            } 
-        }        
+            }
+        }
     }
 
     /**
@@ -272,9 +272,20 @@ class CasoPersonasController extends Controller
      * @param  \App\Models\Rrhh\RrhhPersona  $rrhhPersona
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Hecho $hecho, RrhhPersona $rrhhPersona)
+    public function update(Request $request, $hecho)
     {
-        //
+        $tipo=  isset($_GET['tipo'])?$_GET['tipo']: 5;
+        $tipo_persona=  isset($_GET['n_documento'])?$_GET['n_documento']: 5;
+
+        $tipoSujeto1 = TipoSujeto::where('id',intval($tipo))->select('id')->first()->id;
+        
+         if ($tipoSujeto1['id'] != $tipo && ($tipo_persona =='')) {
+            
+            return $this->errorResponse('Does not exists any endpoint for this Caso '.$hecho,422);
+        
+        }else{
+
+        }
     }
 
     /**
