@@ -24,6 +24,15 @@ class CasoDesconocidaResource extends JsonResource
         
         $complementoHechoPersona = HechoPersona::where('hecho_id',$this->pivot->hecho_id)->where('persona_desconocida_id',$this->id)->first();
 
+        if ($complementoHechoPersona->estado_libertad_id == null) {
+            $estado_libre = null;
+            $fecha_estado_libre = null;
+        }else{
+            $estado_libertad = EstadoLibertad::where('id',$complementoHechoPersona->estado_libertad_id)->first();
+            $estado_libre = $estado_libertad->nombre;
+            $fecha_estado_libre = $complementoHechoPersona->fecha_estado_procesal;
+        }
+
          if ($pais== null) {
             $pa = null;
         }else{
@@ -52,17 +61,40 @@ class CasoDesconocidaResource extends JsonResource
         }
 
         return [
-            'es_persona'=>2,
+            'es_persona_valida'=>0,
             'pais' => $pa,
             'nombre' => $this->nombre,
             'ap_paterno' => $this->ap_paterno,
             'ap_materno' => $this->ap_materno,
             'descripcion' => $this->descripcion,
+            'sexo' => $this->sexo,
+            'fecha_nacimiento' => $this->f_nacimiento,
+            'estado_civil' => $this->estado_civil,
+            'domicilio' => $this->domicilio,
+            'telefono' => $this->telefono,
+            'celular' => $this->celular,
+            'profesion_ocupacion' => $this->profesion_ocupacion,
+            'pueblo_originario' => $this->pueblo_originario,
+            'lugar_trabajo' => $this->lugar_trabajo,
+            'domicilio_laboral' => $this->domicilio_laboral,
+            'telefono_laboral' => $this->telf_laboral,
+            'alias' => $this->alias,
+            'estatura' => $this->estatura,
+            'tez' => $this->tez,
+            'edad' => $this->edad,
+            'vestimenta' => $this->vestimenta,
+            'senia' => $this->senia,
+            'peso' => $this->peso,
+            'cabello' => $this->cabello,
+            'genero' => $this->genero,
+            'email' => $this->email,
+            'ojos' => $this->ojos,
             'relacion_victima' => $relacionVictima,
             'nivel_educacion' => $nivelEducacion,
             'grupo_vulnerable' => $grupoVulnerable,
             'grado_discapacidad' => $Discapacidad,
-            'estado_procesal' => null,
+            'estado_libertad' => $estado_libre,
+            'fecha_estado_procesal' => $fecha_estado_libre,
         ];
     }
 }

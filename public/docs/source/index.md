@@ -1,5 +1,5 @@
 ---
-title: API DOCUMENTACIÓN
+title: API Reference
 
 language_tabs:
 - bash
@@ -10,22 +10,348 @@ includes:
 search: true
 
 toc_footers:
-- <a href='https://www.fiscalia.gob.bo/'>NINISTERIO PÚBLICO @2019</a>
+- <a href='https://www.fiscalia.gob.bo/'>MINISTERIO PUBLICO @2019</a>
 ---
-<!-- START_INFO -->
-# Documentación Fiscalía General del Estado
 
-<h2>Bienvenidos al Generador de documentacion API REST FULL.</h2>
-
-<!-- END_INFO -->
-
-#Métodos Sujetos Procesales
+#Estado Servicio
 
 
-<!-- START_a693ec0cce3fe5d623626615f51838bd -->
-## Metodo GET obtención Sujetos Procesales.
+<!-- START_7b8abd27573a846ef5c67ec0d43c6529 -->
+## Estado - Estado de la API REST.
 
-Para la Obtención de los Sujeto Procesales se debe mandar una peticion a la <b>url</b> descrita abajo
+> Example request:
+
+```bash
+curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/connection" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2"
+```
+
+```javascript
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/connection");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "message": "El servicio de Ministerio Publico v2 se encuentra disponible",
+    "code": 200
+}
+```
+
+### HTTP Request
+`GET api/v2/connection`
+
+
+<!-- END_7b8abd27573a846ef5c67ec0d43c6529 -->
+
+#Metodo REJAF
+
+
+<!-- START_bfc712ac3415f38be395c887c62a1478 -->
+## Insercion con metodo POST de Certificaciones REJAF.
+
+Este Metodo esta en espera de la respuesta de una solicitud anterior echa para obtener el REJAF<br><br>
+
+ <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+
+> Example request:
+
+```bash
+curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/rejaf" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2" \
+    -H "Content-Type: application/json" \
+    -d '{"n_documento":"quia","complemento":"iusto","nombre":"veniam","ap_paterno":"voluptate","ap_materno":"molestias","fecha_nacimiento":"aut","solicitud":"autem","wed_id":"nulla","fecha_envio":"eos","observacion":"possimus","estado":"ut","certificado":"ea"}'
+
+```
+
+```javascript
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/rejaf");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "n_documento": "quia",
+    "complemento": "iusto",
+    "nombre": "veniam",
+    "ap_paterno": "voluptate",
+    "ap_materno": "molestias",
+    "fecha_nacimiento": "aut",
+    "solicitud": "autem",
+    "wed_id": "nulla",
+    "fecha_envio": "eos",
+    "observacion": "possimus",
+    "estado": "ut",
+    "certificado": "ea"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "message": "El rejaf se Inserto satisfactoriamente",
+    "code": 201
+}
+```
+
+### HTTP Request
+`POST api/v2/rejaf`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    n_documento | string |  required  | el carnet de identidad para validacion
+    complemento | string |  required  | el para la validacion
+    nombre | string |  required  | el nombre para la validacion
+    ap_paterno | string |  required  | el apellido paterno para la validacion
+    ap_materno | string |  required  | el apellido materno para la validacion
+    fecha_nacimiento | date |  required  | la fecha de nacimiento para la validacion
+    solicitud | string |  required  | codigo de la solicitud
+    wed_id | string |  required  | codigo web id del certificado REJAF
+    fecha_envio | date |  required  | Fecha en la que se envio el Certificado REJAF
+    observacion | string |  required  | alguna observacion del Certificado REJAF
+    estado | string |  required  | estado del Certificado REJAF
+    certificado | BASE_64 |  required  | DOCUMENTO PDF del REJAF
+
+<!-- END_bfc712ac3415f38be395c887c62a1478 -->
+
+#Metodo para Notificaciones.
+
+
+<!-- START_6f7a48a3daea6fd0cecb080b510107ee -->
+## Metodo POST de Notificaciones
+
+Este metodo se podran recibir varias notificaciones de las diferentes instituciones
+ <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+
+> Example request:
+
+```bash
+curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/notificaciones" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_FUD":"ipsam","codigo_tipo_actividad":"quasi","fecha_Actividad_solicitud":"quia","descripcion_actividad_solicitud":"sunt","archivo_actividad_solicitud":"ut","nombre_archivo_solicitud":"autem","codigo_institucion_solicitante":"aut","codigo_sujeto_solicitante":"nulla","ci_solicitante":"nisi","complemento_solicitante":"eum","nombre_solicitante":"aliquid","ap_paterno_solicitante":"ipsum","ap_materno":"voluptatem","fecha_nacimiento_solicitante":"voluptatem","asunto":"qui","codigo_notificacion":"velit","notificacion_electronica":true}'
+
+```
+
+```javascript
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/notificaciones");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_FUD": "ipsam",
+    "codigo_tipo_actividad": "quasi",
+    "fecha_Actividad_solicitud": "quia",
+    "descripcion_actividad_solicitud": "sunt",
+    "archivo_actividad_solicitud": "ut",
+    "nombre_archivo_solicitud": "autem",
+    "codigo_institucion_solicitante": "aut",
+    "codigo_sujeto_solicitante": "nulla",
+    "ci_solicitante": "nisi",
+    "complemento_solicitante": "eum",
+    "nombre_solicitante": "aliquid",
+    "ap_paterno_solicitante": "ipsum",
+    "ap_materno": "voluptatem",
+    "fecha_nacimiento_solicitante": "voluptatem",
+    "asunto": "qui",
+    "codigo_notificacion": "velit",
+    "notificacion_electronica": true
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "message": "La Notificaion se Inserto satisfactoriamente",
+    "code": 201
+}
+```
+
+### HTTP Request
+`POST api/v2/notificaciones`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    codigo_FUD | string |  required  | codigo unico de la denuncia
+    codigo_tipo_actividad | string |  required  | Código del tipo de actividad / actuado realizado hacia la Fiscalia
+    fecha_Actividad_solicitud | date |  required  | Fecha en la que se realiza la Actividad/Actuado
+    descripcion_actividad_solicitud | string |  required  | Descripción de la solicitud de Actividad/Actuado
+    archivo_actividad_solicitud | Base_64 |  required  | Archivo en PDF de la Solicitud de es tipo de Activida
+    nombre_archivo_solicitud | string |  required  | Nombre de PDF de la Solicitud de es tipo de Actividad
+    codigo_institucion_solicitante | string |  required  | Código de la Institución que solicita la Actividad
+    codigo_sujeto_solicitante | numeric |  required  | Codigo Tipo de Sujeto Procesal que Solicita la Actividad (Juez Abogado, Investigador, etc)
+    ci_solicitante | numeric |  required  | Carnet de identidad de la Persona que solicita dicha Actividad para validación
+    complemento_solicitante | string |  required  | Opcional complemento Carnet de la Persona que solicita dicha Actividad para validación
+    nombre_solicitante | string |  required  | Nombre de la Persona que solicita dicha Actividad para validación
+    ap_paterno_solicitante | string |  optional  | Apellido Paterno de la Persona que solicita dicha Actividad para validación
+    ap_materno | string |  required  | Apellido Materno de la Persona que solicita dicha Actividad para validación
+    fecha_nacimiento_solicitante | date |  required  | Fecha Nacimiento de la Persona que solicita dicha Actividad para validación
+    asunto | string |  required  | Descripción de qué se trata la Actividad o notificación
+    codigo_notificacion | numeric |  required  | Código en caso de que haya Dicha Notificación
+    notificacion_electronica | boolean |  required  | alguna tipo boolean (true: se realizó notificación Electrónica false: no se realizó notificación electrónica)
+
+<!-- END_6f7a48a3daea6fd0cecb080b510107ee -->
+
+#Metodos Medidas de Proteccion.
+
+
+<!-- START_79b453270d70e7c53b77894b712420ff -->
+## Listado GET de Medidas de Proteccion.
+
+Este metodo es para obtener las Medidas de Proteccion de una Victima <br><br>
+ en la Url se debe colocar el ci de la persona como el numero de caso <br>
+ Url base acompañado del ?ci= numero de carnet<br>
+
+> Example request:
+
+```bash
+curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas?ci=001" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2"
+```
+
+```javascript
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas?ci=001");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": [
+        {
+            "codigo_medida_proteccion": 1,
+            "tipo": 1,
+            "inciso": 1,
+            "descripcion": "Salida o desocupación del domicilio donde habita la víctima, independientemente de la titularidad del bien inmuebl"
+        },
+        {
+            "codigo_medida_proteccion": 2,
+            "tipo": 1,
+            "inciso": 2,
+            "descripcion": "Prohibición de ingreso al domicilio de la víctima, aunque se trate del domicilio familia"
+        },
+        {
+            "codigo_medida_proteccion": 8,
+            "tipo": 1,
+            "inciso": 8,
+            "descripcion": "Prohibición de acercarse, en el radio de distancia que determine la jueza o el juez, al lugar de residencia, trabajo, estudio, \r\nesparcimiento o a los lugares de habitual concurrencia de la víctima"
+        },
+        {
+            "codigo_medida_proteccion": 12,
+            "tipo": 1,
+            "inciso": 12,
+            "descripcion": "Fijación provisional de la asistencia familiar, cuando la persona imputada sea el progenitor"
+        },
+        {
+            "codigo_medida_proteccion": 9,
+            "tipo": 1,
+            "inciso": 9,
+            "descripcion": "Prohibición de transitar por los lugares de recorrido frecuente de la víctima"
+        }
+    ],
+    "links": {
+        "first": null,
+        "last": null,
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "página_actual": 1,
+        "url_primera_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas?page=1",
+        "desde": 1,
+        "ultima_pagina": 1,
+        "url_ultima_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas?page=1",
+        "url_pagina_siguiente": null,
+        "path": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas",
+        "por_pagina": 15,
+        "purl_pagina_anterior": null,
+        "a": 5,
+        "total": 5
+    }
+}
+```
+
+### HTTP Request
+`GET api/v2/casos/{hecho}/medidas`
+
+
+<!-- END_79b453270d70e7c53b77894b712420ff -->
+
+#Metodos Sujetos Procesales
+
+
+<!-- START_d035734794b7475fbfcdad68b604fcf6 -->
+## GET obtencion SujetosProcesales.
+
+Para la Obtencion de los SujetoProcesales se debe mandar una peticon a la <b>url</b> descrita abajo
  enviando los sigientes parametros a la variable tipo.<br>
  <b>tipo=1 (Persona Denunciante)</b><br>
  <b>tipo=2 (Persona Denunciado)</b><br>
@@ -35,13 +361,13 @@ Para la Obtención de los Sujeto Procesales se debe mandar una peticion a la <b>
 > Example request:
 
 ```bash
-curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosProcesales?tipo=1" \
+curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1" \
     -H "Authorization: Bearer " \
     -H "Api-Version: v2"
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosProcesales?tipo=1");
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1");
 
 let headers = {
     "Authorization": "Bearer ",
@@ -64,24 +390,116 @@ fetch(url, {
 ```json
 {
     "página_actual": 1,
-    "datos": [
+    "data": [
         {
-            "es_persona": 1,
-            "provincia_nacimiento": "PEDRO DOMINGO MURILLO",
-            "municipio_nacimiento": "NUESTRA SEÑORA DE LA PAZ",
-            "provincia_residencia": "PEDRO DOMINGO MURILLO",
-            "municipio_residencia": "NUESTRA SEÑORA DE LA PAZ",
-            "n_documento": "9247139",
-            "nombre": "JESUS REYNALDO",
-            "ap_paterno": "MENDOZA",
-            "ap_materno": "ATAHUACHI",
+            "es_persona_valida": 1,
+            "provincia_nacimiento": null,
+            "municipio_nacimiento": null,
+            "provincia_residencia": "JAIME ZUDAÑEZ",
+            "municipio_residencia": "ICLA (R.MUJIA)",
+            "n_documento": "7894562",
+            "nombre": "EFRAIN",
+            "ap_paterno": "PELAEZ",
+            "ap_materno": "FERNANDEZ",
+            "ap_esposo": "VALDEZ",
+            "sexo": "M",
+            "fecha_nacimiento": "1983-12-01",
+            "estado_civil": null,
+            "domicilio": "avda. MAX FERNANDEZ",
+            "telefono": null,
+            "celular": "79537750",
+            "profesion_ocupacion": "ING.  OF SYS",
+            "pueblo_originario": null,
+            "lugar_trabajo": null,
+            "domicilio_laboral": null,
+            "telefono_laboral": null,
+            "alias": null,
+            "estatura": null,
+            "tez": null,
+            "edad": null,
+            "vestimenta": null,
+            "senia": null,
+            "peso": null,
+            "cabello": null,
+            "genero": 0,
+            "email": null,
+            "ojos": null,
+            "ciudadano_digital": 0,
+            "relacion_victima": "MADRE",
+            "nivel_educacion": "SECUNDARIA",
+            "grupo_vulnerable": "ADULTO MAYOR",
+            "grado_discapacidad": null,
+            "estado_libertad": null,
+            "fecha_estado_procesal": null
+        },
+        {
+            "es_persona_valida": 1,
+            "provincia_nacimiento": null,
+            "municipio_nacimiento": null,
+            "provincia_residencia": "OROPEZA",
+            "municipio_residencia": "YOTALA",
+            "n_documento": "4900325",
+            "nombre": "MARCELO",
+            "ap_paterno": "TITO",
+            "ap_materno": "COPA",
             "ap_esposo": null,
             "sexo": "M",
-            "fecha_nacimiento": "1991-01-06",
+            "fecha_nacimiento": "1983-10-09",
+            "estado_civil": 2,
+            "domicilio": "AV. LITORAL, EL ALTO, BOLIVIA",
+            "telefono": "8786545",
+            "celular": "465487",
+            "profesion_ocupacion": "ALBAÃ±IL",
+            "pueblo_originario": null,
+            "lugar_trabajo": "se desconoce",
+            "domicilio_laboral": "se desconoce",
+            "telefono_laboral": null,
+            "alias": null,
+            "estatura": null,
+            "tez": null,
+            "edad": null,
+            "vestimenta": null,
+            "senia": null,
+            "peso": null,
+            "cabello": null,
+            "genero": 0,
+            "email": "MATCOP@GMAIL.COM",
+            "ojos": null,
+            "ciudadano_digital": 0,
+            "relacion_victima": "CONYUGUE",
+            "nivel_educacion": null,
+            "grupo_vulnerable": null,
+            "grado_discapacidad": null,
+            "estado_libertad": null,
+            "fecha_estado_procesal": null
+        },
+        {
+            "es_persona_valida": 0,
+            "provincia": "LUIS CALVO",
+            "municipio": "VILLA VACA GUZMAN (MUYUPAMPA)",
+            "razon_social": "Paucek Ltd",
+            "nit": "626394652",
+            "domicilio": "4856 Randy Points Suite 194\nNew Rosannastad, NJ 46481",
+            "telefono": "+3877697129878",
+            "relacion_victima": "AUTORIDAD DE CENTRO EDUCATIVO",
+            "representante_legal": {
+                "n_documento": null,
+                "nombre_completo": null
+            }
+        },
+        {
+            "es_persona_valida": 0,
+            "pais": "ARGENTINA",
+            "nombre": "Americo Mosciski",
+            "ap_paterno": "Erwin",
+            "ap_materno": "Wuckert",
+            "descripcion": "Ab facere maiores delectus voluptatibus quo. Mollitia inventore dolor quo omnis animi harum ut. Expedita quia assumenda soluta praesentium.",
+            "sexo": null,
+            "fecha_nacimiento": null,
             "estado_civil": null,
             "domicilio": null,
             "telefono": null,
-            "celular": "75205679",
+            "celular": null,
             "profesion_ocupacion": null,
             "pueblo_originario": null,
             "lugar_trabajo": null,
@@ -95,69 +513,201 @@ fetch(url, {
             "senia": null,
             "peso": null,
             "cabello": null,
-            "genero": null,
+            "genero": 0,
             "email": null,
             "ojos": null,
-            "ciudadano_digital": 0,
-            "relacion_victima": "PADRE",
+            "relacion_victima": "AUTORIDAD POLITICA",
             "nivel_educacion": "SECUNDARIA",
             "grupo_vulnerable": "ADULTO MAYOR",
-            "grado_discapacidad": "MILTIPLE",
-            "estado_procesal": null
-        },
-        {
-            "es_persona": 0,
-            "provincia": "LUIS CALVO",
-            "municipio": "VILLA VACA GUZMAN (MUYUPAMPA)",
-            "razon_social": "Paucek Ltd",
-            "nit": "626394652",
-            "domicilio": "4856 Randy Points Suite 194\nNew Rosannastad, NJ 46481",
-            "telefono": "+3877697129878",
-            "relacion_victima": "HIJO(A)",
-            "nivel_educacion": "MAESTRIA",
-            "grupo_vulnerable": "NIÑO - ADOLECENTE",
-            "grado_discapacidad": "AUDITIVA",
-            "estado_procesal": null
-        },
-        {
-            "es_persona": 2,
-            "pais": "ANTILLAS NEERLANDESAS",
-            "nombre": "Prof. Francisco Strosin IV",
-            "ap_paterno": "Stephanie",
-            "ap_materno": "Haag",
-            "descripcion": "Qui nostrum sed atque debitis nulla qui alias non. Delectus sit omnis quia non debitis. Sed enim et neque sunt laboriosam. Ipsa fuga sit voluptatem et incidunt alias neque voluptas.",
-            "relacion_victima": "PERSONAL ISNTITUCIONAL",
-            "nivel_educacion": "TÉCNICO",
-            "grupo_vulnerable": "POBLACION CON DISCAPACIDAD",
             "grado_discapacidad": "INTELECTUAL",
-            "estado_procesal": null
+            "estado_libertad": null,
+            "fecha_estado_procesal": null
         }
     ],
-    "url_primera_pagina": "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosProcesales?tipo=1&page=1",
+    "url_primera_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1&page=1",
     "desde": 1,
     "ultima_pagina": 1,
-    "url_ultima_pagina": "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosProcesales?tipo=1&page=1",
+    "url_ultima_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1&page=1",
     "url_pagina_siguiente": null,
-    "path": "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosProcesales",
+    "path": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales",
     "por_pagina": 5,
     "purl_pagina_anterior": null,
-    "a": 3,
-    "total": 3
+    "a": 4,
+    "total": 4
 }
 ```
 
 ### HTTP Request
-`GET api/v2/casos/{hecho}/sujetosProcesales?tipo={sujetoProcesal}`
+`GET api/v2/casos/{hecho}/sujetosprocesales`
 
 
-<!-- END_a693ec0cce3fe5d623626615f51838bd -->
+<!-- END_d035734794b7475fbfcdad68b604fcf6 -->
 
-<!-- START_a71dcd3d6f16c5c1b0e42b270fa7547d -->
+<!-- START_342fa55c54b09c080ad50d7f3c9abaf6 -->
 ## Metodo POST para registro de Sujetos Procesales.
 
-En este método debe mandarse la información Generada en las Instituciones con acceso a esta API
-cada vez que se genere un nuevo tipo de Sujeto Procesal se de mandar 2 parametros adicionales
-como ser el <b>tipo=</b> y el <b>es_persona=</b> donde los parámetros van de acuerdo a lo siguiente<br>
+En este metodo debe mandarse la informacion Generada en las Instituciones con acceso a esta API
+cade vez que se genere un nuevo tipo de Sujeto Procesal se de ma andar 2 parametros adicionales
+como ser el <b>tipo=</b> y el <b>es_persona=</b> donde los parametros van de acuerdo a lo sgt<br>
+<b>tipo=1 (Persona Denunciante)  |</b> <b>es_persona=0 (Persona Juridica)</b><br>
+<b>tipo=2  (Persona Denunciado)  |</b> <b>es_persona=1 (Persona natural)</b><br>
+<b>tipo=3    (Persona Victima)   |</b> <b>es_persona=2 (Persona Desconocida y/o Extranjera)</b><br>
+<b>tipo=4    (Persona Testigo)   |</b><br>
+<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
+
+> Example request:
+
+```bash
+curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007/sujetosprocesales?tipo=1&es_persona=1" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2" \
+    -H "Content-Type: application/json" \
+    -d '{"es_victima":16,"es_persona_valida":18,"codigo_municipio_residencia":"non","n_documento":"non","nombre":"neque","ap_paterno":"adipisci","ap_materno":"excepturi","ap_esposo":"est","sexo":"exercitationem","fecha_nacimiento":"suscipit","estado_civil":"est","domicilio":"a","telefono":"quo","celular":"velit","profesion_ocupacion":"unde","pueblo_originario":"eligendi","lugar_trabajo":"tempore","domicilio_laboral":"quas","telefono_laboral":"non","alias":"et","estatura":false,"tez":"qui","edad":"quam","vestimenta":"aut","senia":"reprehenderit","peso":"enim","cabello":"fugit","genero":"sunt","email":"ex","ojos":true,"ciudadano_digital":"quae","relacion_victima":19,"nivel_educacion":16,"grupo_vulnerable":11,"grado_discapacidad":4,"estado_procesal":1,"fecha_estado_procesal":"molestiae","nit":2,"razon_social":"voluptatibus","map_latitud":"quia","map_longitud":"aut","relacion_victima_id":8,"estado_procesal_id":17,"n_documento_representante_legal":"et","Nombre_representante_legal":"quod","ap_paterno_representante_legal":"ullam","ap_materno_representante_legal":"saepe","fecha_nacimiento_representante_legal":"quas"}'
+
+```
+
+```javascript
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007/sujetosprocesales?tipo=1&es_persona=1");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "es_victima": 16,
+    "es_persona_valida": 18,
+    "codigo_municipio_residencia": "non",
+    "n_documento": "non",
+    "nombre": "neque",
+    "ap_paterno": "adipisci",
+    "ap_materno": "excepturi",
+    "ap_esposo": "est",
+    "sexo": "exercitationem",
+    "fecha_nacimiento": "suscipit",
+    "estado_civil": "est",
+    "domicilio": "a",
+    "telefono": "quo",
+    "celular": "velit",
+    "profesion_ocupacion": "unde",
+    "pueblo_originario": "eligendi",
+    "lugar_trabajo": "tempore",
+    "domicilio_laboral": "quas",
+    "telefono_laboral": "non",
+    "alias": "et",
+    "estatura": false,
+    "tez": "qui",
+    "edad": "quam",
+    "vestimenta": "aut",
+    "senia": "reprehenderit",
+    "peso": "enim",
+    "cabello": "fugit",
+    "genero": "sunt",
+    "email": "ex",
+    "ojos": true,
+    "ciudadano_digital": "quae",
+    "relacion_victima": 19,
+    "nivel_educacion": 16,
+    "grupo_vulnerable": 11,
+    "grado_discapacidad": 4,
+    "estado_procesal": 1,
+    "fecha_estado_procesal": "molestiae",
+    "nit": 2,
+    "razon_social": "voluptatibus",
+    "map_latitud": "quia",
+    "map_longitud": "aut",
+    "relacion_victima_id": 8,
+    "estado_procesal_id": 17,
+    "n_documento_representante_legal": "et",
+    "Nombre_representante_legal": "quod",
+    "ap_paterno_representante_legal": "ullam",
+    "ap_materno_representante_legal": "saepe",
+    "fecha_nacimiento_representante_legal": "quas"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "message": "datos llenados correctamente en el caso xxxxxx",
+    "code": 201
+}
+```
+
+### HTTP Request
+`POST api/v2/casos/{hecho}/sujetosprocesales`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    es_victima | integer |  optional  | opcional Tipo booleano  devuelve 0: si no es víctima o 1: si es víctima
+    es_persona_valida | integer |  required  | persona_Natural=1, Jurídica=1 o Desconocida=0
+    codigo_municipio_residencia | string |  required  | Municipio de residencia de una persona
+    n_documento | string |  required  | Carnet de identidad de la una persona válida por el SEGIF
+    nombre | string |  required  | Nombre de la persona natural
+    ap_paterno | string |  required  | Apellido paterno de la persona natural
+    ap_materno | string |  required  | Apellido materno de la persona natural
+    ap_esposo | string |  required  | Apellido esposo de la persona natural
+    sexo | date |  optional  | opcional Sexo de la persona natural
+    fecha_nacimiento | date |  required  | Fecha de nacimiento de la persona natural (Ejemplo 2019-10-24 15:30:15)
+    estado_civil | numeric |  optional  | opcional Estado civil de la persona natural
+    domicilio | string |  optional  | opcional Domicilio de la empresa
+    telefono | string |  optional  | opcional Teléfono de la empresa
+    celular | string |  optional  | opcional Celular de la persona natural
+    profesion_ocupacion | string |  optional  | opcional Profesión de la persona natural
+    pueblo_originario | string |  optional  | opcional Pueblo originario del que se considera la persona natural
+    lugar_trabajo | string |  optional  | opcional Lugar de trabajo de la persona natural
+    domicilio_laboral | date |  optional  | opcional Domicilio de donde trabaja la persona natural
+    telefono_laboral | string |  optional  | opcional Teléfono del lugar donde trabaja la persona natural
+    alias | numeric |  optional  | opcional Alias de la persona natural
+    estatura | boolean |  optional  | opcional Estatura de la persona natural
+    tez | numeric |  optional  | opcional Tes de la persona natural
+    edad | string |  optional  | opcional Edad de la persona natural
+    vestimenta | string |  optional  | opcional Vestimenta de la persona natural
+    senia | string |  optional  | Señas particulares de la persona natural
+    peso | string |  optional  | opcional Peso de la persona natural
+    cabello | date |  optional  | opcional Cabello de la persona natural
+    genero | string |  optional  | opcional Género de la persona natural
+    email | numeric |  optional  | opcional Email de la persona natural
+    ojos | boolean |  optional  | opcional Color de ojos de la persona natural
+    ciudadano_digital | numeric |  required  | Tipo booleano  devuelve 0: si no es ciudadano Digital o 1: si es ciudadano digital
+    relacion_victima | integer |  optional  | opcional id del catálogo de relación con la víctim
+    nivel_educacion | integer |  optional  | opcional id del catálogo del grado de educación recibida
+    grupo_vulnerable | integer |  optional  | opcional id del catálogo  grupo vulnerable
+    grado_discapacidad | integer |  optional  | opcional id del catálogo grado de discapacidad
+    estado_procesal | integer |  optional  | opcional id del estado procesal en el que se encuentra actualmente
+    fecha_estado_procesal | date |  optional  | opcional fecha en la que  se llevo acabo el estado procesal en el que se encuentra actualment
+    nit | integer |  required  | Número de Identificación Tributaria de la persona jurídica
+    razon_social | string |  required  | Nombre de la Empresa
+    map_latitud | string |  required  | Latitud de la ubicación de la empresa
+    map_longitud | string |  required  | Longitud de la ubicación de la empresa
+    relacion_victima_id | integer |  optional  | opcional Código del catálogo de relación de la víctima
+    estado_procesal_id | integer |  optional  | Código del estado Procesal en el que se encuentra
+    n_documento_representante_legal | string |  required  | Ci del representante legal de la persona jurídica para validacion
+    Nombre_representante_legal | string |  required  | Nombre del representante legal de la persona jurídica para validación
+    ap_paterno_representante_legal | string |  required  | Apellido Paterno del representante legal de la persona jurídica para validación
+    ap_materno_representante_legal | string |  required  | Apellido Materno del representante legal de la persona jurídica para validación
+    fecha_nacimiento_representante_legal | date |  required  | Fecha de nacimiento de la persona natural (Ejemplo 2019-10-24 15:30:15)
+
+<!-- END_342fa55c54b09c080ad50d7f3c9abaf6 -->
+
+<!-- START_01691b0909c874275500685f20cc919e -->
+## Metodo PUT para Actualizar los datos de un Sujeto Procesal.
+
+este metodo aceptamos 2 tipos de parametros extra que son el <b>Tipo de sujeto Procesal</b> y el <b>n_documento</b>
 <b>tipo=1 (Persona Denunciante)</b><br>
 <b>tipo=2 (Persona Denunciado)</b><br>
 <b>tipo=3 (Persona Victima)</b><br>
@@ -169,139 +719,13 @@ como ser el <b>tipo=</b> y el <b>es_persona=</b> donde los parámetros van de ac
 > Example request:
 
 ```bash
-curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosProcesales?tipo=1&es_persona=2" \
+curl -X PUT "http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007/sujetosprocesales?tipo=1&es_persona=1" \
     -H "Authorization: Bearer " \
     -H "Api-Version: v2"
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosProcesales?tipo=1&es_persona=2");
-
-let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (422):
-
-```json
-{
-    "error": {
-        "n_documento": [
-            "El campo n documento es obligatorio."
-        ],
-        "tipo_documento": [
-            "El campo tipo documento es obligatorio."
-        ],
-        "nombre": [
-            "El campo nombre es obligatorio."
-        ],
-        "ap_paterno": [
-            "El campo ap paterno es obligatorio."
-        ],
-        "ap_materno": [
-            "El campo ap materno es obligatorio."
-        ],
-        "ap_esposo": [
-            "El campo ap esposo es obligatorio."
-        ],
-        "sexo": [
-            "El campo sexo es obligatorio."
-        ],
-        "municipio_id_nacimiento": [
-            "El campo municipio id nacimiento es obligatorio."
-        ],
-        "fecha_nacimiento": [
-            "El campo fecha nacimiento es obligatorio."
-        ],
-        "estado_civil": [
-            "El campo estado civil es obligatorio."
-        ],
-        "nacionalidad": [
-            "El campo nacionalidad es obligatorio."
-        ],
-        "profesion_ocupacion": [
-            "El campo profesion ocupacion es obligatorio."
-        ],
-        "relacion_victima_id": [
-            "El campo relacion victima id es obligatorio."
-        ],
-        "idioma_id": [
-            "El campo idioma id es obligatorio."
-        ],
-        "autoidentificacion_id": [
-            "El campo autoidentificacion id es obligatorio."
-        ],
-        "nivel_educacion_id": [
-            "El campo nivel educacion id debe contener sólo caracteres."
-        ],
-        "domicilio": [
-            "El campo domicilio es obligatorio."
-        ],
-        "celular": [
-            "El campo celular es obligatorio."
-        ],
-        "email": [
-            "El campo email es obligatorio."
-        ],
-        "lugar_trabajo": [
-            "El campo lugar trabajo es obligatorio."
-        ],
-        "domicilio_laboral": [
-            "El campo domicilio laboral es obligatorio."
-        ],
-        "map_latitud": [
-            "El campo map latitud es obligatorio."
-        ],
-        "map_longitud": [
-            "El campo map longitud es obligatorio."
-        ],
-        "estado_procesal_id": [
-            "El campo estado procesal id es obligatorio."
-        ]
-    },
-    "code": 422
-}
-```
-
-### HTTP Request
-`POST api/v2/casos/{hecho}/sujetosProcesales?tipo={sujetoProcesal}&es_persona={natural, juridica}`
-
-
-<!-- END_a71dcd3d6f16c5c1b0e42b270fa7547d -->
-
-<!-- START_1329e26090257571a555acedc5bc305a -->
-## Método PUT para Actualizar los datos de un Sujeto Procesal.
-
-En este metodo aceptamos 2 tipos de parametros extra que son el <b>Tipo de sujeto Procesal</b> y el <b>n_documento</b>
-<b>tipo=1 (Persona Denunciante)</b><br>
-<b>tipo=2 (Persona Denunciado)</b><br>
-<b>tipo=3 (Persona Victima)</b><br>
-<b>tipo=4 (Persona Testigo)</b><br>
-<b>n_documento= 7864815 (Carnet de Identida, Pasaporte, etc)</b><br>
-<b>esta_procesal= 1 (detenido, aprendido)</b><br>
-
-> Example request:
-
-```bash
-curl -X PUT "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosProcesales?tipo=1&n_documento=2" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2"
-```
-
-```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosProcesales?tipo=1&n_documento=2");
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007/sujetosprocesales?tipo=1&es_persona=1");
 
 let headers = {
     "Authorization": "Bearer ",
@@ -318,28 +742,250 @@ fetch(url, {
     .then(json => console.log(json));
 ```
 
-> Example response (201):
+
+> Example response (200):
 
 ```json
 {
-    "error": {"los campos fueron actualizados Correctamente"},
+    "message": "datos Actualizados correctamente en el caso xxxxxx",
     "code": 201
 }
 ```
 
 ### HTTP Request
-`PUT api/v2/casos/{hecho}/sujetosProcesales?tipo={suejto_procesal}&n_documento={ci, pasaporte, etc}`
+`PUT api/v2/casos/{hecho}/sujetosprocesales/{sujetosprocesale}`
 
-`PATCH api/v2/casos/{hecho}/sujetosProcesales?tipo={suejto_procesal}&n_documento={ci, pasaporte, etc}`
+`PATCH api/v2/casos/{hecho}/sujetosprocesales/{sujetosprocesale}`
 
 
-<!-- END_1329e26090257571a555acedc5bc305a -->
+<!-- END_01691b0909c874275500685f20cc919e -->
+
+#Metodos de reparto de Juez Juzgado de un Caso.
+
+
+<!-- START_c0912a61f12aec98e23dcfff958fe2e4 -->
+## Metodo POST registro del reparto de un Juez y Jusgado de un caso.
+
+en este metodo podemos insertar todo los campos referentes al Juez y el reparto<br><br>
+ <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+
+> Example request:
+
+```bash
+curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/agendamiento/13/juez" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_juzgado":8,"codigo_fud":"autem","n_documento":"rerum","complemento":"repellendus","nombre":"architecto","ap_paterno":"est","ap_materno":"voluptates","fecha_nacimiento":"quam"}'
+
+```
+
+```javascript
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/agendamiento/13/juez");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_juzgado": 8,
+    "codigo_fud": "autem",
+    "n_documento": "rerum",
+    "complemento": "repellendus",
+    "nombre": "architecto",
+    "ap_paterno": "est",
+    "ap_materno": "voluptates",
+    "fecha_nacimiento": "quam"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "message": "El Juez se Inserto satisfactoriamente",
+    "code": 201
+}
+```
+
+### HTTP Request
+`POST api/v2/agendamiento/{codigo}/juez`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    codigo_juzgado | integer |  required  | el carnet de identidad para validacion
+    codigo_fud | string |  required  | el para la validacion
+    n_documento | string |  required  | el carnet de identidad para validacion
+    complemento | string |  optional  | opcional el para la validacion
+    nombre | string |  required  | el nombre para la validacion
+    ap_paterno | string |  required  | el apellido paterno para la validacion
+    ap_materno | string |  required  | el apellido materno para la validacion
+    fecha_nacimiento | date |  required  | la fecha de nacimiento para la validacion
+
+<!-- END_c0912a61f12aec98e23dcfff958fe2e4 -->
+
+#Metodos para el Agendamiento de Audiencias.
+
+
+<!-- START_6d4a13f77eedf4d280f19490a6244ba6 -->
+## Metodo POST para la insercion del Agendamiento de las Audiencias.
+
+en este metodo podemos insertar todo los campos referentes al sujeto procesal<br><br>
+ <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+
+> Example request:
+
+```bash
+curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/agendamiento" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_fud":"illo","codigo_agendamiento":2,"fecha_hora_inicio":"quis","fecha_hora_fin":"quia","codigo_tipo_audiencia":13,"sala":"placeat","codigo_juzgado":"numquam","archivo_pdf":"voluptas"}'
+
+```
+
+```javascript
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/agendamiento");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_fud": "illo",
+    "codigo_agendamiento": 2,
+    "fecha_hora_inicio": "quis",
+    "fecha_hora_fin": "quia",
+    "codigo_tipo_audiencia": 13,
+    "sala": "placeat",
+    "codigo_juzgado": "numquam",
+    "archivo_pdf": "voluptas"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "message": "El Agendamiento se Inserto satisfactoriamente",
+    "code": 201
+}
+```
+
+### HTTP Request
+`POST api/v2/agendamiento`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    codigo_fud | string |  required  | Código Único de la Denuncia
+    codigo_agendamiento | integer |  required  | Código único del Agendamiento
+    fecha_hora_inicio | date |  required  | Fecha y hora de inicio de audiencia (aaaa-MM-dd hh:mm) (2019-10-03 17:00)
+    fecha_hora_fin | date |  required  | Fecha y hora fin de audiencia (aaaa-MM-dd hh:mm) (2019-10-03 19:00)
+    codigo_tipo_audiencia | integer |  optional  | Catálogo de Tipos de Audiencias
+    sala | string |  required  | Denominativo de la sala donde se llevara a cabo la Audiencia
+    codigo_juzgado | string |  required  | Juzgado id del catálogo de juzgados
+    archivo_pdf | BASE_64 |  required  | Documento tipo PDF en base 64 referente a la audiencia
+
+<!-- END_6d4a13f77eedf4d280f19490a6244ba6 -->
+
+<!-- START_96a9f55b1b7a6f5618565174cdc5dc85 -->
+## Metodo POST para Informar de una la suspencionde Una Agendamiento de Audiencia
+
+En este campo la oficina gestora podra dar informanos las causas de por que se dio de baja una Audiencia<br><br>
+ <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+
+> Example request:
+
+```bash
+curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/agendamiento/suspencion" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_agendamiento":12,"codigo_tipo_causal":8,"tipo":"ad"}'
+
+```
+
+```javascript
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/agendamiento/suspencion");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_agendamiento": 12,
+    "codigo_tipo_causal": 8,
+    "tipo": "ad"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "message": "Se dio de baja el agendamiento satisfactoriamente",
+    "code": 201
+}
+```
+
+### HTTP Request
+`POST api/v2/agendamiento/suspencion`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    codigo_agendamiento | integer |  required  | Código único del Agendamiento
+    codigo_tipo_causal | integer |  required  | Catalogo de Causales de Suspencion
+    tipo | string |  optional  | opcional Descripcion de la causal de suspencion
+
+<!-- END_96a9f55b1b7a6f5618565174cdc5dc85 -->
 
 #Metodos para el F.U.D.
 
 
 <!-- START_a6c2bd4ae9bf91e1a036bdc87b71610e -->
-## Metodo GET Genera un listado de todos los Casos existentes
+## Metodo Get Genera un listado de todos los Casos existentes
 
 puede generar un listado de todos los casos existentes paginados cada 5 casos
 como se puede observar en el ejemplo
@@ -375,119 +1021,132 @@ fetch(url, {
 
 ```json
 {
-    "página_actual": 1,
-    "datos": [
+    "data": [
         {
-            "codigo": "634999",
+            "codigo_fud": "634999",
             "relato": "Et error tempore molestiae temporibus corrupti quis animi voluptatem autem et rerum.",
-            "conducta": "Maxime autem.",
-            "resultado": "Omnis nemo velit nostrum facilis laborum.",
-            "circunstancia": "Minima deserunt est omnis nostrum nihil repellendus fuga laborum pariatur mollitia ipsam aut enim.",
-            "direccion": "8627 McLaughlin Heights\nNew Rainatown, WY 36166",
-            "zona": "51322 Bins Skyway Apt. 269\nMylesmouth, MN 69265-2440",
-            "detallelocacion": "Recusandae debitis dignissimos rerum.",
-            "municipio_id": 49,
-            "created_at": "2019-08-05 18:38:01",
-            "longitude": "-66.771585",
-            "latitude": "-14.090757",
-            "tipo_denuncia_id": 4,
-            "fechahorainicio": "2010-01-09 01:42:00",
-            "fechahorafin": "1981-08-31 18:49:23",
-            "aproximado": "Fuga quia earum sit veritatis.",
-            "oficina_id": null,
-            "titulo": null
+            "resultado": "Maxime autem.",
+            "direccion_caso": "8627 McLaughlin Heights\nNew Rainatown, WY 36166",
+            "detalle_localizacion": "8627 McLaughlin Heights\nNew Rainatown, WY 36166",
+            "provincia": "ELIODORO CAMACHO",
+            "municipio": "PUERTO CARABUCO",
+            "fecha_creacion_fud": "2019-08-05 18:38:01",
+            "longitud": "-66.771585",
+            "latitud": "-14.090757",
+            "tipo_denuncia": "ACCION DIRECTA",
+            "fecha_hora_inicio": "2010-01-09 01:42:00",
+            "fecha_hora_fin": "1981-08-31 18:49:23",
+            "momento_aproximado": "Fuga quia earum sit veritatis.",
+            "etapa_caso": "Abierto",
+            "estado_caso": "Preliminar",
+            "oficina": null,
+            "titulo": null,
+            "delito_principal": null
         },
         {
-            "codigo": "220518",
+            "codigo_fud": "220518",
             "relato": "Consequatur facere nulla repellat consectetur non temporibus molestiae eos odit corrupti aut et sint fuga vel nobis commodi.",
-            "conducta": "Exercitationem possimus non labore est.",
-            "resultado": "Dolorum rerum ipsum quidem molestiae.",
-            "circunstancia": "Impedit cum modi et doloremque nesciunt quidem delectus laudantium consectetur.",
-            "direccion": "864 Lockman Cliff\nNew Isidro, NC 71615",
-            "zona": "36683 Mitchell Corner\nRoweshire, NH 82887",
-            "detallelocacion": "Laudantium dolorem id ducimus debitis totam expedita.",
-            "municipio_id": 4,
-            "created_at": "2019-08-05 18:38:01",
-            "longitude": "-65.385023",
-            "latitude": "-14.431075",
-            "tipo_denuncia_id": 3,
-            "fechahorainicio": "1986-02-05 05:54:39",
-            "fechahorafin": "1991-01-23 00:37:21",
-            "aproximado": "Amet sint similique reiciendis.",
-            "oficina_id": null,
-            "titulo": null
+            "resultado": "Exercitationem possimus non labore est.",
+            "direccion_caso": "864 Lockman Cliff\nNew Isidro, NC 71615",
+            "detalle_localizacion": "864 Lockman Cliff\nNew Isidro, NC 71615",
+            "provincia": "JUANA AZURDUY DE PADILLA",
+            "municipio": "VILLA AZURDUY",
+            "fecha_creacion_fud": "2019-08-05 18:38:01",
+            "longitud": "-65.385023",
+            "latitud": "-14.431075",
+            "tipo_denuncia": "QUERELLA",
+            "fecha_hora_inicio": "1986-02-05 05:54:39",
+            "fecha_hora_fin": "1991-01-23 00:37:21",
+            "momento_aproximado": "Amet sint similique reiciendis.",
+            "etapa_caso": "Abierto",
+            "estado_caso": "Preliminar",
+            "oficina": null,
+            "titulo": null,
+            "delito_principal": null
         },
         {
-            "codigo": "608431",
+            "codigo_fud": "608431",
             "relato": "Aut non voluptates molestiae aut omnis voluptatum quam placeat et exercitationem dolor non deleniti neque voluptatem incidunt.",
-            "conducta": "Mollitia officia impedit nihil.",
-            "resultado": "Earum consequatur deleniti animi voluptatibus molestias.",
-            "circunstancia": "Eius necessitatibus nesciunt cum eum ratione ut et accusantium veniam.",
-            "direccion": "5789 Hettinger Walk\nPort Isabel, AK 63330",
-            "zona": "962 Verdie Track\nRatkeport, IN 86319-1927",
-            "detallelocacion": "Veritatis adipisci possimus ex incidunt ut.",
-            "municipio_id": 53,
-            "created_at": "2019-08-05 18:38:01",
-            "longitude": "-65.429668",
-            "latitude": "-14.215086",
-            "tipo_denuncia_id": 5,
-            "fechahorainicio": "1975-02-08 00:02:47",
-            "fechahorafin": "1990-11-25 10:51:44",
-            "aproximado": "Molestiae qui impedit sapiente.",
-            "oficina_id": null,
-            "titulo": null
+            "resultado": "Mollitia officia impedit nihil.",
+            "direccion_caso": "5789 Hettinger Walk\nPort Isabel, AK 63330",
+            "detalle_localizacion": "5789 Hettinger Walk\nPort Isabel, AK 63330",
+            "provincia": "MUÑECAS",
+            "municipio": "AYATA",
+            "fecha_creacion_fud": "2019-08-05 18:38:01",
+            "longitud": "-65.429668",
+            "latitud": "-14.215086",
+            "tipo_denuncia": "DE OFICIO",
+            "fecha_hora_inicio": "1975-02-08 00:02:47",
+            "fecha_hora_fin": "1990-11-25 10:51:44",
+            "momento_aproximado": "Molestiae qui impedit sapiente.",
+            "etapa_caso": "Abierto",
+            "estado_caso": "Preliminar",
+            "oficina": null,
+            "titulo": null,
+            "delito_principal": null
         },
         {
-            "codigo": "463870",
+            "codigo_fud": "463870",
             "relato": "Iusto et quisquam possimus voluptatibus dolorem eum aperiam alias quis ea iure corrupti vel corrupti vel facilis illo nostrum accusantium et.",
-            "conducta": "Nesciunt consectetur aut reprehenderit.",
-            "resultado": "Consequatur est atque assumenda.",
-            "circunstancia": "Aperiam nisi enim aliquam totam aperiam quam magnam vel aut nostrum veritatis.",
-            "direccion": "90061 Ara Extension\nTillmanmouth, ID 57483",
-            "zona": "14319 Roberts Mission\nMuellerton, OR 12139-1405",
-            "detallelocacion": "Labore alias et consequatur autem vero.",
-            "municipio_id": 8,
-            "created_at": "2019-08-05 18:38:01",
-            "longitude": "-65.703666",
-            "latitude": "-13.834202",
-            "tipo_denuncia_id": 2,
-            "fechahorainicio": "1987-01-14 16:09:56",
-            "fechahorafin": "2006-07-10 23:27:32",
-            "aproximado": "Maxime incidunt sunt maxime.",
-            "oficina_id": null,
-            "titulo": null
+            "resultado": "Nesciunt consectetur aut reprehenderit.",
+            "direccion_caso": "90061 Ara Extension\nTillmanmouth, ID 57483",
+            "detalle_localizacion": "90061 Ara Extension\nTillmanmouth, ID 57483",
+            "provincia": "JAIME ZUDAÑEZ",
+            "municipio": "VILLA MOJOCOYA",
+            "fecha_creacion_fud": "2019-08-05 18:38:01",
+            "longitud": "-65.703666",
+            "latitud": "-13.834202",
+            "tipo_denuncia": "DENUNCIA ESCRITA",
+            "fecha_hora_inicio": "1987-01-14 16:09:56",
+            "fecha_hora_fin": "2006-07-10 23:27:32",
+            "momento_aproximado": "Maxime incidunt sunt maxime.",
+            "etapa_caso": "Abierto",
+            "estado_caso": "Preliminar",
+            "oficina": null,
+            "titulo": null,
+            "delito_principal": null
         },
         {
-            "codigo": "603390",
+            "codigo_fud": "603390",
             "relato": "Vel officiis laboriosam est voluptatem sed dicta officiis laborum ad alias et ut dolores dolor.",
-            "conducta": "Dicta et deserunt odio.",
-            "resultado": "Eum consequatur officia earum molestias aut quaerat sunt.",
-            "circunstancia": "Ut non eum odit nobis qui deserunt minus animi.",
-            "direccion": "88397 Estrella Valleys\nEast Jermeyhaven, VA 71078",
-            "zona": "703 Citlalli Hill\nStromanhaven, WI 61809",
-            "detallelocacion": "Vel nihil accusantium occaecati a.",
-            "municipio_id": 75,
-            "created_at": "2019-08-05 18:38:02",
-            "longitude": "-66.479394",
-            "latitude": "-13.920695",
-            "tipo_denuncia_id": 5,
-            "fechahorainicio": "1982-10-21 04:02:49",
-            "fechahorafin": "2014-10-05 18:34:59",
-            "aproximado": "Aut praesentium corporis quia.",
-            "oficina_id": null,
-            "titulo": null
+            "resultado": "Dicta et deserunt odio.",
+            "direccion_caso": "88397 Estrella Valleys\nEast Jermeyhaven, VA 71078",
+            "detalle_localizacion": "88397 Estrella Valleys\nEast Jermeyhaven, VA 71078",
+            "provincia": "LOAYZA",
+            "municipio": "MALLA",
+            "fecha_creacion_fud": "2019-08-05 18:38:02",
+            "longitud": "-66.479394",
+            "latitud": "-13.920695",
+            "tipo_denuncia": "DE OFICIO",
+            "fecha_hora_inicio": "1982-10-21 04:02:49",
+            "fecha_hora_fin": "2014-10-05 18:34:59",
+            "momento_aproximado": "Aut praesentium corporis quia.",
+            "etapa_caso": "Abierto",
+            "estado_caso": "Preliminar",
+            "oficina": null,
+            "titulo": null,
+            "delito_principal": null
         }
     ],
-    "url_primera_pagina": "http://api-dev.fiscalia.gob.bo/api/v2/casos?page=1",
-    "desde": 1,
-    "ultima_pagina": 23,
-    "url_ultima_pagina": "http://api-dev.fiscalia.gob.bo/api/v2/casos?page=23",
-    "url_pagina_siguiente": "http://api-dev.fiscalia.gob.bo/api/v2/casos?page=2",
-    "path": "http://api-dev.fiscalia.gob.bo/api/v2/casos",
-    "por_pagina": 5,
-    "purl_pagina_anterior": null,
-    "a": 5,
-    "total": 115
+    "links": {
+        "first": null,
+        "last": null,
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "página_actual": 1,
+        "url_primera_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos?page=1",
+        "desde": 1,
+        "ultima_pagina": 58,
+        "url_ultima_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos?page=58",
+        "url_pagina_siguiente": "http://api-dev3.fiscalia.gob.bo/api/v2/casos?page=2",
+        "path": "http://api-dev3.fiscalia.gob.bo/api/v2/casos",
+        "por_pagina": 5,
+        "purl_pagina_anterior": null,
+        "a": 5,
+        "total": 287
+    }
 }
 ```
 
@@ -502,32 +1161,16 @@ fetch(url, {
 
 en este metodo podemos insertar todo los campos referentes al sujeto procesal<br><br>
  <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
- <b>'codigo' => 'required|string'</b><br>
- <b>'relato' => 'required|string'</b><br>
- <b>'conducta'=> 'required|string'</b><br>
- <b>'resultado' => 'required|string'</b><br>
- <b>'circunstancia' => 'required|string'</b><br>
- <b>'direccion' => 'required|string'</b><br>
- <b>'zona' => 'required|string'</b><br>
- <b>'detallelocacion' => 'required|string'</b><br>
- <b>'municipio_id' => 'required|numeric'</b><br>
- <b>'created_at' => 'required|date'</b><br>
- <b>'longitude' => 'required|numeric'</b><br>
- <b>'latitude' => 'required|numeric'</b><br>
- <b>'tipo_denuncia_id' => 'required|numeric'</b><br>
- <b>fechahorainicio' => 'required|date'</b><br>
- <b>'fechahorafin' => 'required|date'</b><br>
- <b>'aproximado' => 'string'</b><br>
- <b>'oficina_id' => 'required|numeric'</b><br>
- <b>'titulo' => 'max:250'</b><br>
- <b>'user_id' => 'required|numeric'</b><br>
 
 > Example request:
 
 ```bash
 curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/casos" \
     -H "Authorization: Bearer " \
-    -H "Api-Version: v2"
+    -H "Api-Version: v2" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_fud":"cumque","tipo_denuncia_id":15,"fecha_denuncia":"sint","codigo_oficina":4,"codigo_municipio":"vel","zona_hecho":"culpa","direccion_hecho":"eveniet","referencia_hecho":"ut","longitud":"voluptatem","latitud":"sunt","codigo_institucion":11,"user_id":3,"fecha_hora_inicio":"dolorem","fecha_hora_fin":"ut","aproximado":"ut","quien_hizo":"fugiat","que_hizo":"earum","aquien_hizo":"aut","como_hizo":"qui","relato":"eius"}'
+
 ```
 
 ```javascript
@@ -536,83 +1179,79 @@ const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos");
 let headers = {
     "Authorization": "Bearer ",
     "Api-Version": "v2",
-    "Accept": "application/json",
     "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_fud": "cumque",
+    "tipo_denuncia_id": 15,
+    "fecha_denuncia": "sint",
+    "codigo_oficina": 4,
+    "codigo_municipio": "vel",
+    "zona_hecho": "culpa",
+    "direccion_hecho": "eveniet",
+    "referencia_hecho": "ut",
+    "longitud": "voluptatem",
+    "latitud": "sunt",
+    "codigo_institucion": 11,
+    "user_id": 3,
+    "fecha_hora_inicio": "dolorem",
+    "fecha_hora_fin": "ut",
+    "aproximado": "ut",
+    "quien_hizo": "fugiat",
+    "que_hizo": "earum",
+    "aquien_hizo": "aut",
+    "como_hizo": "qui",
+    "relato": "eius"
 }
 
 fetch(url, {
     method: "POST",
     headers: headers,
+    body: body
 })
     .then(response => response.json())
     .then(json => console.log(json));
 ```
 
 
-> Example response (422):
+> Example response (200):
 
 ```json
 {
-    "error": {
-        "codigo": [
-            "El campo codigo es obligatorio."
-        ],
-        "relato": [
-            "El campo relato es obligatorio."
-        ],
-        "conducta": [
-            "El campo conducta es obligatorio."
-        ],
-        "resultado": [
-            "El campo resultado es obligatorio."
-        ],
-        "circunstancia": [
-            "El campo circunstancia es obligatorio."
-        ],
-        "direccion": [
-            "El campo direccion es obligatorio."
-        ],
-        "zona": [
-            "El campo zona es obligatorio."
-        ],
-        "detallelocacion": [
-            "El campo detallelocacion es obligatorio."
-        ],
-        "municipio_id": [
-            "El campo municipio id es obligatorio."
-        ],
-        "created_at": [
-            "El campo created at es obligatorio."
-        ],
-        "longitude": [
-            "El campo longitude es obligatorio."
-        ],
-        "latitude": [
-            "El campo latitude es obligatorio."
-        ],
-        "tipo_denuncia_id": [
-            "El campo tipo denuncia id es obligatorio."
-        ],
-        "fechahorainicio": [
-            "El campo fechahorainicio es obligatorio."
-        ],
-        "fechahorafin": [
-            "El campo fechahorafin es obligatorio."
-        ],
-        "oficina_id": [
-            "El campo oficina id es obligatorio."
-        ],
-        "user_id": [
-            "El campo user id es obligatorio."
-        ]
-    },
-    "code": 422
+    "message": "se inserto satisfactoriamente",
+    "code": 201
 }
 ```
 
 ### HTTP Request
 `POST api/v2/casos`
 
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    codigo_fud | string |  required  | Código Único de la Denuncia
+    tipo_denuncia_id | integer |  required  | Es un catálogo tipo de denuncia (Ejemplo: Verbal, Escrita, Querella, Acción Directa, De oficio)
+    fecha_denuncia | date |  required  | Fecha de la denuncia o fecha de registro del denuncia(Ejemplo 2019-10-24 15:30:15)
+    codigo_oficina | integer |  required  | Código de la Oficina donde se registró el Hecho (CATÁLOGO DE OFICINAS POLICÍA O MINISTERIO PÚBLICO)
+    codigo_municipio | string |  required  | Código de 6 caracteres que identifica al municipio donde sucedió el hecho
+    zona_hecho | string |  required  | Zona donde sucedió el hecho
+    direccion_hecho | string |  required  | Dirección donde sucedió el hecho
+    referencia_hecho | string |  required  | Referencia donde sucedió el hecho.
+    longitud | string |  required  | Longitud donde fue el hecho para la geolocalización.
+    latitud | string |  required  | Latitud donde fue el hecho para la geolocalización.
+    codigo_institucion | integer |  optional  | Codigo de la institución que nos envía el POST
+    user_id | integer |  required  | Usuario con la cual se inter opera
+    fecha_hora_inicio | date |  required  | Fecha de la denuncia o fecha de registro del denuncia(Ejemplo 2019-10-24 15:30:15)
+    fecha_hora_fin | date |  optional  | opcional No obligatorio si se cuenta con fecha exacta, fecha de la denuncia o fecha de registro del denuncia(Ejemplo 2019-10-24 15:30:15)
+    aproximado | string |  optional  | opcional No obligatorio momento aproximado de cuando se realizó el hecho
+    quien_hizo | string |  required  | Fecha en la que se envio el Certificado REJAF
+    que_hizo | string |  required  | alguna observacion del Certificado REJAF
+    aquien_hizo | string |  required  | estado del Certificado REJAF
+    como_hizo | string |  required  | DOCUMENTO PDF del REJAF
+    relato | string |  optional  | opcional Descripción del hecho al momento de la denuncia
 
 <!-- END_376ad92579502087eb0ae4e5b69c45b1 -->
 
@@ -620,18 +1259,18 @@ fetch(url, {
 ## Metodo GET para obtener un solo caso; se envia el codigo del caso en la URL.
 
 <p><b>CASO DE EJEMPLO</b></p>
-<b>/v2/casos/324727</b>
+<b>/v2/casos/601102011900007</b>
 
 > Example request:
 
 ```bash
-curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727" \
+curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007" \
     -H "Authorization: Bearer " \
     -H "Api-Version: v2"
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/324727");
+const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007");
 
 let headers = {
     "Authorization": "Bearer ",
@@ -653,28 +1292,32 @@ fetch(url, {
 
 ```json
 {
-    "codigo": "324727",
-    "relato": "12345678",
-    "conducta": "12345678",
-    "resultado": "Ut perspiciatis voluptatibus dolorem sit dolores nihil voluptatem.",
-    "circunstancia": "Consequatur et consequatur vel recusandae et est rerum temporibus nesciunt.",
-    "direccion": "797 Mante Islands\nEast Jedidiah, NV 49284-2587",
-    "zona": "1246 Kari Summit\nKatherineburgh, WI 52582",
-    "detallelocacion": "Dolores et id sunt minima deserunt voluptatem.",
-    "municipio_id": 32,
-    "created_at": "2019-08-05 18:38:01",
-    "longitude": "-64.933732",
-    "latitude": "-14.309941",
-    "tipo_denuncia_id": 2,
-    "fechahorainicio": "2008-03-02 03:14:48",
-    "fechahorafin": "2005-05-20 09:52:27",
-    "aproximado": "Enim culpa itaque dignissimos.",
-    "titulo": null
+    "data": {
+        "codigo_fud": "601102011900007",
+        "relato": "El 09/10/19 08:10 en TARIJA central colon 200 . <br><br>zcvzxc, <br><br>zxcvzxc, zxcvzx, <br><br>Personas afectadas:  . <br><br>cvzxcvzxcv.",
+        "resultado": null,
+        "direccion_caso": "colon 200",
+        "detalle_localizacion": "colon 200",
+        "provincia": "CERCADO",
+        "municipio": "TARIJA",
+        "fecha_creacion_fud": "2019-10-09 08:11:42",
+        "longitud": "-64.7328225",
+        "latitud": "-21.5361428",
+        "tipo_denuncia": "DENUNCIA VERBAL",
+        "fecha_hora_inicio": "2019-10-09 08:10:00",
+        "fecha_hora_fin": null,
+        "momento_aproximado": null,
+        "etapa_caso": "Abierto",
+        "estado_caso": "Preliminar",
+        "oficina": 275,
+        "titulo": "xxxx",
+        "delito_principal": null
+    }
 }
 ```
 
 ### HTTP Request
-`GET api/v2/casos/{codigo_FUD}`
+`GET api/v2/casos/{caso}`
 
 
 <!-- END_7b09fc50ea4b0d5b390ef08a4febc61c -->

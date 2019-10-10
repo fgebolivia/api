@@ -7,6 +7,8 @@ use App\Models\Denuncia\GrupoVulnerabilidad;
 use App\Models\Denuncia\HechoPersona;
 use App\Models\Denuncia\NivelEducacion;
 use App\Models\Denuncia\RelacionVictima;
+use App\Models\Denuncia\RepresentanteLegal;
+use App\Models\Rrhh\RrhhPersona;
 use App\Models\UbicacionGeografica\UbgeMunicipio;
 use App\Models\UbicacionGeografica\UbgeProvincia;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,10 +26,19 @@ class CasoJuridicaResource extends JsonResource
         $municipio = UbgeMunicipio::where('id',$this->municipio_id)->first();
         
         $complementoHechoPersona = HechoPersona::where('hecho_id',$this->pivot->hecho_id)->where('persona_juridica_id',$this->id)->first();
+         $representante = RepresentanteLegal::where('persona_juridica_id', $complementoHechoPersona->persona_juridica_id)->first();
+        
+         if ($representante== null) {
+            $nombre_rep = null;
+            $n_documento_rep = null;
+            $valida = 0;
 
-        $municipioNacido = UbgeMunicipio::where('id',$this->municipio_id_nacimiento)->first();
-        $municipioResidencia = UbgeMunicipio::where('id',$this->municipio_id_residencia)->first();
-        $complementoHechoPersona = HechoPersona::where('hecho_id',$this->pivot->hecho_id)->where('persona_juridica_id',$this->id)->first();
+        }else{
+            $persona = RrhhPersona::where('id',$representante->persona_id)->first();
+            $nombre_rep = $persona->nombre.' '.$persona->ap_paterno.' '.$persona->ap_materno;
+            $n_documento_rep = $persona->n_documento;
+            $valida = $persona->estado_persona;
+        }
 
         if ($municipio== null) {
             $muni = null;
@@ -59,7 +70,7 @@ class CasoJuridicaResource extends JsonResource
         }
 
         return [
-            'es_persona'=>0,
+            'es_persona_valida'=>$valida,
             'provincia' => $provin,
             'municipio' => $muni,
             'razon_social' => $this->razon_social,
@@ -67,10 +78,10 @@ class CasoJuridicaResource extends JsonResource
             'domicilio' => $this->domicilio,
             'telefono' => $this->telefono,
             'relacion_victima' => $relacionVictima,
-            'nivel_educacion' => $nivelEducacion,
-            'grupo_vulnerable' => $grupoVulnerable,
-            'grado_discapacidad' => $Discapacidad,
-            'estado_procesal' => null,
+            'representante_legal' =>[
+                'n_documento' => $n_documento_rep,
+                'nombre_completo' => $nombre_rep,
+            ],
         ];
     }
 }

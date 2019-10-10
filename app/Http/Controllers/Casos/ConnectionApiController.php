@@ -5,16 +5,26 @@ namespace App\Http\Controllers\Casos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+* @group Estado Servicio
+*
+*/
+
 class ConnectionApiController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Estado - Estado de la API REST.
      *
      * @return \Illuminate\Http\Response
+     * @response
+     *  {
+     *  "message": "El servicio de Ministerio Publico v2 se encuentra disponible",
+     *  "code": 200
+     *  }
      */
     public function index()
     {
-        return $this->successConection('la coneccion se establecio con exito', 200);
+        return $this->successConection('El servicio de Ministerio Publico v2 se encuentra disponible', 200);
     }
 
 }

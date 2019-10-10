@@ -17,7 +17,7 @@ return [
      * The base URL to be used in examples and the Postman collection.
      * By default, this will be the value of config('app.url').
      */
-    'base_url' => null,
+    'base_url' => 'http://api-dev3.fiscalia.gob.bo',
 
     /*
      * Generate a Postman collection in addition to HTML docs.
@@ -73,7 +73,7 @@ return [
                  * Note that wildcards are not supported.
                  */
                 'versions' => [
-                    'v1',
+                    'v2'
                 ],
             ],
 
@@ -103,8 +103,8 @@ return [
                  * Specify headers to be added to the example requests
                  */
                 'headers' => [
-                    'Authorization' => 'Bearer ',
-                    'Api-Version' => 'v2',
+                    'Authorization' => 'Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}',
+                    //'Api-Version' => 'v2',
                 ],
 
                 /*
@@ -117,7 +117,7 @@ return [
                      * API calls will be made only for routes in this group matching these HTTP methods (GET, POST, etc).
                      * List the methods here or use '*' to mean all methods. Leave empty to disable API calls.
                      */
-                    'methods' => ['GET', 'POST'],
+                    'methods' => ['GET', 'POST', 'PUT', 'PATCH'],
 
                     /*
                      * For URLs which have parameters (/users/{user}, /orders/{id?}),
@@ -131,6 +131,8 @@ return [
                      */
                     'bindings' => [
                         'v2/casos/{hecho}/sujetosProcesales?tipo=1' => '324727',
+                        'v2/casos/{hecho}' => '324727',
+                        'v2/casos/{hecho}/medidas?ci=001' => '35101020100600',
 
                     ],
 
@@ -152,7 +154,7 @@ return [
                     'headers' => [
                         'Content-Type' => 'application/json',
                         'Accept' => 'application/json',
-                        'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k',
+                        'Authorization' => 'Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}',
                     ],
 
                     /*

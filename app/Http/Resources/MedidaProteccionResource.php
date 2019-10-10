@@ -21,7 +21,7 @@ class MedidaProteccionResource extends JsonResource
        // dd($descripcionMedidas);
 
         return [
-             'medida_proteccion' =>$this->medidaproteccion_id,
+             'codigo_medida_proteccion' =>$this->medidaproteccion_id,
              'tipo' =>$descripcionMedidas->tipo,
              'inciso' =>$descripcionMedidas->inciso,
              'descripcion' =>$descripcionMedidas->descripcion

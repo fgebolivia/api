@@ -7,6 +7,7 @@ use App\Models\Denuncia\GrupoVulnerabilidad;
 use App\Models\Denuncia\HechoPersona;
 use App\Models\Denuncia\NivelEducacion;
 use App\Models\Denuncia\RelacionVictima;
+use App\Models\Denuncia\EstadoLibertad;
 use App\Models\UbicacionGeografica\UbgeMunicipio;
 use App\Models\UbicacionGeografica\UbgeProvincia;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -25,6 +26,15 @@ class CasoPersonaResource extends JsonResource
 
         $municipioResidencia = UbgeMunicipio::where('id',$this->municipio_id_residencia)->first();
         $complementoHechoPersona = HechoPersona::where('hecho_id',$this->pivot->hecho_id)->where('persona_id',$this->id)->first();
+
+        if ($complementoHechoPersona->estado_libertad_id == null) {
+            $estado_libre = null;
+            $fecha_estado_libre = null;
+        }else{
+            $estado_libertad = EstadoLibertad::where('id',$complementoHechoPersona->estado_libertad_id)->first();
+            $estado_libre = $estado_libertad->nombre;
+            $fecha_estado_libre = $complementoHechoPersona->fecha_estado_procesal;
+        }
 
         if ($municipioNacido== null) {
             $muniNombreNacido = null;
@@ -65,7 +75,7 @@ class CasoPersonaResource extends JsonResource
         
 
         return [
-            'es_persona'=>1,
+            'es_persona_valida'=>$this->estado_persona,
             'provincia_nacimiento' => $proviNombreNacido,
             'municipio_nacimiento' => $muniNombreNacido,
             'provincia_residencia' => $proviNombreResidencia,
@@ -102,8 +112,8 @@ class CasoPersonaResource extends JsonResource
             'nivel_educacion' => $nivelEducacion,
             'grupo_vulnerable' => $grupoVulnerable,
             'grado_discapacidad' => $Discapacidad,
-            'estado_procesal' => null,
-
+            'estado_libertad' => $estado_libre,
+            'fecha_estado_procesal' => $fecha_estado_libre,
         ];
     }
 }
