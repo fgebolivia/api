@@ -11,14 +11,34 @@ use App\Models\Notificacion\Caso;
 use App\Models\Rrhh\RrhhPersona;
 use Illuminate\Http\Request;
 
+/**
+* @group Metodos Actividades.
+*
+*/
+
 class ActividadController extends Controller
 {
   
     /**
-     * Store a newly created resource in storage.
+     * Metodo POST de Notificaciones
+     *
+     *  Este metodo se podran recibir varias notificaciones de las diferentes instituciones
+    *  <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+     * @bodyParam codigo_fud string required Codigo unido del Caso
+       @bodyParam codigo_actividad integer required Código único de la Actividad
+       @bodyParam codigo_tipo_actividad integer required Código del catálogo de tipo de actividad
+       @bodyParam fecha_actividad date required Fecha de Emisión de la Actividad
+       @bodyParam descripcion_actividad string required Pequeña descripción de la actividad
+       @bodyParam archivo_actividad BASE64 required Archivo relacionado con la Actividad en formato PDF (base64)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @response
+     *  {
+     *  "message" : "La Actividad se Inserto satisfactoriamente",
+     *  "code" : 201
+     *  } 
      */
     public function store(Request $request)
     {

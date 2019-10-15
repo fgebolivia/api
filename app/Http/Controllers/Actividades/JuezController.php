@@ -55,7 +55,6 @@ class JuezController extends Controller
         $juez = RrhhPersona::where('n_documento',$request->n_documento)->first();
 
         $agenda = Agenda::where('codigo_audiencia',$codigo)->first();
-
         if ($agenda == null) {
         	return $this->errorResponse('error el codigo del agendamiento de la audiencia no existe',400);
         }
@@ -74,22 +73,32 @@ class JuezController extends Controller
             $respuesta1 = $segip->getCertificacionSegip($data);
 
             if ($respuesta1['sw'] == 1) {
-                if ($respuesta1['respuesta']['EsValido'] == true && $respuesta1['respuesta']['CodigoRespuesta'] == '2') {
+                if ($respuesta1['respuesta']['EsValido'] == true && $respuesta1['respuesta']['CodigoRespuesta'] == '2')
+                {
+                    $file_name = uniqid('certificacion_segip_', true) . ".pdf";
+                    $file      = public_path('/storage/segip') . "/" . $file_name;
+                    file_put_contents($file, $respuesta1['respuesta']['ReporteCertificacion']);
+                    
                     $persona = new RrhhPersona();
                     $persona->n_documento          = $request->n_documento;
                     $persona->nombre               = $request->nombre;
                     $persona->ap_paterno           = $request->ap_paterno;
                     $persona->ap_materno           = $request->ap_materno;
                     $persona->f_nacimiento         = $request->fecha_nacimiento;
+                    $persona->estado_segip         = 2;
+                    $persona->nombre_completo          = $request->nombre.' '.trim($request->ap_paterno.' '.$request->ap_materno);
+                    $persona->certificacion_segip      = base64_encode($respuesta1['respuesta']['ReporteCertificacion']);
+                    $persona->certificacion_file_segip = $file_name;
+
                     $persona->save();
                     $juez_id =$persona->id;
                 }else
                 {
-                    return $this->errorResponse('no se logro validar a la persona',400);
+                    return $this->errorResponse('no se logro validar a la persona verifique los datos',400);
                 }
             }else
             {
-                return $this->errorResponse('no se logro validar a la persona',400);
+                return $this->errorResponse('no se logro validar a la persona 2',400);
             }
         	
         }else{

@@ -10,8 +10,15 @@ includes:
 search: true
 
 toc_footers:
-- <a href='https://www.fiscalia.gob.bo/'>MINISTERIO PUBLICO @2019</a>
+- <a href='http://github.com/mpociot/documentarian'>Documentation Powered by Documentarian</a>
 ---
+<!-- START_INFO -->
+# Info
+
+Welcome to the generated API reference.
+[Get Postman Collection](http://api-dev3.fiscalia.gob.bo/docs/collection.json)
+
+<!-- END_INFO -->
 
 #Estado Servicio
 
@@ -22,17 +29,15 @@ toc_footers:
 > Example request:
 
 ```bash
-curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/connection" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2"
+curl -X GET -G "http://api-dev3.fiscalia.gob.bo/api/v2/connection" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}"
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/connection");
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/connection");
 
 let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
     "Accept": "application/json",
     "Content-Type": "application/json",
 }
@@ -74,37 +79,35 @@ Este Metodo esta en espera de la respuesta de una solicitud anterior echa para o
 > Example request:
 
 ```bash
-curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/rejaf" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2" \
+curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/rejaf" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
     -H "Content-Type: application/json" \
-    -d '{"n_documento":"quia","complemento":"iusto","nombre":"veniam","ap_paterno":"voluptate","ap_materno":"molestias","fecha_nacimiento":"aut","solicitud":"autem","wed_id":"nulla","fecha_envio":"eos","observacion":"possimus","estado":"ut","certificado":"ea"}'
+    -d '{"n_documento":"quaerat","complemento":"qui","nombre":"sint","ap_paterno":"et","ap_materno":"vel","fecha_nacimiento":"est","solicitud":"iste","wed_id":"nostrum","fecha_envio":"ut","observacion":"voluptate","estado":"suscipit","certificado":"a"}'
 
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/rejaf");
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/rejaf");
 
 let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 }
 
 let body = {
-    "n_documento": "quia",
-    "complemento": "iusto",
-    "nombre": "veniam",
-    "ap_paterno": "voluptate",
-    "ap_materno": "molestias",
-    "fecha_nacimiento": "aut",
-    "solicitud": "autem",
-    "wed_id": "nulla",
-    "fecha_envio": "eos",
-    "observacion": "possimus",
-    "estado": "ut",
-    "certificado": "ea"
+    "n_documento": "quaerat",
+    "complemento": "qui",
+    "nombre": "sint",
+    "ap_paterno": "et",
+    "ap_materno": "vel",
+    "fecha_nacimiento": "est",
+    "solicitud": "iste",
+    "wed_id": "nostrum",
+    "fecha_envio": "ut",
+    "observacion": "voluptate",
+    "estado": "suscipit",
+    "certificado": "a"
 }
 
 fetch(url, {
@@ -160,42 +163,31 @@ Este metodo se podran recibir varias notificaciones de las diferentes institucio
 > Example request:
 
 ```bash
-curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/notificaciones" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2" \
+curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/notificaciones" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
     -H "Content-Type: application/json" \
-    -d '{"codigo_FUD":"ipsam","codigo_tipo_actividad":"quasi","fecha_Actividad_solicitud":"quia","descripcion_actividad_solicitud":"sunt","archivo_actividad_solicitud":"ut","nombre_archivo_solicitud":"autem","codigo_institucion_solicitante":"aut","codigo_sujeto_solicitante":"nulla","ci_solicitante":"nisi","complemento_solicitante":"eum","nombre_solicitante":"aliquid","ap_paterno_solicitante":"ipsum","ap_materno":"voluptatem","fecha_nacimiento_solicitante":"voluptatem","asunto":"qui","codigo_notificacion":"velit","notificacion_electronica":true}'
+    -d '{"codigo_FUD":"enim","codigo_tipo_notificacion":"quod","fecha_hora_notificacion":"ut","sujeto":"est","notificador":"quia","solicitante":"eos","actuado_actividad":"facilis","archivo":"non"}'
 
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/notificaciones");
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/notificaciones");
 
 let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 }
 
 let body = {
-    "codigo_FUD": "ipsam",
-    "codigo_tipo_actividad": "quasi",
-    "fecha_Actividad_solicitud": "quia",
-    "descripcion_actividad_solicitud": "sunt",
-    "archivo_actividad_solicitud": "ut",
-    "nombre_archivo_solicitud": "autem",
-    "codigo_institucion_solicitante": "aut",
-    "codigo_sujeto_solicitante": "nulla",
-    "ci_solicitante": "nisi",
-    "complemento_solicitante": "eum",
-    "nombre_solicitante": "aliquid",
-    "ap_paterno_solicitante": "ipsum",
-    "ap_materno": "voluptatem",
-    "fecha_nacimiento_solicitante": "voluptatem",
-    "asunto": "qui",
-    "codigo_notificacion": "velit",
-    "notificacion_electronica": true
+    "codigo_FUD": "enim",
+    "codigo_tipo_notificacion": "quod",
+    "fecha_hora_notificacion": "ut",
+    "sujeto": "est",
+    "notificador": "quia",
+    "solicitante": "eos",
+    "actuado_actividad": "facilis",
+    "archivo": "non"
 }
 
 fetch(url, {
@@ -225,56 +217,129 @@ fetch(url, {
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
     codigo_FUD | string |  required  | codigo unico de la denuncia
-    codigo_tipo_actividad | string |  required  | Código del tipo de actividad / actuado realizado hacia la Fiscalia
-    fecha_Actividad_solicitud | date |  required  | Fecha en la que se realiza la Actividad/Actuado
-    descripcion_actividad_solicitud | string |  required  | Descripción de la solicitud de Actividad/Actuado
-    archivo_actividad_solicitud | Base_64 |  required  | Archivo en PDF de la Solicitud de es tipo de Activida
-    nombre_archivo_solicitud | string |  required  | Nombre de PDF de la Solicitud de es tipo de Actividad
-    codigo_institucion_solicitante | string |  required  | Código de la Institución que solicita la Actividad
-    codigo_sujeto_solicitante | numeric |  required  | Codigo Tipo de Sujeto Procesal que Solicita la Actividad (Juez Abogado, Investigador, etc)
-    ci_solicitante | numeric |  required  | Carnet de identidad de la Persona que solicita dicha Actividad para validación
-    complemento_solicitante | string |  required  | Opcional complemento Carnet de la Persona que solicita dicha Actividad para validación
-    nombre_solicitante | string |  required  | Nombre de la Persona que solicita dicha Actividad para validación
-    ap_paterno_solicitante | string |  optional  | Apellido Paterno de la Persona que solicita dicha Actividad para validación
-    ap_materno | string |  required  | Apellido Materno de la Persona que solicita dicha Actividad para validación
-    fecha_nacimiento_solicitante | date |  required  | Fecha Nacimiento de la Persona que solicita dicha Actividad para validación
-    asunto | string |  required  | Descripción de qué se trata la Actividad o notificación
-    codigo_notificacion | numeric |  required  | Código en caso de que haya Dicha Notificación
-    notificacion_electronica | boolean |  required  | alguna tipo boolean (true: se realizó notificación Electrónica false: no se realizó notificación electrónica)
+    codigo_tipo_notificacion | string |  required  | Código del tipo de actividad / actuado realizado hacia la Fiscalia
+    fecha_hora_notificacion | date |  required  | Fecha en la que se realiza la Actividad/Actuado
+    sujeto | array[] |  required  | Datos para la verificacionde una persona nombre apellidos fecha nacimiento
+    notificador | array[] |  required  | Datos para la verificacionde una persona nombre apellidos fecha nacimiento
+    solicitante | array[] |  required  | Datos para la verificacionde una persona nombre apellidos fecha nacimiento
+    actuado_actividad | string |  required  | descripcion del actuado o Actividad
+    archivo | BASE64 |  required  | archivo del actuado a activdad en formato PDF convertido en BASE64 maximo 10MB
 
 <!-- END_6f7a48a3daea6fd0cecb080b510107ee -->
+
+#Metodos Actividades.
+
+
+<!-- START_91379747937eb85a9fdf28770fb9c71b -->
+## Metodo POST de Notificaciones
+
+Este metodo se podran recibir varias notificaciones de las diferentes instituciones
+ <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+
+> Example request:
+
+```bash
+curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/actividad" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_fud":"amet","codigo_actividad":5,"codigo_tipo_actividad":4,"fecha_actividad":"atque","descripcion_actividad":"distinctio","archivo_actividad":"nam"}'
+
+```
+
+```javascript
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/actividad");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_fud": "amet",
+    "codigo_actividad": 5,
+    "codigo_tipo_actividad": 4,
+    "fecha_actividad": "atque",
+    "descripcion_actividad": "distinctio",
+    "archivo_actividad": "nam"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "message": "La Actividad se Inserto satisfactoriamente",
+    "code": 201
+}
+```
+
+### HTTP Request
+`POST api/v2/actividad`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    codigo_fud | string |  required  | Codigo unido del Caso
+    codigo_actividad | integer |  required  | Código único de la Actividad
+    codigo_tipo_actividad | integer |  required  | Código del catálogo de tipo de actividad
+    fecha_actividad | date |  required  | Fecha de Emisión de la Actividad
+    descripcion_actividad | string |  required  | Pequeña descripción de la actividad
+    archivo_actividad | BASE64 |  required  | Archivo relacionado con la Actividad en formato PDF (base64)
+
+<!-- END_91379747937eb85a9fdf28770fb9c71b -->
 
 #Metodos Medidas de Proteccion.
 
 
-<!-- START_79b453270d70e7c53b77894b712420ff -->
-## Listado GET de Medidas de Proteccion.
+<!-- START_4934cf910dfdb8173665030b54a3ba9b -->
+## Registro POST de Medidas de Proteccion.
 
-Este metodo es para obtener las Medidas de Proteccion de una Victima <br><br>
+Este metodo es para registrar las Medidas de Proteccion de una Victima <br><br>
  en la Url se debe colocar el ci de la persona como el numero de caso <br>
  Url base acompañado del ?ci= numero de carnet<br>
 
+<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
+
 > Example request:
 
 ```bash
-curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas?ci=001" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2"
+curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/medidas" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_medida_proteccion":14,"tipo":7,"inciso":7}'
+
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas?ci=001");
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/medidas");
 
 let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
-    "Accept": "application/json",
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
     "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_medida_proteccion": 14,
+    "tipo": 7,
+    "inciso": 7
 }
 
 fetch(url, {
-    method: "GET",
+    method: "POST",
     headers: headers,
+    body: body
 })
     .then(response => response.json())
     .then(json => console.log(json));
@@ -285,263 +350,94 @@ fetch(url, {
 
 ```json
 {
-    "data": [
-        {
-            "codigo_medida_proteccion": 1,
-            "tipo": 1,
-            "inciso": 1,
-            "descripcion": "Salida o desocupación del domicilio donde habita la víctima, independientemente de la titularidad del bien inmuebl"
-        },
-        {
-            "codigo_medida_proteccion": 2,
-            "tipo": 1,
-            "inciso": 2,
-            "descripcion": "Prohibición de ingreso al domicilio de la víctima, aunque se trate del domicilio familia"
-        },
-        {
-            "codigo_medida_proteccion": 8,
-            "tipo": 1,
-            "inciso": 8,
-            "descripcion": "Prohibición de acercarse, en el radio de distancia que determine la jueza o el juez, al lugar de residencia, trabajo, estudio, \r\nesparcimiento o a los lugares de habitual concurrencia de la víctima"
-        },
-        {
-            "codigo_medida_proteccion": 12,
-            "tipo": 1,
-            "inciso": 12,
-            "descripcion": "Fijación provisional de la asistencia familiar, cuando la persona imputada sea el progenitor"
-        },
-        {
-            "codigo_medida_proteccion": 9,
-            "tipo": 1,
-            "inciso": 9,
-            "descripcion": "Prohibición de transitar por los lugares de recorrido frecuente de la víctima"
-        }
-    ],
-    "links": {
-        "first": null,
-        "last": null,
-        "prev": null,
-        "next": null
-    },
-    "meta": {
-        "página_actual": 1,
-        "url_primera_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas?page=1",
-        "desde": 1,
-        "ultima_pagina": 1,
-        "url_ultima_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas?page=1",
-        "url_pagina_siguiente": null,
-        "path": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/35101020100600/medidas",
-        "por_pagina": 15,
-        "purl_pagina_anterior": null,
-        "a": 5,
-        "total": 5
-    }
+    "message": "las Medidas se llenaron Correctamente",
+    "code": 201
 }
 ```
 
 ### HTTP Request
-`GET api/v2/casos/{hecho}/medidas`
+`POST api/v2/casos/{hecho}/medidas`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    codigo_medida_proteccion | integer |  required  | Código asignado de un catálogo definido por la ley 1173
+    tipo | integer |  required  | Tipo de medida (tipo 1 para medidas de la víctima niño o niña.
+    inciso | integer |  required  | Inciso donde se encuentra la descrita la medida de protección de la ley 1173
+
+<!-- END_4934cf910dfdb8173665030b54a3ba9b -->
+
+<!-- START_1e9751c498972821c495b54cfc086a4b -->
+## Actualizacion PUT de Medidas de Proteccion.
+
+Este metodo es para registrar las Medidas de Proteccion de una Victima <br><br>
+ en la Url se debe colocar el ci de la persona como el numero de caso <br>
+ Url base acompañado del ?ci= numero de carnet<br>
+
+<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
+
+> Example request:
+
+```bash
+curl -X PUT "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/medidas/1" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_medida_proteccion":4,"tipo":19,"inciso":14}'
+
+```
+
+```javascript
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/medidas/1");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_medida_proteccion": 4,
+    "tipo": 19,
+    "inciso": 14
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
 
 
-<!-- END_79b453270d70e7c53b77894b712420ff -->
+> Example response (200):
+
+```json
+{
+    "message": "las Medidas se Actualizaron Correctamente",
+    "code": 201
+}
+```
+
+### HTTP Request
+`PUT api/v2/casos/{hecho}/medidas/{medida}`
+
+`PATCH api/v2/casos/{hecho}/medidas/{medida}`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    codigo_medida_proteccion | integer |  required  | Código asignado de un catálogo definido por la ley 1173
+    tipo | integer |  required  | Tipo de medida (tipo 1 para medidas de la víctima niño o niña.
+    inciso | integer |  required  | Inciso donde se encuentra la descrita la medida de protección de la ley 1173
+
+<!-- END_1e9751c498972821c495b54cfc086a4b -->
 
 #Metodos Sujetos Procesales
 
-
-<!-- START_d035734794b7475fbfcdad68b604fcf6 -->
-## GET obtencion SujetosProcesales.
-
-Para la Obtencion de los SujetoProcesales se debe mandar una peticon a la <b>url</b> descrita abajo
- enviando los sigientes parametros a la variable tipo.<br>
- <b>tipo=1 (Persona Denunciante)</b><br>
- <b>tipo=2 (Persona Denunciado)</b><br>
- <b>tipo=3 (Persona Victima)</b><br>
- <b>tipo=4 (Persona Testigo)</b>
-
-> Example request:
-
-```bash
-curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2"
-```
-
-```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1");
-
-let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (200):
-
-```json
-{
-    "página_actual": 1,
-    "data": [
-        {
-            "es_persona_valida": 1,
-            "provincia_nacimiento": null,
-            "municipio_nacimiento": null,
-            "provincia_residencia": "JAIME ZUDAÑEZ",
-            "municipio_residencia": "ICLA (R.MUJIA)",
-            "n_documento": "7894562",
-            "nombre": "EFRAIN",
-            "ap_paterno": "PELAEZ",
-            "ap_materno": "FERNANDEZ",
-            "ap_esposo": "VALDEZ",
-            "sexo": "M",
-            "fecha_nacimiento": "1983-12-01",
-            "estado_civil": null,
-            "domicilio": "avda. MAX FERNANDEZ",
-            "telefono": null,
-            "celular": "79537750",
-            "profesion_ocupacion": "ING.  OF SYS",
-            "pueblo_originario": null,
-            "lugar_trabajo": null,
-            "domicilio_laboral": null,
-            "telefono_laboral": null,
-            "alias": null,
-            "estatura": null,
-            "tez": null,
-            "edad": null,
-            "vestimenta": null,
-            "senia": null,
-            "peso": null,
-            "cabello": null,
-            "genero": 0,
-            "email": null,
-            "ojos": null,
-            "ciudadano_digital": 0,
-            "relacion_victima": "MADRE",
-            "nivel_educacion": "SECUNDARIA",
-            "grupo_vulnerable": "ADULTO MAYOR",
-            "grado_discapacidad": null,
-            "estado_libertad": null,
-            "fecha_estado_procesal": null
-        },
-        {
-            "es_persona_valida": 1,
-            "provincia_nacimiento": null,
-            "municipio_nacimiento": null,
-            "provincia_residencia": "OROPEZA",
-            "municipio_residencia": "YOTALA",
-            "n_documento": "4900325",
-            "nombre": "MARCELO",
-            "ap_paterno": "TITO",
-            "ap_materno": "COPA",
-            "ap_esposo": null,
-            "sexo": "M",
-            "fecha_nacimiento": "1983-10-09",
-            "estado_civil": 2,
-            "domicilio": "AV. LITORAL, EL ALTO, BOLIVIA",
-            "telefono": "8786545",
-            "celular": "465487",
-            "profesion_ocupacion": "ALBAÃ±IL",
-            "pueblo_originario": null,
-            "lugar_trabajo": "se desconoce",
-            "domicilio_laboral": "se desconoce",
-            "telefono_laboral": null,
-            "alias": null,
-            "estatura": null,
-            "tez": null,
-            "edad": null,
-            "vestimenta": null,
-            "senia": null,
-            "peso": null,
-            "cabello": null,
-            "genero": 0,
-            "email": "MATCOP@GMAIL.COM",
-            "ojos": null,
-            "ciudadano_digital": 0,
-            "relacion_victima": "CONYUGUE",
-            "nivel_educacion": null,
-            "grupo_vulnerable": null,
-            "grado_discapacidad": null,
-            "estado_libertad": null,
-            "fecha_estado_procesal": null
-        },
-        {
-            "es_persona_valida": 0,
-            "provincia": "LUIS CALVO",
-            "municipio": "VILLA VACA GUZMAN (MUYUPAMPA)",
-            "razon_social": "Paucek Ltd",
-            "nit": "626394652",
-            "domicilio": "4856 Randy Points Suite 194\nNew Rosannastad, NJ 46481",
-            "telefono": "+3877697129878",
-            "relacion_victima": "AUTORIDAD DE CENTRO EDUCATIVO",
-            "representante_legal": {
-                "n_documento": null,
-                "nombre_completo": null
-            }
-        },
-        {
-            "es_persona_valida": 0,
-            "pais": "ARGENTINA",
-            "nombre": "Americo Mosciski",
-            "ap_paterno": "Erwin",
-            "ap_materno": "Wuckert",
-            "descripcion": "Ab facere maiores delectus voluptatibus quo. Mollitia inventore dolor quo omnis animi harum ut. Expedita quia assumenda soluta praesentium.",
-            "sexo": null,
-            "fecha_nacimiento": null,
-            "estado_civil": null,
-            "domicilio": null,
-            "telefono": null,
-            "celular": null,
-            "profesion_ocupacion": null,
-            "pueblo_originario": null,
-            "lugar_trabajo": null,
-            "domicilio_laboral": null,
-            "telefono_laboral": null,
-            "alias": null,
-            "estatura": null,
-            "tez": null,
-            "edad": null,
-            "vestimenta": null,
-            "senia": null,
-            "peso": null,
-            "cabello": null,
-            "genero": 0,
-            "email": null,
-            "ojos": null,
-            "relacion_victima": "AUTORIDAD POLITICA",
-            "nivel_educacion": "SECUNDARIA",
-            "grupo_vulnerable": "ADULTO MAYOR",
-            "grado_discapacidad": "INTELECTUAL",
-            "estado_libertad": null,
-            "fecha_estado_procesal": null
-        }
-    ],
-    "url_primera_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1&page=1",
-    "desde": 1,
-    "ultima_pagina": 1,
-    "url_ultima_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1&page=1",
-    "url_pagina_siguiente": null,
-    "path": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales",
-    "por_pagina": 5,
-    "purl_pagina_anterior": null,
-    "a": 4,
-    "total": 4
-}
-```
-
-### HTTP Request
-`GET api/v2/casos/{hecho}/sujetosprocesales`
-
-
-<!-- END_d035734794b7475fbfcdad68b604fcf6 -->
 
 <!-- START_342fa55c54b09c080ad50d7f3c9abaf6 -->
 ## Metodo POST para registro de Sujetos Procesales.
@@ -703,7 +599,6 @@ Parameter | Type | Status | Description
     fecha_nacimiento_representante_legal | date |  required  | Fecha de nacimiento de la persona natural (Ejemplo 2019-10-24 15:30:15)
 
 <!-- END_342fa55c54b09c080ad50d7f3c9abaf6 -->
-
 <!-- START_01691b0909c874275500685f20cc919e -->
 ## Metodo PUT para Actualizar los datos de un Sujeto Procesal.
 
@@ -759,6 +654,51 @@ fetch(url, {
 
 
 <!-- END_01691b0909c874275500685f20cc919e -->
+#Metodos de Arpobacionde Documentos AGETIC.
+
+
+<!-- START_3121208c276e4ec50c2414f61df4fa8d -->
+## Store a newly created resource in storage.
+
+> Example request:
+
+```bash
+curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/aprobaciondocumentos" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}"
+```
+
+```javascript
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/aprobaciondocumentos");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (500):
+
+```json
+{
+    "error": "Unexpected error",
+    "code": 500
+}
+```
+
+### HTTP Request
+`POST api/v2/aprobaciondocumentos`
+
+
+<!-- END_3121208c276e4ec50c2414f61df4fa8d -->
 
 #Metodos de reparto de Juez Juzgado de un Caso.
 
@@ -837,7 +777,6 @@ Parameter | Type | Status | Description
     fecha_nacimiento | date |  required  | la fecha de nacimiento para la validacion
 
 <!-- END_c0912a61f12aec98e23dcfff958fe2e4 -->
-
 #Metodos para el Agendamiento de Audiencias.
 
 
@@ -850,33 +789,31 @@ en este metodo podemos insertar todo los campos referentes al sujeto procesal<br
 > Example request:
 
 ```bash
-curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/agendamiento" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2" \
+curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/agendamiento" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
     -H "Content-Type: application/json" \
-    -d '{"codigo_fud":"illo","codigo_agendamiento":2,"fecha_hora_inicio":"quis","fecha_hora_fin":"quia","codigo_tipo_audiencia":13,"sala":"placeat","codigo_juzgado":"numquam","archivo_pdf":"voluptas"}'
+    -d '{"codigo_fud":"quia","codigo_agendamiento":14,"fecha_hora_inicio":"ipsum","fecha_hora_fin":"consectetur","codigo_tipo_audiencia":20,"sala":"molestiae","codigo_juzgado":"recusandae","archivo_pdf":"recusandae"}'
 
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/agendamiento");
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/agendamiento");
 
 let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 }
 
 let body = {
-    "codigo_fud": "illo",
-    "codigo_agendamiento": 2,
-    "fecha_hora_inicio": "quis",
-    "fecha_hora_fin": "quia",
-    "codigo_tipo_audiencia": 13,
-    "sala": "placeat",
-    "codigo_juzgado": "numquam",
-    "archivo_pdf": "voluptas"
+    "codigo_fud": "quia",
+    "codigo_agendamiento": 14,
+    "fecha_hora_inicio": "ipsum",
+    "fecha_hora_fin": "consectetur",
+    "codigo_tipo_audiencia": 20,
+    "sala": "molestiae",
+    "codigo_juzgado": "recusandae",
+    "archivo_pdf": "recusandae"
 }
 
 fetch(url, {
@@ -925,28 +862,27 @@ En este campo la oficina gestora podra dar informanos las causas de por que se d
 > Example request:
 
 ```bash
-curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/agendamiento/suspencion" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2" \
+curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/agendamiento/suspencion" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
     -H "Content-Type: application/json" \
-    -d '{"codigo_agendamiento":12,"codigo_tipo_causal":8,"tipo":"ad"}'
+    -d '{"codigo_agendamiento":20,"codigo_tipo_causal":5,"descripcion":"soluta","archivo_baja_audiencia":"repellat"}'
 
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/agendamiento/suspencion");
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/agendamiento/suspencion");
 
 let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 }
 
 let body = {
-    "codigo_agendamiento": 12,
-    "codigo_tipo_causal": 8,
-    "tipo": "ad"
+    "codigo_agendamiento": 20,
+    "codigo_tipo_causal": 5,
+    "descripcion": "soluta",
+    "archivo_baja_audiencia": "repellat"
 }
 
 fetch(url, {
@@ -977,184 +913,13 @@ Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
     codigo_agendamiento | integer |  required  | Código único del Agendamiento
     codigo_tipo_causal | integer |  required  | Catalogo de Causales de Suspencion
-    tipo | string |  optional  | opcional Descripcion de la causal de suspencion
+    descripcion | string |  optional  | opcional Descripcion de la causal de suspencion
+    archivo_baja_audiencia | Base64 |  required  | Documento en BASE64 de la causal de baja
 
 <!-- END_96a9f55b1b7a6f5618565174cdc5dc85 -->
 
 #Metodos para el F.U.D.
 
-
-<!-- START_a6c2bd4ae9bf91e1a036bdc87b71610e -->
-## Metodo Get Genera un listado de todos los Casos existentes
-
-puede generar un listado de todos los casos existentes paginados cada 5 casos
-como se puede observar en el ejemplo
-
-> Example request:
-
-```bash
-curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/casos" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2"
-```
-
-```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos");
-
-let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (200):
-
-```json
-{
-    "data": [
-        {
-            "codigo_fud": "634999",
-            "relato": "Et error tempore molestiae temporibus corrupti quis animi voluptatem autem et rerum.",
-            "resultado": "Maxime autem.",
-            "direccion_caso": "8627 McLaughlin Heights\nNew Rainatown, WY 36166",
-            "detalle_localizacion": "8627 McLaughlin Heights\nNew Rainatown, WY 36166",
-            "provincia": "ELIODORO CAMACHO",
-            "municipio": "PUERTO CARABUCO",
-            "fecha_creacion_fud": "2019-08-05 18:38:01",
-            "longitud": "-66.771585",
-            "latitud": "-14.090757",
-            "tipo_denuncia": "ACCION DIRECTA",
-            "fecha_hora_inicio": "2010-01-09 01:42:00",
-            "fecha_hora_fin": "1981-08-31 18:49:23",
-            "momento_aproximado": "Fuga quia earum sit veritatis.",
-            "etapa_caso": "Abierto",
-            "estado_caso": "Preliminar",
-            "oficina": null,
-            "titulo": null,
-            "delito_principal": null
-        },
-        {
-            "codigo_fud": "220518",
-            "relato": "Consequatur facere nulla repellat consectetur non temporibus molestiae eos odit corrupti aut et sint fuga vel nobis commodi.",
-            "resultado": "Exercitationem possimus non labore est.",
-            "direccion_caso": "864 Lockman Cliff\nNew Isidro, NC 71615",
-            "detalle_localizacion": "864 Lockman Cliff\nNew Isidro, NC 71615",
-            "provincia": "JUANA AZURDUY DE PADILLA",
-            "municipio": "VILLA AZURDUY",
-            "fecha_creacion_fud": "2019-08-05 18:38:01",
-            "longitud": "-65.385023",
-            "latitud": "-14.431075",
-            "tipo_denuncia": "QUERELLA",
-            "fecha_hora_inicio": "1986-02-05 05:54:39",
-            "fecha_hora_fin": "1991-01-23 00:37:21",
-            "momento_aproximado": "Amet sint similique reiciendis.",
-            "etapa_caso": "Abierto",
-            "estado_caso": "Preliminar",
-            "oficina": null,
-            "titulo": null,
-            "delito_principal": null
-        },
-        {
-            "codigo_fud": "608431",
-            "relato": "Aut non voluptates molestiae aut omnis voluptatum quam placeat et exercitationem dolor non deleniti neque voluptatem incidunt.",
-            "resultado": "Mollitia officia impedit nihil.",
-            "direccion_caso": "5789 Hettinger Walk\nPort Isabel, AK 63330",
-            "detalle_localizacion": "5789 Hettinger Walk\nPort Isabel, AK 63330",
-            "provincia": "MUÑECAS",
-            "municipio": "AYATA",
-            "fecha_creacion_fud": "2019-08-05 18:38:01",
-            "longitud": "-65.429668",
-            "latitud": "-14.215086",
-            "tipo_denuncia": "DE OFICIO",
-            "fecha_hora_inicio": "1975-02-08 00:02:47",
-            "fecha_hora_fin": "1990-11-25 10:51:44",
-            "momento_aproximado": "Molestiae qui impedit sapiente.",
-            "etapa_caso": "Abierto",
-            "estado_caso": "Preliminar",
-            "oficina": null,
-            "titulo": null,
-            "delito_principal": null
-        },
-        {
-            "codigo_fud": "463870",
-            "relato": "Iusto et quisquam possimus voluptatibus dolorem eum aperiam alias quis ea iure corrupti vel corrupti vel facilis illo nostrum accusantium et.",
-            "resultado": "Nesciunt consectetur aut reprehenderit.",
-            "direccion_caso": "90061 Ara Extension\nTillmanmouth, ID 57483",
-            "detalle_localizacion": "90061 Ara Extension\nTillmanmouth, ID 57483",
-            "provincia": "JAIME ZUDAÑEZ",
-            "municipio": "VILLA MOJOCOYA",
-            "fecha_creacion_fud": "2019-08-05 18:38:01",
-            "longitud": "-65.703666",
-            "latitud": "-13.834202",
-            "tipo_denuncia": "DENUNCIA ESCRITA",
-            "fecha_hora_inicio": "1987-01-14 16:09:56",
-            "fecha_hora_fin": "2006-07-10 23:27:32",
-            "momento_aproximado": "Maxime incidunt sunt maxime.",
-            "etapa_caso": "Abierto",
-            "estado_caso": "Preliminar",
-            "oficina": null,
-            "titulo": null,
-            "delito_principal": null
-        },
-        {
-            "codigo_fud": "603390",
-            "relato": "Vel officiis laboriosam est voluptatem sed dicta officiis laborum ad alias et ut dolores dolor.",
-            "resultado": "Dicta et deserunt odio.",
-            "direccion_caso": "88397 Estrella Valleys\nEast Jermeyhaven, VA 71078",
-            "detalle_localizacion": "88397 Estrella Valleys\nEast Jermeyhaven, VA 71078",
-            "provincia": "LOAYZA",
-            "municipio": "MALLA",
-            "fecha_creacion_fud": "2019-08-05 18:38:02",
-            "longitud": "-66.479394",
-            "latitud": "-13.920695",
-            "tipo_denuncia": "DE OFICIO",
-            "fecha_hora_inicio": "1982-10-21 04:02:49",
-            "fecha_hora_fin": "2014-10-05 18:34:59",
-            "momento_aproximado": "Aut praesentium corporis quia.",
-            "etapa_caso": "Abierto",
-            "estado_caso": "Preliminar",
-            "oficina": null,
-            "titulo": null,
-            "delito_principal": null
-        }
-    ],
-    "links": {
-        "first": null,
-        "last": null,
-        "prev": null,
-        "next": null
-    },
-    "meta": {
-        "página_actual": 1,
-        "url_primera_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos?page=1",
-        "desde": 1,
-        "ultima_pagina": 58,
-        "url_ultima_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos?page=58",
-        "url_pagina_siguiente": "http://api-dev3.fiscalia.gob.bo/api/v2/casos?page=2",
-        "path": "http://api-dev3.fiscalia.gob.bo/api/v2/casos",
-        "por_pagina": 5,
-        "purl_pagina_anterior": null,
-        "a": 5,
-        "total": 287
-    }
-}
-```
-
-### HTTP Request
-`GET api/v2/casos`
-
-
-<!-- END_a6c2bd4ae9bf91e1a036bdc87b71610e -->
 
 <!-- START_376ad92579502087eb0ae4e5b69c45b1 -->
 ## Metodo POST Insertar un nuevo Caso.
@@ -1165,45 +930,43 @@ en este metodo podemos insertar todo los campos referentes al sujeto procesal<br
 > Example request:
 
 ```bash
-curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/casos" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2" \
+curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/casos" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
     -H "Content-Type: application/json" \
-    -d '{"codigo_fud":"cumque","tipo_denuncia_id":15,"fecha_denuncia":"sint","codigo_oficina":4,"codigo_municipio":"vel","zona_hecho":"culpa","direccion_hecho":"eveniet","referencia_hecho":"ut","longitud":"voluptatem","latitud":"sunt","codigo_institucion":11,"user_id":3,"fecha_hora_inicio":"dolorem","fecha_hora_fin":"ut","aproximado":"ut","quien_hizo":"fugiat","que_hizo":"earum","aquien_hizo":"aut","como_hizo":"qui","relato":"eius"}'
+    -d '{"codigo_fud":"quibusdam","tipo_denuncia_id":14,"fecha_denuncia":"consequatur","codigo_oficina":1,"codigo_municipio":"est","zona_hecho":"voluptate","direccion_hecho":"sequi","referencia_hecho":"et","longitud":"fuga","latitud":"ut","codigo_institucion":7,"user_id":12,"fecha_hora_inicio":"sapiente","fecha_hora_fin":"voluptatem","aproximado":"vel","quien_hizo":"quod","que_hizo":"iure","aquien_hizo":"et","como_hizo":"ut","relato":"deleniti"}'
 
 ```
 
 ```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos");
+const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/casos");
 
 let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 }
 
 let body = {
-    "codigo_fud": "cumque",
-    "tipo_denuncia_id": 15,
-    "fecha_denuncia": "sint",
-    "codigo_oficina": 4,
-    "codigo_municipio": "vel",
-    "zona_hecho": "culpa",
-    "direccion_hecho": "eveniet",
-    "referencia_hecho": "ut",
-    "longitud": "voluptatem",
-    "latitud": "sunt",
-    "codigo_institucion": 11,
-    "user_id": 3,
-    "fecha_hora_inicio": "dolorem",
-    "fecha_hora_fin": "ut",
-    "aproximado": "ut",
-    "quien_hizo": "fugiat",
-    "que_hizo": "earum",
-    "aquien_hizo": "aut",
-    "como_hizo": "qui",
-    "relato": "eius"
+    "codigo_fud": "quibusdam",
+    "tipo_denuncia_id": 14,
+    "fecha_denuncia": "consequatur",
+    "codigo_oficina": 1,
+    "codigo_municipio": "est",
+    "zona_hecho": "voluptate",
+    "direccion_hecho": "sequi",
+    "referencia_hecho": "et",
+    "longitud": "fuga",
+    "latitud": "ut",
+    "codigo_institucion": 7,
+    "user_id": 12,
+    "fecha_hora_inicio": "sapiente",
+    "fecha_hora_fin": "voluptatem",
+    "aproximado": "vel",
+    "quien_hizo": "quod",
+    "que_hizo": "iure",
+    "aquien_hizo": "et",
+    "como_hizo": "ut",
+    "relato": "deleniti"
 }
 
 fetch(url, {
@@ -1254,70 +1017,3 @@ Parameter | Type | Status | Description
     relato | string |  optional  | opcional Descripción del hecho al momento de la denuncia
 
 <!-- END_376ad92579502087eb0ae4e5b69c45b1 -->
-
-<!-- START_7b09fc50ea4b0d5b390ef08a4febc61c -->
-## Metodo GET para obtener un solo caso; se envia el codigo del caso en la URL.
-
-<p><b>CASO DE EJEMPLO</b></p>
-<b>/v2/casos/601102011900007</b>
-
-> Example request:
-
-```bash
-curl -X GET -G "http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007" \
-    -H "Authorization: Bearer " \
-    -H "Api-Version: v2"
-```
-
-```javascript
-const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007");
-
-let headers = {
-    "Authorization": "Bearer ",
-    "Api-Version": "v2",
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (200):
-
-```json
-{
-    "data": {
-        "codigo_fud": "601102011900007",
-        "relato": "El 09/10/19 08:10 en TARIJA central colon 200 . <br><br>zcvzxc, <br><br>zxcvzxc, zxcvzx, <br><br>Personas afectadas:  . <br><br>cvzxcvzxcv.",
-        "resultado": null,
-        "direccion_caso": "colon 200",
-        "detalle_localizacion": "colon 200",
-        "provincia": "CERCADO",
-        "municipio": "TARIJA",
-        "fecha_creacion_fud": "2019-10-09 08:11:42",
-        "longitud": "-64.7328225",
-        "latitud": "-21.5361428",
-        "tipo_denuncia": "DENUNCIA VERBAL",
-        "fecha_hora_inicio": "2019-10-09 08:10:00",
-        "fecha_hora_fin": null,
-        "momento_aproximado": null,
-        "etapa_caso": "Abierto",
-        "estado_caso": "Preliminar",
-        "oficina": 275,
-        "titulo": "xxxx",
-        "delito_principal": null
-    }
-}
-```
-
-### HTTP Request
-`GET api/v2/casos/{caso}`
-
-
-<!-- END_7b09fc50ea4b0d5b390ef08a4febc61c -->

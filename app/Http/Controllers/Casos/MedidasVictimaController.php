@@ -104,4 +104,58 @@ class MedidasVictimaController extends Controller
 
         return $medidasTransFormada;
     }
+
+    /**
+     * Registro POST de Medidas de Proteccion.
+     *
+     *  Este metodo es para registrar las Medidas de Proteccion de una Victima <br><br>
+     *  en la Url se debe colocar el ci de la persona como el numero de caso <br>
+     *  Url base acompañado del ?ci= numero de carnet<br>
+     
+     *<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
+     * @bodyParam codigo_medida_proteccion integer required Código asignado de un catálogo definido por la ley 1173
+       @bodyParam tipo integer required Tipo de medida (tipo 1 para medidas de la víctima niño o niña.
+tipo 2 medidas para una víctima mujer )
+       @bodyParam inciso integer required Inciso donde se encuentra la descrita la medida de protección de la ley 1173
+     *  
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Denuncia\Hecho  $hecho
+     * @return \Illuminate\Http\Response
+     * @response
+     *  {
+     *  "message": "las Medidas se llenaron Correctamente",
+     *  "code": 201
+     *  }
+     */
+    public function store(Request $request, $hecho)
+    {
+
+    }
+
+    /**
+     * Actualizacion PUT de Medidas de Proteccion.
+     *
+     *  Este metodo es para registrar las Medidas de Proteccion de una Victima <br><br>
+     *  en la Url se debe colocar el ci de la persona como el numero de caso <br>
+     *  Url base acompañado del ?ci= numero de carnet<br>
+     
+     *<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
+     * @bodyParam codigo_medida_proteccion integer required Código asignado de un catálogo definido por la ley 1173
+       @bodyParam tipo integer required Tipo de medida (tipo 1 para medidas de la víctima niño o niña.
+tipo 2 medidas para una víctima mujer )
+       @bodyParam inciso integer required Inciso donde se encuentra la descrita la medida de protección de la ley 1173
+     *  
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Denuncia\Hecho  $hecho
+     * @return \Illuminate\Http\Response
+     * @response
+     *  {
+     *  "message": "las Medidas se Actualizaron Correctamente",
+     *  "code": 201
+     *  }
+     */
+    public function update(Request $request, $hecho)
+    {
+
+    }
 }

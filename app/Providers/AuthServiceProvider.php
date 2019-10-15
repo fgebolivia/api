@@ -27,5 +27,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+
+        Passport::tokensCan([
+            'aprovacion_documento' => 'Metodo Post para la Aprovacion de Documentos',
+        ]);
     }
 }

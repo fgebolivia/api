@@ -18,7 +18,7 @@ class SegipClass
             );
 
             $error1 = FALSE;
-
+            //dd(env('SEGIP_RUTA'));
         // === OPERACION ===
             try
             {
@@ -27,7 +27,7 @@ class SegipClass
                 ];
 
                 $cliente = new \SoapClient(env('SEGIP_RUTA'), $params);
-
+                //dd($cliente);
                 $parametros = array(
                     'pCodigoInstitucion'       => env('SEGIP_CODIGO_INSTITUCION'),
                     'pUsuario'                 => env('SEGIP_USUARIO'),
@@ -41,7 +41,7 @@ class SegipClass
                     'pSegundoApellido'         => $data['ap_materno'],
                     'pFechaNacimiento'         => date("d/m/Y", strtotime($data['f_nacimiento']))
                 );
-
+                //dd($parametros);
                 $respuesta_soap1 = (array) $cliente->ConsultaDatoPersonaCertificacion($parametros);
 
                 $respuesta_soap = (array) $respuesta_soap1["ConsultaDatoPersonaCertificacionResult"];
@@ -56,6 +56,7 @@ class SegipClass
             {
                 $respuesta['respuesta'] = $respuesta_soap;
                 $respuesta['sw']        = 1;
+
             }
 
         return $respuesta;

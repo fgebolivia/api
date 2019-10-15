@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Kernel;
 use App\Traits\ApiResponser;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

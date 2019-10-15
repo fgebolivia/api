@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CasoDesconocidaResource;
 use App\Http\Resources\CasoJuridicaResource;
 use App\Http\Resources\CasoPersonaResource;
+use App\Libraries\SegipClass;
 use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
 use App\Models\Denuncia\Sujeto;
@@ -288,7 +289,6 @@ class CasoPersonasController extends Controller
        @bodyParam senia string Señas particulares de la persona natural
        @bodyParam peso string opcional Peso de la persona natural
        @bodyParam cabello date opcional Cabello de la persona natural
-       @bodyParam genero string opcional Género de la persona natural
        @bodyParam email numeric opcional Email de la persona natural
        @bodyParam ojos boolean opcional Color de ojos de la persona natural
        @bodyParam ciudadano_digital numeric required Tipo booleano  devuelve 0: si no es ciudadano Digital o 1: si es ciudadano digital
@@ -307,9 +307,6 @@ class CasoPersonasController extends Controller
        @bodyParam telefono string opcional Teléfono de la empresa
        @bodyParam map_latitud string required Latitud de la ubicación de la empresa
        @bodyParam map_longitud string required Longitud de la ubicación de la empresa
-       @bodyParam relacion_victima_id integer opcional Código del catálogo de relación de la víctima
-       @bodyParam estado_procesal_id integer Código del estado Procesal en el que se encuentra
-       @bodyParam es_victima integer opcional Tipo booleano  devuelve 0: si no es víctima o 1: si es víctima
        @bodyParam n_documento_representante_legal string required Ci del representante legal de la persona jurídica para validacion
        @bodyParam Nombre_representante_legal string required Nombre del representante legal de la persona jurídica para validación
        @bodyParam ap_paterno_representante_legal string required Apellido Paterno del representante legal de la persona jurídica para validación
@@ -371,11 +368,12 @@ class CasoPersonasController extends Controller
                     
                     if($c_n_documento == null)
                     {
-                        dd($c_n_documento);
                         $persona_id = $this->guardarPersonaNatural($request,$tipo);
+                        if($persona_id == null){
+                            return $this->errorResponse('los datos de la persona no son validos coriga por favor',422);
+                        }
 
                     }else{
-                        //dd($c_n_documento->id);
                         $persona_id = $c_n_documento->id;
                     }
                   
@@ -653,9 +651,56 @@ class CasoPersonasController extends Controller
                 'map_longitud' => $map_longitud ,
             ]);
             //dd($request);
-            $persona= (new RrhhPersona)->fill($request->all());
-            $persona->save();
-            return $persona->id;
+
+            $segip = new SegipClass();
+            $data = [
+                'n_documento'  => $request->n_documento,
+                'complemento'  => $request->complemento,
+                'nombre'       => $request->nombre,
+                'ap_paterno'   => $request->ap_paterno,
+                'ap_materno'   => $request->ap_materno,
+                'f_nacimiento' => $request->fecha_nacimiento
+            ];
+
+            $respuesta1 = $segip->getCertificacionSegip($data);
+
+            if ($respuesta1['sw'] == 1) {
+                if ($respuesta1['respuesta']['EsValido'] == true && $respuesta1['respuesta']['CodigoRespuesta'] == 2)
+                {
+                    $file_name = uniqid('certificacion_segip_', true) . ".pdf";
+                    $file      = public_path('/storage/segip') . "/" . $file_name;
+                    file_put_contents($file, $respuesta1['respuesta']['ReporteCertificacion']);
+                    
+                    $persona = new RrhhPersona();
+
+                    $persona->n_documento               = $request->n_documento;
+                    $persona->nombre                    = $request->nombre;
+                    $persona->ap_paterno                = $request->ap_paterno;
+                    $persona->ap_materno                = $request->ap_materno;
+                    $persona->f_nacimiento              = $request->fecha_nacimiento;
+                    $persona->sexo                      = $request->sexo;
+                    $persona->genero                    = $request->genero;
+                    $persona->municipio_id_residencia   = $request->municipio_id_residencia;
+                    $persona->idioma_id                 = $request->idioma_id;
+                    $persona->domicilio                 = $request->domicilio;
+                    $persona->telefono                  = $request->telefono;
+                    $persona->map_latitud               = $request->map_latitud;
+                    $persona->map_longitud              = $request->map_longitud;
+                    $persona->estado_segip              = 2;
+                    $persona->nombre_completo           = $request->nombre.' '.trim($request->ap_paterno.' '.$request->ap_materno);
+                    $persona->certificacion_segip       = base64_encode($respuesta1['respuesta']['ReporteCertificacion']);
+                    $persona->certificacion_file_segip  = $file_name;
+
+                    $persona->save();
+                    return $persona->id;
+                }else
+                {
+                    return null;
+                }
+            }else
+            {
+                return null;
+            }
     }
 
     private function guardarPersonaJuridica($request)
@@ -677,13 +722,14 @@ class CasoPersonasController extends Controller
         $persona_desconocida->nombre = $request->nombre;
         $persona_desconocida->ap_paterno = $request->ap_paterno;
         $persona_desconocida->ap_materno = $request->ap_materno;
-        $persona_desconocida->ap_esposo = $request->alias;
-        $persona_desconocida->ap_esposo = $request->estatura;
-        $persona_desconocida->ap_esposo = $request->tez;
-        $persona_desconocida->ap_esposo = $request->vestimenta;
-        $persona_desconocida->ap_esposo = $request->senia;
-        $persona_desconocida->ap_esposo = $request->peso;
-        $persona_desconocida->ap_esposo = $request->cabello;
+        $persona_desconocida->sexo = $request->sexo;
+        $persona_desconocida->alias = $request->alias;
+        $persona_desconocida->estatura = $request->estatura;
+        $persona_desconocida->tez = $request->tez;
+        $persona_desconocida->vestimenta = $request->vestimenta;
+        $persona_desconocida->senia = $request->senia;
+        $persona_desconocida->peso = $request->peso;
+        $persona_desconocida->cabello = $request->cabello;
         $persona_desconocida->pais_id = $request->pais_id;
         $persona_desconocida->descripcion = 'nombre: '.$request->nombre.', alias: '.$request->alias.', estatura: '.$request->estatura.', color de Tez: '.$request->tez.', Tipo de Veztimenta: '.$request->vestimenta.', Senia Particular: '.$request->senia.', peso Aproximado: '.$request->peso.', color de Cabello: '.$request->cabello;
         $persona_desconocida->save();

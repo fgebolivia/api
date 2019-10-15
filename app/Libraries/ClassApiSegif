@@ -27,7 +27,7 @@ class ClassApiSegif
                 ];
 
                 $cliente = new \SoapClient(env('SEGIP_RUTA'), $params);
-
+                
                 $parametros = array(
                     'pCodigoInstitucion'       => 'personas/certificacion/13546619'),
                     'pUsuario'                 => env('SEGIPAPI_USUARIO'),

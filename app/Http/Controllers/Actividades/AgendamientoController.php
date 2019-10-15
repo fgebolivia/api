@@ -55,6 +55,12 @@ class AgendamientoController extends Controller
             'codigo_juzgado' => 'required|integer',
             'archivo_pdf' => 'required|string',
         ]);
+        $count = Agenda::where('codigo_audiencia',$request->codigo_agendamiento)->get()->count();
+        
+        if ($count >1) {
+            return $this->errorResponse('Error el codigo de audiencia ya existe',422);
+        }
+        
         $hecho = Hecho::where('codigo',$request->codigo_fud)->first();
         $audienciaTipo = TipoAudiencia::where('codigo_audiencia',$request->codigo_tipo_audiencia)->first();
         $juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado)->first();

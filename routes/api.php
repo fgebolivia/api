@@ -19,8 +19,11 @@ use Illuminate\Http\Request;
 //Route::apiResource('v2/abogados', 'Notificaciones\AbogadoController')->only(['index', 'show']);//esperar a estar enlasado realmente con el i 4
 //Route::apiResource('v2/hechos', 'Hechos\HechoController');
 //Route::apiResource('v1/usuarios', 'UserController');
-//Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);
-//Route::apiResource('v2/actividad', 'Actividades\ActividadController')->only(['store', 'show','update']);*/
+//Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);*/
+
+Route::apiResource('v2/actividad', 'Actividades\ActividadController')->only(['store']);
+
+Route::apiResource('v2/aprobaciondocumentos', 'Ciudadania\AprobacionDocumentosController')->only(['store']);
 
 Route::apiResource('v2/connection', 'Casos\ConnectionApiController')->only(['index']);
 
@@ -33,9 +36,9 @@ Route::apiResource('v2/agendamiento/suspencion', 'Actividades\AgendaSuspencionCo
 
 Route::apiResource('v2/notificaciones', 'Notificaciones\NotificacionesController')->only(['store']);
 
-Route::apiResource('v2/casos', 'Casos\CasoController')->except(['update','destroy']);
+Route::apiResource('v2/casos', 'Casos\CasoController')->only(['store']);
 
-Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->except(['show','destroy']);
+Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->only(['store','update']);
 
-Route::apiResource('v2/casos/{hecho}/medidas', 'Casos\MedidasVictimaController')->only(['index']);
+Route::apiResource('v2/casos/{hecho}/medidas', 'Casos\MedidasVictimaController')->only(['store','update']);
 
