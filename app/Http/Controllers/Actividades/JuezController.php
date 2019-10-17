@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Libraries\SegipClass;
 use App\Models\Agenda\Agenda;
 use App\Models\Agenda\AgendaPersona;
+use App\Models\Agenda\Juzgado;
+use App\Models\Denuncia\Hecho;
 use App\Models\Rrhh\RrhhPersona;
 use Illuminate\Http\Request;
 
@@ -52,13 +54,23 @@ class JuezController extends Controller
             'fecha_nacimiento' => 'required|date',
         ]);
 
-        $juez = RrhhPersona::where('n_documento',$request->n_documento)->first();
-
+        
         $agenda = Agenda::where('codigo_audiencia',$codigo)->first();
         if ($agenda == null) {
-        	return $this->errorResponse('error el codigo del agendamiento de la audiencia no existe',400);
+        	return $this->errorResponse('Error el codigo del agendamiento de la audiencia no existe',400);
         }
 
+        $caso = Hecho::where('codigo',$request->codigo_fud)->first();
+        if ($caso == null) {
+            return $this->errorResponse('Error el codigo del caso no existe',400);
+        }
+
+        $juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado)->first();
+        if ($juzgado == null) {
+            return $this->errorResponse('Error el codigo del Juzgado no existe',400);
+        }
+
+        $juez = RrhhPersona::where('n_documento',$request->n_documento)->first();
         if ($juez == null) {
             $segip = new SegipClass();
             $data = [
@@ -110,10 +122,12 @@ class JuezController extends Controller
         $agendajuez->agenda_id = $agenda->id;
         $agendajuez->persona_id = $juez_id;
         $agendajuez->tipo = 1; // 1 = juez, 2= fiscal
-        //dd($juez->id);
+        $agendajuez->hecho_id = $caso->id;
+        $agendajuez->juzgado_id = $juzgado->id;
+        //dd($agendajuez);
         $agendajuez->save();
 
-        return $this->successConection('el Juez se incerto Correctamente',201);
+        return $this->successConection('El reparto de Juez y Juzgado al CASO se incerto Correctamente',201);
     }
 
 }

@@ -30,7 +30,7 @@ Route::apiResource('v2/connection', 'Casos\ConnectionApiController')->only(['ind
 Route::apiResource('v2/rejaf', 'Actividades\RejafController')->only(['store']);
 
 Route::apiResource('v2/agendamiento', 'Actividades\AgendamientoController')->only(['store']);
-Route::apiResource('v2/agendamiento/{codigo}/juez', 'Actividades\JuezController')->only(['store']);
+Route::apiResource('v2/reparto/{codigo}/juez', 'Actividades\JuezController')->only(['store']);
 Route::apiResource('v2/agendamiento/suspencion', 'Actividades\AgendaSuspencionController')->only(['store']);
 
 
@@ -38,7 +38,7 @@ Route::apiResource('v2/notificaciones', 'Notificaciones\NotificacionesController
 
 Route::apiResource('v2/casos', 'Casos\CasoController')->only(['store']);
 
-Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->only(['store','update']);
+Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->only(['store','update','index']);
 
 Route::apiResource('v2/casos/{hecho}/medidas', 'Casos\MedidasVictimaController')->only(['store','update']);
 

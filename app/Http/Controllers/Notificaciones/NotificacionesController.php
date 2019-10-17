@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Notificaciones;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Helpers\HelperInicioOrganoJudicial;
+use Illuminate\Http\Request;
 
 /**
 * @group Metodo para Notificaciones.
@@ -37,7 +38,7 @@ class NotificacionesController extends Controller
      */
     public function store(Request $request)
     {
-        $datos = $request->validate([
+        /*$datos = $request->validate([
             'codigo_fud' => 'required|max:250|string',
             'codigo_tipo_notificacion' => 'required|string',
             'fecha_hora_notificacion' => 'required|date',
@@ -67,10 +68,14 @@ class NotificacionesController extends Controller
             'ap_paterno_solicitante' => 'required|string',
             'ap_materno_solicitante' => 'required|string',
             'fecha_nacimiento_solicitante' => 'required|date',
-            ]);
+            ]);*/
 
         //Hecho::create($datos);
+        $esto = new HelperInicioOrganoJudicial();
 
-        return $this->successResponse('se inserto satisfactoriamente', 201);
+
+        $respuesta = $esto->insertFormularioUnico();
+        return $respuesta;
+        //return $this->successResponse('se inserto satisfactoriamente', 201);
     }
 }

@@ -111,11 +111,10 @@ class MedidasVictimaController extends Controller
      *  Este metodo es para registrar las Medidas de Proteccion de una Victima <br><br>
      *  en la Url se debe colocar el ci de la persona como el numero de caso <br>
      *  Url base acompañado del ?ci= numero de carnet<br>
-     
+     *
      *<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
      * @bodyParam codigo_medida_proteccion integer required Código asignado de un catálogo definido por la ley 1173
-       @bodyParam tipo integer required Tipo de medida (tipo 1 para medidas de la víctima niño o niña.
-tipo 2 medidas para una víctima mujer )
+       @bodyParam tipo integer required Tipo de medida (tipo 1 para medidas de la víctima niño o niña. tipo 2 medidas para una víctima mujer )
        @bodyParam inciso integer required Inciso donde se encuentra la descrita la medida de protección de la ley 1173
      *  
      * @param  \Illuminate\Http\Request  $request
@@ -129,7 +128,26 @@ tipo 2 medidas para una víctima mujer )
      */
     public function store(Request $request, $hecho)
     {
+        $ci=  isset($_GET['ci'])?$_GET['ci']: 5;
 
+        $datos = $request->validate([
+            'codigo_medida_proteccion' => 'required|integer',
+            'tipo' => 'required|integer',
+            'inciso' => 'required|integer',
+            ]);
+
+        $persona_id = RrhhPersona::where('n_documento',$ci)->first();
+        $reserva = Hecho::where('codigo',$hecho)->first();
+
+        if ($persona_id === null) {
+            return $this->errorResponse('El carnet de identidad no exite',422);
+        };
+        if ($reserva === null) {
+            return $this->errorResponse('El caso no exite',422);
+        }
+
+        $hechopersona = HechoPersona::where('hecho_id',$reserva->id)->where('persona_id',$persona_id->id)->where('tipo_sujeto_id',3)->first();
+        dd($hechopersona);
     }
 
     /**
@@ -156,6 +174,12 @@ tipo 2 medidas para una víctima mujer )
      */
     public function update(Request $request, $hecho)
     {
-
+        $ci=  isset($_GET['ci'])?$_GET['ci']: 5;
+        
+        $datos = $request->validate([
+            'codigo_medida_proteccion' => 'required|integer',
+            'tipo' => 'required|integer',
+            'inciso' => 'required|integer',
+            ]);
     }
 }

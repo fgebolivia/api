@@ -206,15 +206,15 @@ class CasoPersonasController extends Controller
         {
             return $this->errorResponse('El caso es reservado no tiene acceso',401);
         }else{
-            $personas = Hecho::where('codigo',$hecho)->first()->personas()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
+            $personas = Hecho::where('codigo',$hecho)->first()->personas()->where('tipo_sujeto_id',$tipoSujeto1->id)->where('deleted',0)->orderBy('id')->get();
             
             $perosonaTransform = CasoPersonaResource::collection($personas); //ok funcion corecta
             
-            $personasJuridica = Hecho::where('codigo',$hecho)->first()->juridica()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
+            $personasJuridica = Hecho::where('codigo',$hecho)->first()->juridica()->where('tipo_sujeto_id',$tipoSujeto1->id)->where('deleted',0)->orderBy('id')->get();
 
             $perJuridTransform = CasoJuridicaResource::collection($personasJuridica);
             
-            $personasDesco = Hecho::where('codigo',$hecho)->first()->personaDesconocida()->where('tipo_sujeto_id',$tipoSujeto1->id)->orderBy('id')->get();
+            $personasDesco = Hecho::where('codigo',$hecho)->first()->personaDesconocida()->where('tipo_sujeto_id',$tipoSujeto1->id)->where('deleted',0)->orderBy('id')->get();
 
             
             $perDescoTranform = CasoDesconocidaResource::collection($personasDesco);

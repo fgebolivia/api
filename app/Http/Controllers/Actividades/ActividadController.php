@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Actividades;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ActividadResource;
-//use App\Http\Resources\DelitoResource;
+use App\Models\Agenda\ActividadTriton;
 use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoFelony;
 use App\Models\Notificacion\Caso;
+use App\Models\Notificacion\TipoActividad;
 use App\Models\Rrhh\RrhhPersona;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,43 @@ class ActividadController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $datos = $request->validate([
+            'codigo_fud' => 'required|string',
+            'codigo_actividad' => 'required|integer',
+            'codigo_tipo_actividad' => 'required|integer',
+            'fecha_actividad' => 'required|date',
+            'descripcion_actividad' => 'required|string',
+            'archivo_actividad' => 'required|string',
+            ]);
+
+        $caso = Hecho::where('codigo',$request->codigo_fud)->first();
+
+        if ($caso == null) {
+            return $this->errorResponse('el codigo del caso no exite',422);
+        }
+
+        $tipoActi = TipoActividad::where('id',$request->codigo_tipo_actividad)->first();
+        if ($tipoActi == null) {
+            return $this->errorResponse('el codigo del tipo de Activida no exite',422);
+        }
+
+        $file_name = uniqid('actividad'.$tipoActi->TipoActividad, true) . ".pdf";
+        $file      = public_path('/storage/actividad') . "/" . $file_name;
+        file_put_contents($file,base64_decode($request->archivo_actividad));
+
+        $activi = new ActividadTriton();
+
+        $activi->codigo_actividad = $request->codigo_actividad;
+        $activi->tipo_actividad_id = $tipoActi->id;
+        $activi->nombre_tipo_actividad = $tipoActi->TipoActividad;
+        $activi->fecha_actividad = $request->fecha_actividad;
+        $activi->descripcion_actividad = $request->descripcion_actividad;
+        $activi->nombre_archivo = $file_name;
+        $activi->hecho_id = $caso->id;
+        $activi->save();
+
+         return $this->successConection('la Actividad se Registro con Exito',201);
+
     }
 
     /**
