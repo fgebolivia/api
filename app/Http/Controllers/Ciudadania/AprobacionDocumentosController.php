@@ -31,30 +31,43 @@ class AprobacionDocumentosController extends Controller
             'aceptado' => 'required|boolean',
             'introducido' => 'required|boolean',
             'uuidTramite' => 'required|max:250|string',
-            'codigoOperacion' => 'max:250|string',//este
+            'codigoOperacion' => 'max:250',//este
             'mensaje' => 'max:250|string',
-            'transaction_id' => 'max:250|string',//este
+            'transaction_id' => 'max:250',//este
             'fechaHoraSolicitud' => 'max:250|string',//este
             'hashDatos' => 'max:250|string',
             'ci' => 'max:250|string',
             ]);
-        if (!$request->aceptado) {
-            return response()->json(['finalizado'=>false, 'message'=> 'el campo aceptado tiene el valor de false', 'code' => 422],422);
-        }
-
         $tramiteUuid = DocumentosAprobados::where('tramite_uuid',$request->uuidTramite)->first();
-
         if ($tramiteUuid === null) {
                     return response()->json(['finalizado'=>false, 'message'=> 'el campo uuidTramite no exite', 'code' => 422],422);
                 }
 
-        
-        $tramiteUuid->codigo_operacion = $request->codigoOperacion;
-        $tramiteUuid->transaccion_id = $request->transaction_id;
-        $tramiteUuid->fh_solicitud_agetic = date('Y-m-d H:i:s:u', strtotime($request->fechaHoraSolicitud));
-        $tramiteUuid->tramite_uuid = $request->uuidTramite;
-        $tramiteUuid->save();
+        if ($request->aceptado) {
+            $tramiteUuid->codigo_operacion = $request->codigoOperacion;
+            $tramiteUuid->transaccion_id = $request->transaction_id;
+            $tramiteUuid->fh_solicitud_agetic = date('Y-m-d H:i:s:u', strtotime($request->fechaHoraSolicitud));
+            $tramiteUuid->tramite_uuid = $request->uuidTramite;
+            $tramiteUuid->save();
 
-        return response()->json(['finalizado'=>true, 'message'=> 'se lleno correctamente', 'code' => 200],200);
+            $sql ="UPDATE " . $tramiteUuid->tabla . " 
+            SET 
+            aprobado_cd = 1
+            WHERE id = " . $tramiteUuid->tabla_id;
+            if($tramiteUuid->tipo_conexion === 0){
+                DB::statement($sql);
+            }
+            else{
+                DB::connection('mysql')->statement($sql);
+            }
+            
+        }else{
+            
+            $tramiteUuid->fh_solicitud_agetic = date('Y-m-d H:i:s:u', strtotime($request->fechaHoraSolicitud));
+            $tramiteUuid->save();
+            return response()->json(['finalizado'=>false, 'message'=> 'Los valores del rechazo fueron registradas en el Sistema Cliente.', 'code' => 422],422);
+        }
+
+        return response()->json(['finalizado'=>true, 'message'=> 'Los valores de aprobación fueron registradas en el Sistema Cliente.', 'code' => 200],200);
     }
 }
