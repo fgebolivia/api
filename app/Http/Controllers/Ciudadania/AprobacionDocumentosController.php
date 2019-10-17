@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ciudadania;
 use App\Http\Controllers\Controller;
 use App\Models\Notificacion\DocumentosAprobados;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
 * @group Metodos de Arpobacionde Documentos AGETIC.
