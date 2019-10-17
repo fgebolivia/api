@@ -24,7 +24,9 @@ class CasoController extends Controller
      */
     public function index()
     {
-        $hechos = Hecho::where('reserva',0)->Paginate(5);
+	    $hechos = Hecho::where('reserva',0)
+		    ->where('deleted',0)
+		    ->Paginate(5);
         //return CasoResource::collection($hechos);
          $hechos1 = CasoResource::collection($hechos);
          //dd($hechos);
@@ -95,7 +97,10 @@ class CasoController extends Controller
      */
     public function show($id)
     {
-        $hecho = Hecho::where('codigo', $id)->where('reserva',0)->first();
+	    $hecho = Hecho::where('codigo', $id)
+		    ->where('reserva',0)
+		    ->where('deleted',0)
+		    ->first();
         if ($hecho == null) {
             return $this->errorResponse('Does not exists any endpoint for this URL',404);
         }else{
