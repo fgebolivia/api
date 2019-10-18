@@ -42,3 +42,4 @@ Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasCont
 
 Route::apiResource('v2/casos/{hecho}/medidas', 'Casos\MedidasVictimaController')->only(['store','update']);
 
+//Route::apiResource('v1/usuarios', 'UserController');

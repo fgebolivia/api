@@ -205,7 +205,7 @@ class CasoPersonasController extends Controller
         if($reserva->reserva === 1)
         {
             return $this->errorResponse('El caso es reservado no tiene acceso',401);
-        }else{
+		}else{
             $personas = Hecho::where('codigo',$hecho)->first()->personas()->where('tipo_sujeto_id',$tipoSujeto1->id)->where('deleted',0)->orderBy('id')->get();
             
             $perosonaTransform = CasoPersonaResource::collection($personas); //ok funcion corecta
