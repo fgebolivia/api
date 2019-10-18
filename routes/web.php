@@ -15,6 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/home/personal-tokens', 'HomeController@personalTokens')->name('personal-tokens');
+
+Route::get('/home/clients', 'HomeController@clients')->name('clients');
+
+/*Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});*///borrar el cache si es necesario

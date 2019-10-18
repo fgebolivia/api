@@ -45,14 +45,16 @@ class RrhhPersona extends Model
         'estado_persona',
         'nombre_completo',
         'genero',
-        'email'
+        'email',
+        'map_latitud',
+        'map_longitud'
 
     ];
     protected $guarded  = [];
 
     //public $resource = CasoPersonaResource::class;
 
-    protected $hidden = ['certificacion_segip','pivot', 'updated_at','id','estado','certificacion_file_segip','fullname','idioma_id','pais_id','estado_persona','nombre_completo']; 
+    protected $hidden = [/*'certificacion_segip', */'updated_at','id','estado',/*'certificacion_file_segip',*/'fullname','idioma_id','pais_id','estado_persona','nombre_completo']; 
     /***relaciones**///
     //todo sus oficinas, activos e inactivos
     public function oficinas(){

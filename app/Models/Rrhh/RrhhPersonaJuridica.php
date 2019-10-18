@@ -16,11 +16,13 @@ class RrhhPersonaJuridica extends Model
         'nit',
         'domicilio',
         'telefono',
+        'map_latitud',
+        'map_longitud'
     ];
 
     protected $guarded  = [];
 
     //public $resource = CasoJuridicaResource::class;
 
-    protected $hidden = ['pivot','updated_at','id','estado'];
+    protected $hidden = ['updated_at','id','estado'];
 }

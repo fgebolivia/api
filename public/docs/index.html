@@ -1,0 +1,1559 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/all.js"></script>
+
+
+          <script>
+        $(function() {
+            setupLanguages(["bash","javascript"]);
+        });
+      </script>
+      </head>
+
+  <body class="">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+        <img src="images/logo.png" />
+                    <div class="lang-selector">
+                                  <a href="#" data-language-name="bash">bash</a>
+                                  <a href="#" data-language-name="javascript">javascript</a>
+                            </div>
+                            <div class="search">
+              <input type="text" class="search" id="input-search" placeholder="Search">
+            </div>
+            <ul class="search-results"></ul>
+              <div id="toc">
+      </div>
+                    <ul class="toc-footer">
+                                  <li><a href='http://github.com/mpociot/documentarian'>Documentation Powered by Documentarian</a></li>
+                            </ul>
+            </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+          <!-- START_INFO -->
+<h1>Info</h1>
+<p>Welcome to the generated API reference.
+<a href="http://api-dev3.fiscalia.gob.bo/docs/collection.json">Get Postman Collection</a></p>
+<!-- END_INFO -->
+<h1>Estado Servicio</h1>
+<!-- START_7b8abd27573a846ef5c67ec0d43c6529 -->
+<h2>Estado - Estado de la API REST.</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "http://api-dev3.fiscalia.gob.bo/api/v2/connection" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}"</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/connection");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "El servicio de Ministerio Publico v2 se encuentra disponible",
+    "code": 200
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/v2/connection</code></p>
+<!-- END_7b8abd27573a846ef5c67ec0d43c6529 -->
+<h1>Metodo REJAF</h1>
+<!-- START_bfc712ac3415f38be395c887c62a1478 -->
+<h2>Insercion con metodo POST de Certificaciones REJAF.</h2>
+<p>Este Metodo esta en espera de la respuesta de una solicitud anterior echa para obtener el REJAF<br><br></p>
+<p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/rejaf" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"n_documento":"quaerat","complemento":"qui","nombre":"sint","ap_paterno":"et","ap_materno":"vel","fecha_nacimiento":"est","solicitud":"iste","wed_id":"nostrum","fecha_envio":"ut","observacion":"voluptate","estado":"suscipit","certificado":"a"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/rejaf");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "n_documento": "quaerat",
+    "complemento": "qui",
+    "nombre": "sint",
+    "ap_paterno": "et",
+    "ap_materno": "vel",
+    "fecha_nacimiento": "est",
+    "solicitud": "iste",
+    "wed_id": "nostrum",
+    "fecha_envio": "ut",
+    "observacion": "voluptate",
+    "estado": "suscipit",
+    "certificado": "a"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "El rejaf se Inserto satisfactoriamente",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/rejaf</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>n_documento</td>
+<td>string</td>
+<td>required</td>
+<td>el carnet de identidad para validacion</td>
+</tr>
+<tr>
+<td>complemento</td>
+<td>string</td>
+<td>required</td>
+<td>el para la validacion</td>
+</tr>
+<tr>
+<td>nombre</td>
+<td>string</td>
+<td>required</td>
+<td>el nombre para la validacion</td>
+</tr>
+<tr>
+<td>ap_paterno</td>
+<td>string</td>
+<td>required</td>
+<td>el apellido paterno para la validacion</td>
+</tr>
+<tr>
+<td>ap_materno</td>
+<td>string</td>
+<td>required</td>
+<td>el apellido materno para la validacion</td>
+</tr>
+<tr>
+<td>fecha_nacimiento</td>
+<td>date</td>
+<td>required</td>
+<td>la fecha de nacimiento para la validacion</td>
+</tr>
+<tr>
+<td>solicitud</td>
+<td>string</td>
+<td>required</td>
+<td>codigo de la solicitud</td>
+</tr>
+<tr>
+<td>wed_id</td>
+<td>string</td>
+<td>required</td>
+<td>codigo web id del certificado REJAF</td>
+</tr>
+<tr>
+<td>fecha_envio</td>
+<td>date</td>
+<td>required</td>
+<td>Fecha en la que se envio el Certificado REJAF</td>
+</tr>
+<tr>
+<td>observacion</td>
+<td>string</td>
+<td>required</td>
+<td>alguna observacion del Certificado REJAF</td>
+</tr>
+<tr>
+<td>estado</td>
+<td>string</td>
+<td>required</td>
+<td>estado del Certificado REJAF</td>
+</tr>
+<tr>
+<td>certificado</td>
+<td>BASE_64</td>
+<td>required</td>
+<td>DOCUMENTO PDF del REJAF</td>
+</tr>
+</tbody>
+</table>
+<!-- END_bfc712ac3415f38be395c887c62a1478 -->
+<h1>Metodo para Notificaciones.</h1>
+<!-- START_6f7a48a3daea6fd0cecb080b510107ee -->
+<h2>Metodo POST de Notificaciones</h2>
+<p>Este metodo se podran recibir varias notificaciones de las diferentes instituciones</p>
+<p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/notificaciones" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_FUD":"enim","codigo_tipo_notificacion":"quod","fecha_hora_notificacion":"ut","sujeto":"est","notificador":"quia","solicitante":"eos","actuado_actividad":"facilis","archivo":"non"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/notificaciones");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_FUD": "enim",
+    "codigo_tipo_notificacion": "quod",
+    "fecha_hora_notificacion": "ut",
+    "sujeto": "est",
+    "notificador": "quia",
+    "solicitante": "eos",
+    "actuado_actividad": "facilis",
+    "archivo": "non"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "La Notificaion se Inserto satisfactoriamente",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/notificaciones</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codigo_FUD</td>
+<td>string</td>
+<td>required</td>
+<td>codigo unico de la denuncia</td>
+</tr>
+<tr>
+<td>codigo_tipo_notificacion</td>
+<td>string</td>
+<td>required</td>
+<td>Código del tipo de actividad / actuado realizado hacia la Fiscalia</td>
+</tr>
+<tr>
+<td>fecha_hora_notificacion</td>
+<td>date</td>
+<td>required</td>
+<td>Fecha en la que se realiza la Actividad/Actuado</td>
+</tr>
+<tr>
+<td>sujeto</td>
+<td>array[]</td>
+<td>required</td>
+<td>Datos para la verificacionde una persona nombre apellidos fecha nacimiento</td>
+</tr>
+<tr>
+<td>notificador</td>
+<td>array[]</td>
+<td>required</td>
+<td>Datos para la verificacionde una persona nombre apellidos fecha nacimiento</td>
+</tr>
+<tr>
+<td>solicitante</td>
+<td>array[]</td>
+<td>required</td>
+<td>Datos para la verificacionde una persona nombre apellidos fecha nacimiento</td>
+</tr>
+<tr>
+<td>actuado_actividad</td>
+<td>string</td>
+<td>required</td>
+<td>descripcion del actuado o Actividad</td>
+</tr>
+<tr>
+<td>archivo</td>
+<td>BASE64</td>
+<td>required</td>
+<td>archivo del actuado a activdad en formato PDF convertido en BASE64 maximo 10MB</td>
+</tr>
+</tbody>
+</table>
+<!-- END_6f7a48a3daea6fd0cecb080b510107ee -->
+<h1>Metodos Actividades.</h1>
+<!-- START_91379747937eb85a9fdf28770fb9c71b -->
+<h2>Metodo POST de Notificaciones</h2>
+<p>Este metodo se podran recibir varias notificaciones de las diferentes instituciones</p>
+<p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/actividad" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_fud":"amet","codigo_actividad":5,"codigo_tipo_actividad":4,"fecha_actividad":"atque","descripcion_actividad":"distinctio","archivo_actividad":"nam"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/actividad");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_fud": "amet",
+    "codigo_actividad": 5,
+    "codigo_tipo_actividad": 4,
+    "fecha_actividad": "atque",
+    "descripcion_actividad": "distinctio",
+    "archivo_actividad": "nam"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "La Actividad se Inserto satisfactoriamente",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/actividad</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codigo_fud</td>
+<td>string</td>
+<td>required</td>
+<td>Codigo unido del Caso</td>
+</tr>
+<tr>
+<td>codigo_actividad</td>
+<td>integer</td>
+<td>required</td>
+<td>Código único de la Actividad</td>
+</tr>
+<tr>
+<td>codigo_tipo_actividad</td>
+<td>integer</td>
+<td>required</td>
+<td>Código del catálogo de tipo de actividad</td>
+</tr>
+<tr>
+<td>fecha_actividad</td>
+<td>date</td>
+<td>required</td>
+<td>Fecha de Emisión de la Actividad</td>
+</tr>
+<tr>
+<td>descripcion_actividad</td>
+<td>string</td>
+<td>required</td>
+<td>Pequeña descripción de la actividad</td>
+</tr>
+<tr>
+<td>archivo_actividad</td>
+<td>BASE64</td>
+<td>required</td>
+<td>Archivo relacionado con la Actividad en formato PDF (base64)</td>
+</tr>
+</tbody>
+</table>
+<!-- END_91379747937eb85a9fdf28770fb9c71b -->
+<h1>Metodos Medidas de Proteccion.</h1>
+<!-- START_4934cf910dfdb8173665030b54a3ba9b -->
+<h2>Registro POST de Medidas de Proteccion.</h2>
+<p>Este metodo es para registrar las Medidas de Proteccion de una Victima <br><br>
+en la Url se debe colocar el ci de la persona como el numero de caso <br>
+Url base acompañado del ?ci= numero de carnet<br></p>
+<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/medidas" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_medida_proteccion":14,"tipo":7,"inciso":7}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/medidas");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_medida_proteccion": 14,
+    "tipo": 7,
+    "inciso": 7
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "las Medidas se llenaron Correctamente",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/casos/{hecho}/medidas</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codigo_medida_proteccion</td>
+<td>integer</td>
+<td>required</td>
+<td>Código asignado de un catálogo definido por la ley 1173</td>
+</tr>
+<tr>
+<td>tipo</td>
+<td>integer</td>
+<td>required</td>
+<td>Tipo de medida (tipo 1 para medidas de la víctima niño o niña.</td>
+</tr>
+<tr>
+<td>inciso</td>
+<td>integer</td>
+<td>required</td>
+<td>Inciso donde se encuentra la descrita la medida de protección de la ley 1173</td>
+</tr>
+</tbody>
+</table>
+<!-- END_4934cf910dfdb8173665030b54a3ba9b -->
+<!-- START_1e9751c498972821c495b54cfc086a4b -->
+<h2>Actualizacion PUT de Medidas de Proteccion.</h2>
+<p>Este metodo es para registrar las Medidas de Proteccion de una Victima <br><br>
+en la Url se debe colocar el ci de la persona como el numero de caso <br>
+Url base acompañado del ?ci= numero de carnet<br></p>
+<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X PUT "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/medidas/1" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_medida_proteccion":4,"tipo":19,"inciso":14}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/medidas/1");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_medida_proteccion": 4,
+    "tipo": 19,
+    "inciso": 14
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "las Medidas se Actualizaron Correctamente",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PUT api/v2/casos/{hecho}/medidas/{medida}</code></p>
+<p><code>PATCH api/v2/casos/{hecho}/medidas/{medida}</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codigo_medida_proteccion</td>
+<td>integer</td>
+<td>required</td>
+<td>Código asignado de un catálogo definido por la ley 1173</td>
+</tr>
+<tr>
+<td>tipo</td>
+<td>integer</td>
+<td>required</td>
+<td>Tipo de medida (tipo 1 para medidas de la víctima niño o niña.</td>
+</tr>
+<tr>
+<td>inciso</td>
+<td>integer</td>
+<td>required</td>
+<td>Inciso donde se encuentra la descrita la medida de protección de la ley 1173</td>
+</tr>
+</tbody>
+</table>
+<!-- END_1e9751c498972821c495b54cfc086a4b -->
+<h1>Metodos Sujetos Procesales</h1>
+<!-- START_342fa55c54b09c080ad50d7f3c9abaf6 -->
+<h2>Metodo POST para registro de Sujetos Procesales.</h2>
+<p>En este metodo debe mandarse la informacion Generada en las Instituciones con acceso a esta API
+cade vez que se genere un nuevo tipo de Sujeto Procesal se de ma andar 2 parametros adicionales
+como ser el <b>tipo=</b> y el <b>es_persona=</b> donde los parametros van de acuerdo a lo sgt<br>
+<b>tipo=1 (Persona Denunciante)  |</b> <b>es_persona=0 (Persona Juridica)</b><br>
+<b>tipo=2  (Persona Denunciado)  |</b> <b>es_persona=1 (Persona natural)</b><br>
+<b>tipo=3    (Persona Victima)   |</b> <b>es_persona=2 (Persona Desconocida y/o Extranjera)</b><br>
+<b>tipo=4    (Persona Testigo)   |</b><br></p>
+<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007/sujetosprocesales?tipo=1&amp;es_persona=1" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2" \
+    -H "Content-Type: application/json" \
+    -d '{"es_victima":16,"es_persona_valida":18,"codigo_municipio_residencia":"non","n_documento":"non","nombre":"neque","ap_paterno":"adipisci","ap_materno":"excepturi","ap_esposo":"est","sexo":"exercitationem","fecha_nacimiento":"suscipit","estado_civil":"est","domicilio":"a","telefono":"quo","celular":"velit","profesion_ocupacion":"unde","pueblo_originario":"eligendi","lugar_trabajo":"tempore","domicilio_laboral":"quas","telefono_laboral":"non","alias":"et","estatura":false,"tez":"qui","edad":"quam","vestimenta":"aut","senia":"reprehenderit","peso":"enim","cabello":"fugit","genero":"sunt","email":"ex","ojos":true,"ciudadano_digital":"quae","relacion_victima":19,"nivel_educacion":16,"grupo_vulnerable":11,"grado_discapacidad":4,"estado_procesal":1,"fecha_estado_procesal":"molestiae","nit":2,"razon_social":"voluptatibus","map_latitud":"quia","map_longitud":"aut","relacion_victima_id":8,"estado_procesal_id":17,"n_documento_representante_legal":"et","Nombre_representante_legal":"quod","ap_paterno_representante_legal":"ullam","ap_materno_representante_legal":"saepe","fecha_nacimiento_representante_legal":"quas"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007/sujetosprocesales?tipo=1&amp;es_persona=1");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "es_victima": 16,
+    "es_persona_valida": 18,
+    "codigo_municipio_residencia": "non",
+    "n_documento": "non",
+    "nombre": "neque",
+    "ap_paterno": "adipisci",
+    "ap_materno": "excepturi",
+    "ap_esposo": "est",
+    "sexo": "exercitationem",
+    "fecha_nacimiento": "suscipit",
+    "estado_civil": "est",
+    "domicilio": "a",
+    "telefono": "quo",
+    "celular": "velit",
+    "profesion_ocupacion": "unde",
+    "pueblo_originario": "eligendi",
+    "lugar_trabajo": "tempore",
+    "domicilio_laboral": "quas",
+    "telefono_laboral": "non",
+    "alias": "et",
+    "estatura": false,
+    "tez": "qui",
+    "edad": "quam",
+    "vestimenta": "aut",
+    "senia": "reprehenderit",
+    "peso": "enim",
+    "cabello": "fugit",
+    "genero": "sunt",
+    "email": "ex",
+    "ojos": true,
+    "ciudadano_digital": "quae",
+    "relacion_victima": 19,
+    "nivel_educacion": 16,
+    "grupo_vulnerable": 11,
+    "grado_discapacidad": 4,
+    "estado_procesal": 1,
+    "fecha_estado_procesal": "molestiae",
+    "nit": 2,
+    "razon_social": "voluptatibus",
+    "map_latitud": "quia",
+    "map_longitud": "aut",
+    "relacion_victima_id": 8,
+    "estado_procesal_id": 17,
+    "n_documento_representante_legal": "et",
+    "Nombre_representante_legal": "quod",
+    "ap_paterno_representante_legal": "ullam",
+    "ap_materno_representante_legal": "saepe",
+    "fecha_nacimiento_representante_legal": "quas"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "datos llenados correctamente en el caso xxxxxx",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/casos/{hecho}/sujetosprocesales</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>es_victima</td>
+<td>integer</td>
+<td>optional</td>
+<td>opcional Tipo booleano  devuelve 0: si no es víctima o 1: si es víctima</td>
+</tr>
+<tr>
+<td>es_persona_valida</td>
+<td>integer</td>
+<td>required</td>
+<td>persona_Natural=1, Jurídica=1 o Desconocida=0</td>
+</tr>
+<tr>
+<td>codigo_municipio_residencia</td>
+<td>string</td>
+<td>required</td>
+<td>Municipio de residencia de una persona</td>
+</tr>
+<tr>
+<td>n_documento</td>
+<td>string</td>
+<td>required</td>
+<td>Carnet de identidad de la una persona válida por el SEGIF</td>
+</tr>
+<tr>
+<td>nombre</td>
+<td>string</td>
+<td>required</td>
+<td>Nombre de la persona natural</td>
+</tr>
+<tr>
+<td>ap_paterno</td>
+<td>string</td>
+<td>required</td>
+<td>Apellido paterno de la persona natural</td>
+</tr>
+<tr>
+<td>ap_materno</td>
+<td>string</td>
+<td>required</td>
+<td>Apellido materno de la persona natural</td>
+</tr>
+<tr>
+<td>ap_esposo</td>
+<td>string</td>
+<td>required</td>
+<td>Apellido esposo de la persona natural</td>
+</tr>
+<tr>
+<td>sexo</td>
+<td>date</td>
+<td>optional</td>
+<td>opcional Sexo de la persona natural</td>
+</tr>
+<tr>
+<td>fecha_nacimiento</td>
+<td>date</td>
+<td>required</td>
+<td>Fecha de nacimiento de la persona natural (Ejemplo 2019-10-24 15:30:15)</td>
+</tr>
+<tr>
+<td>estado_civil</td>
+<td>numeric</td>
+<td>optional</td>
+<td>opcional Estado civil de la persona natural</td>
+</tr>
+<tr>
+<td>domicilio</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Domicilio de la empresa</td>
+</tr>
+<tr>
+<td>telefono</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Teléfono de la empresa</td>
+</tr>
+<tr>
+<td>celular</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Celular de la persona natural</td>
+</tr>
+<tr>
+<td>profesion_ocupacion</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Profesión de la persona natural</td>
+</tr>
+<tr>
+<td>pueblo_originario</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Pueblo originario del que se considera la persona natural</td>
+</tr>
+<tr>
+<td>lugar_trabajo</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Lugar de trabajo de la persona natural</td>
+</tr>
+<tr>
+<td>domicilio_laboral</td>
+<td>date</td>
+<td>optional</td>
+<td>opcional Domicilio de donde trabaja la persona natural</td>
+</tr>
+<tr>
+<td>telefono_laboral</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Teléfono del lugar donde trabaja la persona natural</td>
+</tr>
+<tr>
+<td>alias</td>
+<td>numeric</td>
+<td>optional</td>
+<td>opcional Alias de la persona natural</td>
+</tr>
+<tr>
+<td>estatura</td>
+<td>boolean</td>
+<td>optional</td>
+<td>opcional Estatura de la persona natural</td>
+</tr>
+<tr>
+<td>tez</td>
+<td>numeric</td>
+<td>optional</td>
+<td>opcional Tes de la persona natural</td>
+</tr>
+<tr>
+<td>edad</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Edad de la persona natural</td>
+</tr>
+<tr>
+<td>vestimenta</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Vestimenta de la persona natural</td>
+</tr>
+<tr>
+<td>senia</td>
+<td>string</td>
+<td>optional</td>
+<td>Señas particulares de la persona natural</td>
+</tr>
+<tr>
+<td>peso</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Peso de la persona natural</td>
+</tr>
+<tr>
+<td>cabello</td>
+<td>date</td>
+<td>optional</td>
+<td>opcional Cabello de la persona natural</td>
+</tr>
+<tr>
+<td>genero</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Género de la persona natural</td>
+</tr>
+<tr>
+<td>email</td>
+<td>numeric</td>
+<td>optional</td>
+<td>opcional Email de la persona natural</td>
+</tr>
+<tr>
+<td>ojos</td>
+<td>boolean</td>
+<td>optional</td>
+<td>opcional Color de ojos de la persona natural</td>
+</tr>
+<tr>
+<td>ciudadano_digital</td>
+<td>numeric</td>
+<td>required</td>
+<td>Tipo booleano  devuelve 0: si no es ciudadano Digital o 1: si es ciudadano digital</td>
+</tr>
+<tr>
+<td>relacion_victima</td>
+<td>integer</td>
+<td>optional</td>
+<td>opcional id del catálogo de relación con la víctim</td>
+</tr>
+<tr>
+<td>nivel_educacion</td>
+<td>integer</td>
+<td>optional</td>
+<td>opcional id del catálogo del grado de educación recibida</td>
+</tr>
+<tr>
+<td>grupo_vulnerable</td>
+<td>integer</td>
+<td>optional</td>
+<td>opcional id del catálogo  grupo vulnerable</td>
+</tr>
+<tr>
+<td>grado_discapacidad</td>
+<td>integer</td>
+<td>optional</td>
+<td>opcional id del catálogo grado de discapacidad</td>
+</tr>
+<tr>
+<td>estado_procesal</td>
+<td>integer</td>
+<td>optional</td>
+<td>opcional id del estado procesal en el que se encuentra actualmente</td>
+</tr>
+<tr>
+<td>fecha_estado_procesal</td>
+<td>date</td>
+<td>optional</td>
+<td>opcional fecha en la que  se llevo acabo el estado procesal en el que se encuentra actualment</td>
+</tr>
+<tr>
+<td>nit</td>
+<td>integer</td>
+<td>required</td>
+<td>Número de Identificación Tributaria de la persona jurídica</td>
+</tr>
+<tr>
+<td>razon_social</td>
+<td>string</td>
+<td>required</td>
+<td>Nombre de la Empresa</td>
+</tr>
+<tr>
+<td>map_latitud</td>
+<td>string</td>
+<td>required</td>
+<td>Latitud de la ubicación de la empresa</td>
+</tr>
+<tr>
+<td>map_longitud</td>
+<td>string</td>
+<td>required</td>
+<td>Longitud de la ubicación de la empresa</td>
+</tr>
+<tr>
+<td>relacion_victima_id</td>
+<td>integer</td>
+<td>optional</td>
+<td>opcional Código del catálogo de relación de la víctima</td>
+</tr>
+<tr>
+<td>estado_procesal_id</td>
+<td>integer</td>
+<td>optional</td>
+<td>Código del estado Procesal en el que se encuentra</td>
+</tr>
+<tr>
+<td>n_documento_representante_legal</td>
+<td>string</td>
+<td>required</td>
+<td>Ci del representante legal de la persona jurídica para validacion</td>
+</tr>
+<tr>
+<td>Nombre_representante_legal</td>
+<td>string</td>
+<td>required</td>
+<td>Nombre del representante legal de la persona jurídica para validación</td>
+</tr>
+<tr>
+<td>ap_paterno_representante_legal</td>
+<td>string</td>
+<td>required</td>
+<td>Apellido Paterno del representante legal de la persona jurídica para validación</td>
+</tr>
+<tr>
+<td>ap_materno_representante_legal</td>
+<td>string</td>
+<td>required</td>
+<td>Apellido Materno del representante legal de la persona jurídica para validación</td>
+</tr>
+<tr>
+<td>fecha_nacimiento_representante_legal</td>
+<td>date</td>
+<td>required</td>
+<td>Fecha de nacimiento de la persona natural (Ejemplo 2019-10-24 15:30:15)</td>
+</tr>
+</tbody>
+</table>
+<!-- END_342fa55c54b09c080ad50d7f3c9abaf6 -->
+<!-- START_01691b0909c874275500685f20cc919e -->
+<h2>Metodo PUT para Actualizar los datos de un Sujeto Procesal.</h2>
+<p>este metodo aceptamos 2 tipos de parametros extra que son el <b>Tipo de sujeto Procesal</b> y el <b>n_documento</b>
+<b>tipo=1 (Persona Denunciante)</b><br>
+<b>tipo=2 (Persona Denunciado)</b><br>
+<b>tipo=3 (Persona Victima)</b><br>
+<b>tipo=4 (Persona Testigo)</b><br>
+<b>es_persona=0 (Persona Juridica)</b><br>
+<b>es_persona=1 (Persona natural)</b><br>
+<b>es_persona=2 (Persona Desconocida y/o Extranjera)</b><br></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X PUT "http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007/sujetosprocesales?tipo=1&amp;es_persona=1" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2"</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/casos/601102011900007/sujetosprocesales?tipo=1&amp;es_persona=1");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "datos Actualizados correctamente en el caso xxxxxx",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PUT api/v2/casos/{hecho}/sujetosprocesales/{sujetosprocesale}</code></p>
+<p><code>PATCH api/v2/casos/{hecho}/sujetosprocesales/{sujetosprocesale}</code></p>
+<!-- END_01691b0909c874275500685f20cc919e -->
+<h1>Metodos de Arpobacionde Documentos AGETIC.</h1>
+<!-- START_3121208c276e4ec50c2414f61df4fa8d -->
+<h2>Store a newly created resource in storage.</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/aprobaciondocumentos" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}"</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/aprobaciondocumentos");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "Unexpected error",
+    "code": 500
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/aprobaciondocumentos</code></p>
+<!-- END_3121208c276e4ec50c2414f61df4fa8d -->
+<h1>Metodos de reparto de Juez Juzgado de un Caso.</h1>
+<!-- START_c0912a61f12aec98e23dcfff958fe2e4 -->
+<h2>Metodo POST registro del reparto de un Juez y Juzgado de un caso.</h2>
+<p>en este metodo podemos insertar todo los campos referentes al Juez y el reparto<br><br></p>
+<p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev.fiscalia.gob.bo/api/v2/agendamiento/13/juez" \
+    -H "Authorization: Bearer " \
+    -H "Api-Version: v2" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_juzgado":8,"codigo_fud":"autem","n_documento":"rerum","complemento":"repellendus","nombre":"architecto","ap_paterno":"est","ap_materno":"voluptates","fecha_nacimiento":"quam"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev.fiscalia.gob.bo/api/v2/agendamiento/13/juez");
+
+let headers = {
+    "Authorization": "Bearer ",
+    "Api-Version": "v2",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_juzgado": 8,
+    "codigo_fud": "autem",
+    "n_documento": "rerum",
+    "complemento": "repellendus",
+    "nombre": "architecto",
+    "ap_paterno": "est",
+    "ap_materno": "voluptates",
+    "fecha_nacimiento": "quam"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "El Juez se Inserto satisfactoriamente",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/agendamiento/{codigo}/juez</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codigo_juzgado</td>
+<td>integer</td>
+<td>required</td>
+<td>el carnet de identidad para validacion</td>
+</tr>
+<tr>
+<td>codigo_fud</td>
+<td>string</td>
+<td>required</td>
+<td>el para la validacion</td>
+</tr>
+<tr>
+<td>n_documento</td>
+<td>string</td>
+<td>required</td>
+<td>el carnet de identidad para validacion</td>
+</tr>
+<tr>
+<td>complemento</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional el para la validacion</td>
+</tr>
+<tr>
+<td>nombre</td>
+<td>string</td>
+<td>required</td>
+<td>el nombre para la validacion</td>
+</tr>
+<tr>
+<td>ap_paterno</td>
+<td>string</td>
+<td>required</td>
+<td>el apellido paterno para la validacion</td>
+</tr>
+<tr>
+<td>ap_materno</td>
+<td>string</td>
+<td>required</td>
+<td>el apellido materno para la validacion</td>
+</tr>
+<tr>
+<td>fecha_nacimiento</td>
+<td>date</td>
+<td>required</td>
+<td>la fecha de nacimiento para la validacion</td>
+</tr>
+</tbody>
+</table>
+<!-- END_c0912a61f12aec98e23dcfff958fe2e4 -->
+<h1>Metodos para el Agendamiento de Audiencias.</h1>
+<!-- START_6d4a13f77eedf4d280f19490a6244ba6 -->
+<h2>Metodo POST para la insercion del Agendamiento de las Audiencias.</h2>
+<p>en este metodo podemos insertar todo los campos referentes al sujeto procesal<br><br></p>
+<p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/agendamiento" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_fud":"quia","codigo_agendamiento":14,"fecha_hora_inicio":"ipsum","fecha_hora_fin":"consectetur","codigo_tipo_audiencia":20,"sala":"molestiae","codigo_juzgado":"recusandae","archivo_pdf":"recusandae"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/agendamiento");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_fud": "quia",
+    "codigo_agendamiento": 14,
+    "fecha_hora_inicio": "ipsum",
+    "fecha_hora_fin": "consectetur",
+    "codigo_tipo_audiencia": 20,
+    "sala": "molestiae",
+    "codigo_juzgado": "recusandae",
+    "archivo_pdf": "recusandae"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "El Agendamiento se Inserto satisfactoriamente",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/agendamiento</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codigo_fud</td>
+<td>string</td>
+<td>required</td>
+<td>Código Único de la Denuncia</td>
+</tr>
+<tr>
+<td>codigo_agendamiento</td>
+<td>integer</td>
+<td>required</td>
+<td>Código único del Agendamiento</td>
+</tr>
+<tr>
+<td>fecha_hora_inicio</td>
+<td>date</td>
+<td>required</td>
+<td>Fecha y hora de inicio de audiencia (aaaa-MM-dd hh:mm) (2019-10-03 17:00)</td>
+</tr>
+<tr>
+<td>fecha_hora_fin</td>
+<td>date</td>
+<td>required</td>
+<td>Fecha y hora fin de audiencia (aaaa-MM-dd hh:mm) (2019-10-03 19:00)</td>
+</tr>
+<tr>
+<td>codigo_tipo_audiencia</td>
+<td>integer</td>
+<td>optional</td>
+<td>Catálogo de Tipos de Audiencias</td>
+</tr>
+<tr>
+<td>sala</td>
+<td>string</td>
+<td>required</td>
+<td>Denominativo de la sala donde se llevara a cabo la Audiencia</td>
+</tr>
+<tr>
+<td>codigo_juzgado</td>
+<td>string</td>
+<td>required</td>
+<td>Juzgado id del catálogo de juzgados</td>
+</tr>
+<tr>
+<td>archivo_pdf</td>
+<td>BASE_64</td>
+<td>required</td>
+<td>Documento tipo PDF en base 64 referente a la audiencia</td>
+</tr>
+</tbody>
+</table>
+<!-- END_6d4a13f77eedf4d280f19490a6244ba6 -->
+<!-- START_96a9f55b1b7a6f5618565174cdc5dc85 -->
+<h2>Metodo POST para Informar de una la suspencionde Una Agendamiento de Audiencia</h2>
+<p>En este campo la oficina gestora podra dar informanos las causas de por que se dio de baja una Audiencia<br><br></p>
+<p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/agendamiento/suspencion" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_agendamiento":20,"codigo_tipo_causal":5,"descripcion":"soluta","archivo_baja_audiencia":"repellat"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/agendamiento/suspencion");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_agendamiento": 20,
+    "codigo_tipo_causal": 5,
+    "descripcion": "soluta",
+    "archivo_baja_audiencia": "repellat"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "Se dio de baja el agendamiento satisfactoriamente",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/agendamiento/suspencion</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codigo_agendamiento</td>
+<td>integer</td>
+<td>required</td>
+<td>Código único del Agendamiento</td>
+</tr>
+<tr>
+<td>codigo_tipo_causal</td>
+<td>integer</td>
+<td>required</td>
+<td>Catalogo de Causales de Suspencion</td>
+</tr>
+<tr>
+<td>descripcion</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Descripcion de la causal de suspencion</td>
+</tr>
+<tr>
+<td>archivo_baja_audiencia</td>
+<td>Base64</td>
+<td>required</td>
+<td>Documento en BASE64 de la causal de baja</td>
+</tr>
+</tbody>
+</table>
+<!-- END_96a9f55b1b7a6f5618565174cdc5dc85 -->
+<h1>Metodos para el F.U.D.</h1>
+<!-- START_376ad92579502087eb0ae4e5b69c45b1 -->
+<h2>Metodo POST Insertar un nuevo Caso.</h2>
+<p>en este metodo podemos insertar todo los campos referentes al sujeto procesal<br><br></p>
+<p><b>CAMPOS DE INSERCION EN EL POST</b></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://api-dev3.fiscalia.gob.bo/api/v2/casos" \
+    -H "Authorization: Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}" \
+    -H "Content-Type: application/json" \
+    -d '{"codigo_fud":"quibusdam","tipo_denuncia_id":14,"fecha_denuncia":"consequatur","codigo_oficina":1,"codigo_municipio":"est","zona_hecho":"voluptate","direccion_hecho":"sequi","referencia_hecho":"et","longitud":"fuga","latitud":"ut","codigo_institucion":7,"user_id":12,"fecha_hora_inicio":"sapiente","fecha_hora_fin":"voluptatem","aproximado":"vel","quien_hizo":"quod","que_hizo":"iure","aquien_hizo":"et","como_hizo":"ut","relato":"deleniti"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://api-dev3.fiscalia.gob.bo/api/v2/casos");
+
+let headers = {
+    "Authorization": "Bearer {eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQwZTk1YTdjOTUwOWNiYTIzZGQwMzNhNThhMzhiMGMyOWRiMTMzYWQxZWRiMDEzM2QzMWYwZjI4ZGIzNTI5ODlkZjhjMjUxZGU5Y2RmZjdjIn0.eyJhdWQiOiI0IiwianRpIjoiNDBlOTVhN2M5NTA5Y2JhMjNkZDAzM2E1OGEzOGIwYzI5ZGIxMzNhZDFlZGIwMTMzZDMxZjBmMjhkYjM1Mjk4OWRmOGMyNTFkZTljZGZmN2MiLCJpYXQiOjE1Njc0NTU4MTAsIm5iZiI6MTU2NzQ1NTgxMCwiZXhwIjoxNTk5MDc4MjEwLCJzdWIiOiIxMDc5Iiwic2NvcGVzIjpbXX0.LfnWfIlpnNkBkWRZqtydUu5dxg_ydbWpnLlptTOT-BeJFftDfzJC_lyIN97-Zv7n19ywDgMIbSMTTwrsOBjTjzB34ld-hIXkSMg6nJgDZMPgT7jQ9VGkcjrz02yANlIvzjuV8NXthw9QxDmq6fdZfopEdzcfxQc47scRXARqLs035kvB5r_XGf8sFLJ_eN3RFOnId_PKw-JxdPDV28KghNUBSEhh3n2zXYA37OPhQdGpG3lVqAgMpdJIb30XT26VFqmjsifMED1VtleMeScrupmmqykFvfrnkplDYPl1knOLW38K0_SUEm-wmWU5H7UqFJynplnokpK839vDiUcY3vwHGaLWrBf1GVQuHWAoQo1sufRlaTyaplYP0jk103UF6QwY0gcvydK4feKRRN00KiHruj9E5QhFUYZ6T9WMd7lnPUbKewuT_uT6VlIJJXSskWElICH4duAcFXORrCyX2jB_966DC3sOcvWuGcCECER4hv7pJg1g8ISGEAm77uJ3C9jyH8ZJi8BccJceUtuJqltMc7jzCC-wkKL_wqCdrjkz9Da0oThZ8vCT7yZWRPWL0fvpy21HOc5SAQSwu9VHs51VMoHZzEFD6C6bjXlhrc9NnHlGPL0ouchKJFTiqj2cb9JSGy5_AErJJVcYlWClYiVky_dJs8iLIQ64rbDBT1k}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "codigo_fud": "quibusdam",
+    "tipo_denuncia_id": 14,
+    "fecha_denuncia": "consequatur",
+    "codigo_oficina": 1,
+    "codigo_municipio": "est",
+    "zona_hecho": "voluptate",
+    "direccion_hecho": "sequi",
+    "referencia_hecho": "et",
+    "longitud": "fuga",
+    "latitud": "ut",
+    "codigo_institucion": 7,
+    "user_id": 12,
+    "fecha_hora_inicio": "sapiente",
+    "fecha_hora_fin": "voluptatem",
+    "aproximado": "vel",
+    "quien_hizo": "quod",
+    "que_hizo": "iure",
+    "aquien_hizo": "et",
+    "como_hizo": "ut",
+    "relato": "deleniti"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "se inserto satisfactoriamente",
+    "code": 201
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v2/casos</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codigo_fud</td>
+<td>string</td>
+<td>required</td>
+<td>Código Único de la Denuncia</td>
+</tr>
+<tr>
+<td>tipo_denuncia_id</td>
+<td>integer</td>
+<td>required</td>
+<td>Es un catálogo tipo de denuncia (Ejemplo: Verbal, Escrita, Querella, Acción Directa, De oficio)</td>
+</tr>
+<tr>
+<td>fecha_denuncia</td>
+<td>date</td>
+<td>required</td>
+<td>Fecha de la denuncia o fecha de registro del denuncia(Ejemplo 2019-10-24 15:30:15)</td>
+</tr>
+<tr>
+<td>codigo_oficina</td>
+<td>integer</td>
+<td>required</td>
+<td>Código de la Oficina donde se registró el Hecho (CATÁLOGO DE OFICINAS POLICÍA O MINISTERIO PÚBLICO)</td>
+</tr>
+<tr>
+<td>codigo_municipio</td>
+<td>string</td>
+<td>required</td>
+<td>Código de 6 caracteres que identifica al municipio donde sucedió el hecho</td>
+</tr>
+<tr>
+<td>zona_hecho</td>
+<td>string</td>
+<td>required</td>
+<td>Zona donde sucedió el hecho</td>
+</tr>
+<tr>
+<td>direccion_hecho</td>
+<td>string</td>
+<td>required</td>
+<td>Dirección donde sucedió el hecho</td>
+</tr>
+<tr>
+<td>referencia_hecho</td>
+<td>string</td>
+<td>required</td>
+<td>Referencia donde sucedió el hecho.</td>
+</tr>
+<tr>
+<td>longitud</td>
+<td>string</td>
+<td>required</td>
+<td>Longitud donde fue el hecho para la geolocalización.</td>
+</tr>
+<tr>
+<td>latitud</td>
+<td>string</td>
+<td>required</td>
+<td>Latitud donde fue el hecho para la geolocalización.</td>
+</tr>
+<tr>
+<td>codigo_institucion</td>
+<td>integer</td>
+<td>optional</td>
+<td>Codigo de la institución que nos envía el POST</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>integer</td>
+<td>required</td>
+<td>Usuario con la cual se inter opera</td>
+</tr>
+<tr>
+<td>fecha_hora_inicio</td>
+<td>date</td>
+<td>required</td>
+<td>Fecha de la denuncia o fecha de registro del denuncia(Ejemplo 2019-10-24 15:30:15)</td>
+</tr>
+<tr>
+<td>fecha_hora_fin</td>
+<td>date</td>
+<td>optional</td>
+<td>opcional No obligatorio si se cuenta con fecha exacta, fecha de la denuncia o fecha de registro del denuncia(Ejemplo 2019-10-24 15:30:15)</td>
+</tr>
+<tr>
+<td>aproximado</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional No obligatorio momento aproximado de cuando se realizó el hecho</td>
+</tr>
+<tr>
+<td>quien_hizo</td>
+<td>string</td>
+<td>required</td>
+<td>Fecha en la que se envio el Certificado REJAF</td>
+</tr>
+<tr>
+<td>que_hizo</td>
+<td>string</td>
+<td>required</td>
+<td>alguna observacion del Certificado REJAF</td>
+</tr>
+<tr>
+<td>aquien_hizo</td>
+<td>string</td>
+<td>required</td>
+<td>estado del Certificado REJAF</td>
+</tr>
+<tr>
+<td>como_hizo</td>
+<td>string</td>
+<td>required</td>
+<td>DOCUMENTO PDF del REJAF</td>
+</tr>
+<tr>
+<td>relato</td>
+<td>string</td>
+<td>optional</td>
+<td>opcional Descripción del hecho al momento de la denuncia</td>
+</tr>
+</tbody>
+</table>
+<!-- END_376ad92579502087eb0ae4e5b69c45b1 -->
+      </div>
+      <div class="dark-box">
+                        <div class="lang-selector">
+                                    <a href="#" data-language-name="bash">bash</a>
+                                    <a href="#" data-language-name="javascript">javascript</a>
+                              </div>
+                </div>
+    </div>
+  </body>
+</html>

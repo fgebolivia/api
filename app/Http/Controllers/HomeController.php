@@ -25,4 +25,14 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function personalTokens()
+    {
+        return view('auth.passport.personal_tokens');
+    }
+
+    public function clients()
+    {
+        return view('auth.passport.passport_clients');
+    }
 }
