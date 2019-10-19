@@ -47,9 +47,6 @@ class CasoResource extends JsonResource
         }
 
         return [
-            'tipo_actividad' =>271,
-            'codigo_actividad' => 10875412,
-            'documento_acttividad' =>'',
             'codigo_fud' => $this->codigo,
             'relato' => $this->relato,
             'resultado' => $this->conducta,

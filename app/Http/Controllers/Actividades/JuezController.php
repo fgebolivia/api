@@ -24,8 +24,7 @@ class JuezController extends Controller
      *
      *  en este metodo podemos insertar todo los campos referentes al Juez y el reparto<br><br>
      *  <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
-     * @bodyParam codigo_juzgado integer required el carnet de identidad para validacion
-       @bodyParam codigo_fud string required el para la validacion 
+     * @bodyParam codigo_fud string required el para la validacion 
        @bodyParam n_documento string required el carnet de identidad para validacion
        @bodyParam complemento string opcional el para la validacion
        @bodyParam nombre string required el nombre para la validacion
@@ -44,7 +43,7 @@ class JuezController extends Controller
     public function store(Request $request, $codigo)
     {
         $datos = $request->validate([
-        	'codigo_juzgado' => 'required',
+        	//'codigo_juzgado' => 'required',
         	'codigo_fud' => 'required',
             'n_documento' => 'required',
             //'complemento' => 'string',
@@ -123,7 +122,7 @@ class JuezController extends Controller
         $agendajuez->persona_id = $juez_id;
         $agendajuez->tipo = 1; // 1 = juez, 2= fiscal
         $agendajuez->hecho_id = $caso->id;
-        $agendajuez->juzgado_id = $juzgado->id;
+        //$agendajuez->juzgado_id = $juzgado->id;
         //dd($agendajuez);
         $agendajuez->save();
 

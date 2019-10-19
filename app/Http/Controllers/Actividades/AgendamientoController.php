@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Actividades;
 
+use App\Helpers\HelperJuzgado;
 use App\Http\Controllers\Controller;
 use App\Models\Agenda\Agenda;
 use App\Models\Agenda\Juzgado;
@@ -64,6 +65,31 @@ class AgendamientoController extends Controller
         $hecho = Hecho::where('codigo',$request->codigo_fud)->first();
         $audienciaTipo = TipoAudiencia::where('codigo_audiencia',$request->codigo_tipo_audiencia)->first();
         $juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado)->first();
+        if ($juzgado === null) {
+
+            $juzgado1 = new HelperJuzgado();
+            $respuesta = $juzgado1->GetJuzgado($request->codigo_juzgado);
+            $insertJuzgado = json_decode($respuesta);
+
+            $muni = UbgeMunicipio::where('codigo',$insertJuzgado->juzgado->codigoMunicipio)->first();
+
+            $juzgadoInsert = new Juzgado();
+
+            $juzgadoInsert->codigo_juzgado = $insertJuzgado->juzgado->id;
+            $juzgadoInsert->nombre = $insertJuzgado->juzgado->nombre;
+            $juzgadoInsert->municipio_id = $muni->id;
+            $juzgadoInsert->oficina_gestora = $insertJuzgado->juzgado->oficinaGestora;
+            $juzgadoInsert->zona = $insertJuzgado->juzgado->zona;
+            $juzgadoInsert->direccion = $insertJuzgado->juzgado->direccion;
+            $juzgadoInsert->map_latitud = $insertJuzgado->juzgado->latitud;
+            $juzgadoInsert->map_longitud = $insertJuzgado->juzgado->nombre;
+            $juzgadoInsert->edificio= $insertJuzgado->juzgado->longitud;
+            $juzgadoInsert->telefono = $insertJuzgado->juzgado->telefonos;
+            $juzgadoInsert->save();
+
+            $juzgado_id = $juzgadoInsert->id;
+
+        }else{ $juzgado_id = $juzgado->id; }
 
         $agenda = new Agenda();
 
@@ -79,7 +105,7 @@ class AgendamientoController extends Controller
         $agenda->sala = $request->sala;
         $agenda->hecho_id = $hecho->id;
         $agenda->tipo_audiencia_id = $audienciaTipo->id;
-        $agenda->juzgado_id = $juzgado->id;
+        $agenda->juzgado_id = $juzgado_id;
         $agenda->estado = 0;
 
         $agenda->save();

@@ -2,42 +2,97 @@
 
 namespace App\Helpers;
 
-use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
 use App\Models\Denuncia\PersonaMedidasProteccion;
 use App\Models\Notificacion\Caso;
 use App\Models\Rrhh\RrhhPersona;
 use App\Models\Rrhh\RrhhPersonaDesconocida;
 use App\Models\Rrhh\RrhhPersonaJuridica;
-
-//use GuzzleHttp\Client;
+use App\Models\UbicacionGeografica\UbgeMunicipio;
+use GuzzleHttp\Client;
 
 class HelperInicioOrganoJudicial
 {
-    public static function insertFormularioUnico($casoId, $arrayActividad)
+    public static function insertFormularioUnico($caso)
     {
-        $caso = Caso::where('id',$casoId)->first();
 
-        foreach ($arrayActividad as $key) {
+        $casoi4 = Caso::where('Caso',$caso->codigo)->first();
+
+        $arrayActividades = Actividad::where('caso',$casoi4->Caso)->get();
+        $arrayDelitos =CasoDelito::where('caso',$casoi4->Caso)->get();
+
+        foreach ($arrayActividades as $key) {
             $actividades[] =[
-                    'codigo_actividad' => $key->codigo_actividad,
-                    'codigo_fud' => $caso->Caso,
-                    'codigo_tipo_actividad' => $key->codigo_tipo_actividad,
-                    'descripcion' => $key->descripcion,
-                    'fecha' => $key->fecha_actividad,
-                    'archivo' => '',
+                    'tipo_actividad' => $key->TipoActividad,
+                    'codigo_actividad' => $key->id,
+                    'descripcion_actividad' => $key->descripcion,
+                    'fecha_actividad' => $key->Fecha,
+                    'archdocumento_acttividadivo' => '',
                 ];
         }
 
-        foreach ($arrayDelito as $row) {
+        foreach ($arrayDelitos as $row) {
             $delito[] =[
                     'codigo_delito' => $row->codigo_delito,
-                    'codigo_fud' => $caso->Caso,
                     'es_delito_principal' => $row->es_delito_principal,
                 ];
         }
 
-        $hechoPer = HechoPersona::where('hecho_id',$casoId)->get();
+        $municipio = UbgeMunicipio::where('di',$caso->municipio_id)->first();
+
+        $headers = ['Content-Type' => 'application/json'];
+
+         $queryParams = [
+                'codigo_fud' => $caso->codigo,
+
+                'actividades' => $actividades,
+
+                'relato' => $caso->relato,
+                'direccion_caso' => $caso->direccion,
+                'detalle_localizacion' => $caso->detallelocacion,
+                'municipio_codigo' => $municipio->codigo,
+                'fecha_creacion_fud' => $caso->created_at,
+                'longitud' => $caso->longitude,
+                'latitud' => $caso->latitude,
+                'codigo_tipo_denuncia' => $caso->tipo_denuncia_id,
+                'fecha_hora_inicio' => $caso->fechahorainicio,
+                'fecha_hora_fin' => $caso->fechahorafin,
+                'momento_aproximado' => $caso->aproximado,
+                'etapa_caso' => $caso->hecho_etapa_id,
+                'estado_caso' => $caso->hecho_estado_id,
+                'oficina' => $caso->oficina_id,
+                'titulo' => $caso->titulo,
+
+                'delitos' => $delito
+            ];
+
+            return $deco = json_encode($queryParams);
+            
+            $client = new Client();
+
+            $response = $client->post('http://magistratura.organojudicial.gob.bo:8888/wsInteroperabilidadSirej/servicios/formulariounico/v1',[
+                'headers' => $headers,
+                'body' => $deco
+            ]);
+        return $response->getBody()->getContents();
+    } 
+
+
+    public static function inserSujetosProcesales($tiposujeto, $arrayHechoPersona)
+    {
+        foreach ($arrayHechoPersona as $key => $value) {
+           
+            $arraySujeto[]= ['creacion' => $value->created_at];
+        }
+        return $arraySujeto;
+
+
+
+
+
+
+
+        /*$hechoPer = HechoPersona::where('hecho_id',$casoCodigo)->get();
         $medidas = array();
         foreach ($hechoPer as $row => $valor) {
 
@@ -133,42 +188,8 @@ class HelperInicioOrganoJudicial
                     'codigo_sujeto_procesal' => $valor->tipo_sujeto_id,
                 ]
             }
-            
+        }*/
+    }
 
-        }
-
-        $headers = ['Content-Type' => 'application/json'];
-
-         $queryParams = [
-                'actividad' => $actividades,
-                'codigo_delito_principal' => $caso->DelitoPrincipal,
-                'codigo_estado_caso' => $caso->EstadoCaso,
-                'codigo_etapa_caso' => $caso->EtapaCaso,
-                'codigo_fud' => $caso->Caso,
-                'codigo_municipio' => '1',
-                'codigo_oficina' => '1',
-                'delito' => $delito,
-                'direccion_hecho' => 'lo que sea es la direccion',
-                'fecha_denuncia' => '2019-10-17T10:22:30.275-04:00',
-                'fecha_hecho' => '2019-10-17T10:22:30.275-04:00',
-                'latitud' => '-13.87451478',
-                'longitud' => '-69.1254877',
-                'medida_de_proteccion' => $medidas,
-                'referencia_hecho' => 'reofndskjbnldfb',
-                'relato' => 'dkhfbgadknsglfdbndkfsb',
-                'sujetos_procesales' => $sujeto,
-                'tipo_denuncia' => 1,
-                'zona_hecho' => 'calle no se que que es buena',
-            ];
-
-            return $deco = json_encode($queryParams);
-            
-            /*$client = new Client();
-
-            $response = $client->post('http://magistratura.organojudicial.gob.bo:8888/wsInteroperabilidadSirej/servicios/formulariounico/v1',[
-                'headers' => $headers,
-                'body' => $deco
-            ]);
-        return $response->getBody()->getContents();*/
-    } 
+        
 }

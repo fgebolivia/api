@@ -43,11 +43,10 @@ class AprobacionDocumentosController extends Controller
         if ($tramiteUuid === null) {
                     return response()->json(['finalizado'=>false, 'message'=> 'el campo uuidTramite no exite', 'code' => 422],422);
                 }
-
         if ($request->aceptado) {
             $tramiteUuid->codigo_operacion = $request->codigoOperacion;
             $tramiteUuid->transaccion_id = $request->transaction_id;
-            $tramiteUuid->fh_solicitud_agetic = date('Y-m-d H:i:s:u', strtotime($request->fechaHoraSolicitud));
+            $tramiteUuid->fh_solicitud_agetic = date('Y-m-d H:i:s', strtotime(str_replace('/', '-',$request->fechaHoraSolicitud)));
             $tramiteUuid->tramite_uuid = $request->uuidTramite;
             $tramiteUuid->save();
 
@@ -64,9 +63,9 @@ class AprobacionDocumentosController extends Controller
             
         }else{
             
-            $tramiteUuid->fh_solicitud_agetic = date('Y-m-d H:i:s:u', strtotime($request->fechaHoraSolicitud));
+            $tramiteUuid->fh_solicitud_agetic = date('Y-m-d H:i:s', strtotime(str_replace('/', '-',$request->fechaHoraSolicitud)));
             $tramiteUuid->save();
-            return response()->json(['finalizado'=>false, 'message'=> 'Los valores del rechazo fueron registradas en el Sistema Cliente.', 'code' => 422],422);
+            return response()->json(['finalizado'=>true, 'message'=> 'Los valores del rechazo fueron registradas en el Sistema Cliente.', 'code' => 200],200);
         }
 
         return response()->json(['finalizado'=>true, 'message'=> 'Los valores de aprobación fueron registradas en el Sistema Cliente.', 'code' => 200],200);
