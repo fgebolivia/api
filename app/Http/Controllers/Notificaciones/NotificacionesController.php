@@ -40,7 +40,7 @@ class NotificacionesController extends Controller
      */
     public function store(Request $request)
     {
-        $datos = $request->validate([
+        /*$datos = $request->validate([
             'codigo_fud' => 'required|max:250|string',
             'codigo_tipo_notificacion' => 'required|string',
             'fecha_hora_notificacion' => 'required|date',
@@ -70,17 +70,25 @@ class NotificacionesController extends Controller
             'ap_paterno_solicitante' => 'required|string',
             'ap_materno_solicitante' => 'required|string',
             'fecha_nacimiento_solicitante' => 'required|date',
-            ]);
+            ]);*/
 
+            $datos = $request->validate([
+            'codigo_fud' => 'required|max:250|string',
+            //'tipo_sujeto_id' => 'required',
+            ]);
         //Hecho::create($datos);
         
         
-       /* $hecho = Hecho::where('codigo',$request->codigo_fud)->first();
+        $hecho = Hecho::where('codigo',$request->codigo_fud)->first();
         
-        $hechopersona = HechoPersona::where('hecho_id',$hecho->id)->get();
+        
         $esto = new HelperInicioOrganoJudicial();
-        $respuesta = $esto->inserSujetosProcesales(1,$hechopersona);
-        return $respuesta;*/
+        
+        $respuesta = $esto->insertFormularioUnico($hecho,'FIS-BENI1901872');//{"codigo":"201","mensaje":"Created","idJuzgado":42}
+
+        $respuesta2 = $esto->inserSujetosProcesales($hecho->id,$request->codigo_fud);
+
+        return $respuesta. $respuesta2;
         //return $this->successResponse('se inserto satisfactoriamente', 201);
     }
 }

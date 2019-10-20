@@ -24,6 +24,7 @@ class Actividad extends Model
         'RequisaPositiva',
         'Documento',
         '_Documento',
+        'TipoActividad',
     ];
     protected $guarded  = [];
 }

@@ -13,10 +13,9 @@ class CasoDelito extends Model
      */
     protected $connection = 'comments';
 
-    protected $table = 'zCasoDelitoDup2';
+    protected $table = 'CasoDelito';
     protected $fillable = [
-        'nro_fila',
-        'idCasoDelito',
+        'id',
         'Caso',
         'Delito',        
     ];

@@ -3,8 +3,12 @@
 namespace App\Helpers;
 
 use App\Models\Denuncia\HechoPersona;
+use App\Models\Denuncia\MedidaProteccion;
 use App\Models\Denuncia\PersonaMedidasProteccion;
+use App\Models\Denuncia\RepresentanteLegal;
+use App\Models\Notificacion\Actividad;
 use App\Models\Notificacion\Caso;
+use App\Models\Notificacion\CasoDelito;
 use App\Models\Rrhh\RrhhPersona;
 use App\Models\Rrhh\RrhhPersonaDesconocida;
 use App\Models\Rrhh\RrhhPersonaJuridica;
@@ -13,64 +17,70 @@ use GuzzleHttp\Client;
 
 class HelperInicioOrganoJudicial
 {
-    public static function insertFormularioUnico($caso)
+    public static function insertFormularioUnico($caso, $casoId)
     {
+        $casoi4 = Caso::where('Caso',$casoId)->first();
 
-        $casoi4 = Caso::where('Caso',$caso->codigo)->first();
+        $arrayActividades = Actividad::where('caso',$casoi4->id)->where('TipoActividad',861)->get();
+        $arrayDelitos =CasoDelito::where('caso',$casoi4->id)->get();
+        //dd($arrayActividades);
+        $actividades = array();
+        foreach ($arrayActividades as $key => $value ) {
+            $file_name = 'Prueba.pdf';
+            $file      = public_path('/storage/agenda'). "/" . $file_name;
+            $b64Doc = chunk_split(base64_encode(file_get_contents($file)));
 
-        $arrayActividades = Actividad::where('caso',$casoi4->Caso)->get();
-        $arrayDelitos =CasoDelito::where('caso',$casoi4->Caso)->get();
-
-        foreach ($arrayActividades as $key) {
-            $actividades[] =[
-                    'tipo_actividad' => $key->TipoActividad,
-                    'codigo_actividad' => $key->id,
-                    'descripcion_actividad' => $key->descripcion,
-                    'fecha_actividad' => $key->Fecha,
-                    'archdocumento_acttividadivo' => '',
+            $actividades []=[
+                    'idTipoActividad' => $value->TipoActividad,
+                    'codigoActividad' => $value->id,
+                    'descripcion' => $value->Actividad,
+                    'fecha' => $value->Fecha,
+                    'archivo' => $b64Doc,//base64_encode($value->Documento),
                 ];
         }
 
-        foreach ($arrayDelitos as $row) {
-            $delito[] =[
-                    'codigo_delito' => $row->codigo_delito,
-                    'es_delito_principal' => $row->es_delito_principal,
+        $delito = array();
+        foreach ($arrayDelitos as $row => $valor) {
+            $delito []=[
+                    'idDelito' => $valor->Delito,
+                    'esPrincipal' => true,
                 ];
         }
 
-        $municipio = UbgeMunicipio::where('di',$caso->municipio_id)->first();
+        $municipio = UbgeMunicipio::where('id',$caso->municipio_id)->first();
 
-        $headers = ['Content-Type' => 'application/json'];
+        $headers = ['Content-Type' => 'application/json',
+                'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImZpc2NhbGlhIiwibmFtZWlkIjoiNyIsImlkWm9uYSI6IjAiLCJyb2xlIjoiV3NGaXNjYWxpYSIsIm5iZiI6MTU3MDIwNDY2MiwiZXhwIjoxNzI3ODg0NjYyLCJpYXQiOjE1NzAyMDQ2NjIsImlzcyI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyIsImF1ZCI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyJ9.J_fzQ2I4YQ3jwmWHpt0df5Uc07eS0wqHPPr2zEQaHcM'
+                ];
 
          $queryParams = [
-                'codigo_fud' => $caso->codigo,
-
-                'actividades' => $actividades,
-
+                'codigoUnico' => $caso->codigo,
                 'relato' => $caso->relato,
-                'direccion_caso' => $caso->direccion,
-                'detalle_localizacion' => $caso->detallelocacion,
-                'municipio_codigo' => $municipio->codigo,
-                'fecha_creacion_fud' => $caso->created_at,
+                'direccionCaso' => $caso->direccion,
+                'detalleLocalizacion' => $caso->detallelocacion,
+                'codigoMunicipio' => $municipio->codigo,
+                'fechaCreacionFud' => $caso->created_at,
                 'longitud' => $caso->longitude,
                 'latitud' => $caso->latitude,
-                'codigo_tipo_denuncia' => $caso->tipo_denuncia_id,
-                'fecha_hora_inicio' => $caso->fechahorainicio,
-                'fecha_hora_fin' => $caso->fechahorafin,
-                'momento_aproximado' => $caso->aproximado,
-                'etapa_caso' => $caso->hecho_etapa_id,
-                'estado_caso' => $caso->hecho_estado_id,
-                'oficina' => $caso->oficina_id,
+                'idTipoDenuncia' => $caso->tipo_denuncia_id,
+                'fechaHoraInicio' => $caso->fechahorainicio,
+                'fechaHoraFin' => $caso->fechahorafin,
+                'momentoAproximado' => $caso->aproximado,
+                'idEtapaCaso' => $caso->hecho_etapa_id,
+                'idEstadoCaso' => $caso->hecho_estado_id,
+                'idOficinaMpSc' => $caso->oficina_id,
                 'titulo' => $caso->titulo,
 
-                'delitos' => $delito
+                'Actividad' => $actividades,
+
+                'CasoDelito' => $delito
             ];
 
-            return $deco = json_encode($queryParams);
-            
+            $deco = json_encode($queryParams);
+
             $client = new Client();
 
-            $response = $client->post('http://magistratura.organojudicial.gob.bo:8888/wsInteroperabilidadSirej/servicios/formulariounico/v1',[
+            $response = $client->post('http://wseforo.organojudicial.gob.bo/api/casos',[
                 'headers' => $headers,
                 'body' => $deco
             ]);
@@ -78,118 +88,213 @@ class HelperInicioOrganoJudicial
     } 
 
 
-    public static function inserSujetosProcesales($tiposujeto, $arrayHechoPersona)
+    public static function inserSujetosProcesales($casoId, $codigo_fud)
     {
-        foreach ($arrayHechoPersona as $key => $value) {
+        $hechopersona = HechoPersona::where('hecho_id',$casoId)->get();
+        
+        $queryParams = array();
+
+        foreach ($hechopersona as $key => $value) {
            
-            $arraySujeto[]= ['creacion' => $value->created_at];
-        }
-        return $arraySujeto;
+            if ($value->persona_id != null) {
 
+                $personaNatural = self::getPersonaNatural($value->persona_id);
 
-
-
-
-
-
-        /*$hechoPer = HechoPersona::where('hecho_id',$casoCodigo)->get();
-        $medidas = array();
-        foreach ($hechoPer as $row => $valor) {
-
-            $persona = RrhhPersona::where('id',$valor->persona_id)->first();
-
-            if (!$persona == null) {
-                $sujeto []= [
-                    'celular' => $persona->celular,
-                    'codigo_fud' =>$caso->Caso,
-                    'codigo_municipio_residencia' =>$persona->municipio_id_residencia,
-                    'codigo_sujeto_procesal' =>$valor->id,
-                    'codigo_tipo_sujeto' => $persona->tipo_sujeto_id,
-                    'complemento' => '',
-                    'correo_electronico' => $persona->email,
-                    'domicilio' => $persona->domicilio,
-                    'es_ciudadano_digital' => $persona->es_ciudadano_digital,
-                    'fecha_nacimiento' => $persona->f_nacimiento,
-                    'genero' => $persona->genero,
-                    'nombre_sujeto_procesal' => $valor->busqueda_nombre,
-                    'nombres' => $persona->nombre,
-                    'numero_documento' => $persona->n_documento,
-                    'primer_apellido' =>$persona->ap_paterno,
-                    'segundo_apellido' =>$persona->ap_materno,
-                    'sexo' =>$persona->sexo,
-                    'telefono' => $persona->telefono,
-                    'tipo_documento' => 1,
-                    'tipo_persona' => 1,
-                    ];
-            }else
-            {
-                $juridica = RrhhPersonaJuridica::where('id',$valor->persona_juridica_id)->first();
-                if (!$juridica == null) {
-                    $sujeto []= [
-                        'celular' => $juridica->celular,
-                        'codigo_fud' =>$caso->Caso,
-                        'codigo_municipio_residencia' =>$juridica->municipio_id_residencia,
-                        'codigo_sujeto_procesal' =>$valor->id,
-                        'codigo_tipo_sujeto' => $juridica->tipo_sujeto_id,
-                        'complemento' => '',
-                        'correo_electronico' => $juridica->email,
-                        'domicilio' => $juridica->domicilio,
-                        'es_ciudadano_digital' => $juridica->es_ciudadano_digital,
-                        'fecha_nacimiento' => $juridica->f_nacimiento,
-                        'genero' => $juridica->genero,
-                        'nombre_sujeto_procesal' => $valor->busqueda_nombre,
-                        'nombres' => $juridica->nombre,
-                        'numero_documento' => $juridica->n_documento,
-                        'primer_apellido' =>$juridica->ap_paterno,
-                        'segundo_apellido' =>$juridica->ap_materno,
-                        'sexo' =>$juridica->sexo,
-                        'telefono' => $juridica->telefono,
-                        'tipo_documento' => 1,
-                        'tipo_persona' => 1,
-                        ];
-                }else
-                {
-                    $desconocida = RrhhPersonaDesconocida::where('id',$valor->persona_desconocida_id)->first();
-                    if (!$juridica == null) {
-                        $sujeto []= [
-                                'celular' => $desconocida->celular,
-                                'codigo_fud' =>$caso->Caso,
-                                'codigo_municipio_residencia' =>$desconocida->municipio_id_residencia,
-                                'codigo_sujeto_procesal' =>$valor->id,
-                                'codigo_tipo_sujeto' => $desconocida->tipo_sujeto_id,
-                                'complemento' => '',
-                                'correo_electronico' => $desconocida->email,
-                                'domicilio' => $desconocida->domicilio,
-                                'es_ciudadano_digital' => $desconocida->es_ciudadano_digital,
-                                'fecha_nacimiento' => $desconocida->f_nacimiento,
-                                'genero' => $desconocida->genero,
-                                'nombre_sujeto_procesal' => $valor->busqueda_nombre,
-                                'nombres' => $desconocida->nombre,
-                                'numero_documento' => $desconocida->n_documento,
-                                'primer_apellido' =>$desconocida->ap_paterno,
-                                'segundo_apellido' =>$desconocida->ap_materno,
-                                'sexo' =>$desconocida->sexo,
-                                'telefono' => $desconocida->telefono,
-                                'tipo_documento' => 1,
-                                'tipo_persona' => 1,
-                                ];
-                    }else
-                    {
-                        return false;
-                    }
+                if ($value->es_victima === 1 || $value->tipo_sujeto_id === 3) {
+                    $medidasProteccion = self::getMedidas($value->id);
+                }else{
+                    $medidasProteccion = [];
                 }
-            }
+                $queryParams []=[
+                    'idRelacionVictima' => $value->relacion_victima_id,
+                    'idNivelEducacion' => $value->nivel_educacion_id,
+                    'idGrupoVulnerable' => $value->grupo_vulnerable_id,
+                    'idGradoDiscapacidad' => $value->grado_discapacidad_id,
+                    'idTipoParte' => $value->tipo_sujeto_id,
+                    'idEstadoLibertad' => $value->estado_libertad_id,
+                    'fechaEstadoProcesal' => $value->fecha_estado_procesal,
+                    'estadoProcesal' => $value->estado_procesal,
+                    'PersonaNatural' => $personaNatural,
+                    'MedidaProteccion' => $medidasProteccion,
+                ];
 
-            $medidaProtec = PersonaMedidasProteccion::where('hechopersona_id',$valor->id)->get();
-            foreach ($medidaProtec as $key => $value) {
-                $medidas = [
-                    'codigo_fud' => $caso->Caso,
-                    'codigo_medida_proteccion' => $value->medidaproteccion_id,
-                    'codigo_sujeto_procesal' => $valor->tipo_sujeto_id,
-                ]
-            }
-        }*/
+            }elseif ($value->persona_juridica_id != null) {
+
+                $personaJuridica = self::getPersonaJuridica($value->persona_juridica_id);
+
+                if ($value->es_victima === 1 || $value->tipo_sujeto_id === 3) {
+                    $medidasProteccion = self::getMedidas($value->id);
+                }else{
+                    $medidasProteccion = [];
+                }
+                $queryParams []=[
+                    'idRelacionVictima' => $value->relacion_victima_id,
+                    'idNivelEducacion' => $value->nivel_educacion_id,
+                    'idGrupoVulnerable' => $value->grupo_vulnerable_id,
+                    'idGradoDiscapacidad' => $value->grado_discapacidad_id,
+                    'idTipoParte' => $value->tipo_sujeto_id,
+                    'idEstadoLibertad' => $value->estado_libertad_id,
+                    'fechaEstadoProcesal' => $value->fecha_estado_procesal,
+                    'estadoProcesal' => $value->estado_procesal,
+                    'PersonaNatural' => $personaJuridica,
+                    'MedidaProteccion' => $medidasProteccion,
+                ];
+
+            }elseif ($value->persona_desconocida_id != null) {
+                
+                $personaDesconocida = self::getPersonaDesconocida($value->persona_desconocida_id);
+
+                if ($value->es_victima === 1 || $value->tipo_sujeto_id === 3) {
+                    $medidasProteccion = self::getMedidas($value->id);
+                }else{
+                    $medidasProteccion = [];
+                }
+                $queryParams []=[
+                    'idRelacionVictima' => $value->relacion_victima_id,
+                    'idNivelEducacion' => $value->nivel_educacion_id,
+                    'idGrupoVulnerable' => $value->grupo_vulnerable_id,
+                    'idGradoDiscapacidad' => $value->grado_discapacidad_id,
+                    'idTipoParte' => $value->tipo_sujeto_id,
+                    'idEstadoLibertad' => $value->estado_libertad_id,
+                    'fechaEstadoProcesal' => $value->fecha_estado_procesal,
+                    'estadoProcesal' => $value->estado_procesal,
+                    'PersonaNatural' => $personaDesconocida,
+                    'MedidaProteccion' => $medidasProteccion,
+                ];
+            }            
+        }
+        //return $queryParams;
+        $headers = ['Content-Type' => 'application/json',
+                'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImZpc2NhbGlhIiwibmFtZWlkIjoiNyIsImlkWm9uYSI6IjAiLCJyb2xlIjoiV3NGaXNjYWxpYSIsIm5iZiI6MTU3MDIwNDY2MiwiZXhwIjoxNzI3ODg0NjYyLCJpYXQiOjE1NzAyMDQ2NjIsImlzcyI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyIsImF1ZCI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyJ9.J_fzQ2I4YQ3jwmWHpt0df5Uc07eS0wqHPPr2zEQaHcM'
+                ];
+                
+            $deco = json_encode($queryParams);
+
+            $client = new Client();
+
+            $response = $client->post('http://wseforo.organojudicial.gob.bo/api/sujetosProcesales/'.$codigo_fud,[
+                'headers' => $headers,
+                'body' => $deco
+            ]);
+        return $response->getBody()->getContents();
     }
 
+    public static function getMedidas($hechoPersonaId){
+        $medidas = PersonaMedidasProteccion::where('hechopersona_id',$hechoPersonaId)->get();
+        $medidasGet = array();
+        foreach ($medidas as $key => $value) {
+            $codigoMedida = MedidaProteccion::where('id',$value->medidaproteccion_id)->first();
+            $medidasGet[] = [
+                'idTipoMedidaProteccion' => $codigoMedida->id,
+                'tipo' => $codigoMedida->tipo,
+                'inciso' => $codigoMedida->inciso,
+            ];
+        }
+        return $medidasGet;
+    }
+
+    public static function getPersonaNatural($id){
+
+        $persona = RrhhPersona::where('id',$id)->first();
+        //
+        return $getPersoana=[
+                'codigoMunicipioNacimiento' => $persona->municipio_id_nacimiento,
+                'codigoMunicipioResidencia' => $persona->municipio_id_residencia,
+                'ci' => $persona->n_documento,
+                'nombres' => $persona->nombre,
+                'primerApellido' => $persona->ap_paterno,
+                'segundoApellido' => $persona->ap_materno,
+                'apellidoEsposo' => $persona->ap_esposo,
+                'sexo' => $persona->sexo,
+                'fechaNacimiento' => $persona->f_nacimiento,
+                'estadoCivil' => $persona->estado_civil,
+                'domicilio' => $persona->domicilio,
+                'telefono' => $persona->telefono,
+                'celular' => $persona->celular,
+                'profesionOcupacion' => $persona->profesion_ocupacion,
+                'puebloOriginario' => $persona->pueblo_originario,
+                'lugarTrabajo' =>$persona->lugar_trabajo,
+                'domicilioLaboral' =>$persona->domicilio_laboral,
+                'telefonoLaboral' =>$persona->telf_laboral,
+                'alias' => $persona->alias,
+                'estatura' => $persona->estatura,
+                'tez' => $persona->tez,
+                'edad' => $persona->edad,
+                'vestimenta' =>$persona->vestimenta,
+                'senia' =>$persona->senia,
+                'peso' => $persona->peso,
+                'cabello' => $persona->cabello,
+                'genero' => $persona->genero,
+                'email' => $persona->email,
+                'ojos' => $persona->ojos,
+                'ciudadanoDigital' => $persona->es_ciudadano_digital,
+                'esValida' => true,
+            ];
+    }    
+
+    public static function getPersonaJuridica($id){
+
+        $juridica = RrhhPersonaJuridica::where('id',$id)->first();
+        
+        $juridacaRepresentante = RepresentanteLegal::where('persona_juridica_id',$id)->orderByRaw('updated_at - created_at DESC')->first();
+        if ($juridacaRepresentante === null) {
+            $perLegalCi = null;
+            $nombreLegal = null;
+        }else{
+            $PersonaLegal = RrhhPersona::where('id',$juridacaRepresentante->persona_id)->first();
+            $perLegalCi = $PersonaLegal->n_documento;
+            $nombreLegal = $PersonaLegal->nombre.' '.$PersonaLegal->ap_paterno.' '.$PersonaLegal->ap_materno;
+        }
+
+        return $getjuridica =[
+            'codigoMunicipio' => $juridica->municipio_id_nacimiento,
+            'codigoMunicipioResidencia' => $juridica->municipio_id_residencia,
+            'nit' => $juridica->n_documento,
+            'razonSocial' => $juridica->nombre,
+            'domicilio' => $juridica->n_documento,
+            'telefono' => $juridica->nombre,
+            'ciRepresentante' => $perLegalCi,
+            'nombreRepresentante' => $nombreLegal,
+        ];
+    }
+
+    public static function getPersonaDesconocida($id){
+
+        $persona = RrhhPersonaDesconocida::where('id',$id)->first();
+
+        return $getPersoana=[
+                'codigoMunicipioNacimiento' => $persona->municipio_id_nacimiento,
+                'codigoMunicipioResidencia' => $persona->municipio_id_residencia,
+                'ci' => $persona->n_documento,
+                'nombres' => $persona->nombre,
+                'primerApellido' => $persona->ap_paterno,
+                'segundoApellido' => $persona->ap_materno,
+                'apellidoEsposo' => $persona->ap_esposo,
+                'sexo' => $persona->sexo,
+                'fechaNacimiento' => $persona->f_nacimiento,
+                'estadoCivil' => $persona->estado_civil,
+                'domicilio' => $persona->domicilio,
+                'telefono' => $persona->telefono,
+                'celular' => $persona->celular,
+                'profesionOcupacion' => $persona->profesion_ocupacion,
+                'puebloOriginario' => $persona->pueblo_originario,
+                'lugarTrabajo' =>$persona->lugar_trabajo,
+                'domicilioLaboral' =>$persona->domicilio_laboral,
+                'telefonoLaboral' =>$persona->telf_laboral,
+                'alias' => $persona->alias,
+                'estatura' => $persona->estatura,
+                'tez' => $persona->tez,
+                'edad' => $persona->edad,
+                'vestimenta' =>$persona->vestimenta,
+                'senia' =>$persona->senia,
+                'peso' => $persona->peso,
+                'cabello' => $persona->cabello,
+                'genero' => $persona->genero,
+                'email' => $persona->email,
+                'ojos' => $persona->ojos,
+                'ciudadanoDigital' => 0,
+                'esValida' => false,
+            ];
+    }
         
 }

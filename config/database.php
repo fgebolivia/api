@@ -65,10 +65,10 @@ return [
 
         'comments'  => [
             'driver'     => 'mysql',
-            'host'       => env('COMMENTS_HOST', '192.168.30.20'),
+            'host'       => env('COMMENTS_HOST', '192.168.20.60'),
             'database'   => env('COMMENTS_DATABASE', 'i4bol'),
-            'username'   => env('COMMENTS_USERNAME', 'jserrudo'),
-            'password'   => env('COMMETNS_PASSWORD', 'lgsucresol'),
+            'username'   => env('COMMENTS_USERNAME', 'paulcaihuara'),
+            'password'   => env('COMMETNS_PASSWORD', 'Paul2ol9'),
             'charset'    => 'utf8',
             'collation'  => 'utf8_unicode_ci',
             'prefix'     => '',
