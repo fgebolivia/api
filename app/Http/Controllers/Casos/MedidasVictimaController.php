@@ -146,7 +146,7 @@ class MedidasVictimaController extends Controller
             return $this->errorResponse('El caso no exite',422);
         }
 
-        $hechopersona = HechoPersona::where('hecho_id',$reserva->id)->where('persona_id',$persona_id->id)->where('tipo_sujeto_id',3)->first();
+        $hechopersona = HechoPersona::where('hecho_id',$reserva->id)->where('persona_id',$persona_id->id)->first();
         dd($hechopersona);
     }
 
@@ -179,7 +179,7 @@ tipo 2 medidas para una víctima mujer )
         $datos = $request->validate([
             'codigo_medida_proteccion' => 'required|integer',
             'tipo' => 'required|integer',
-            'inciso' => 'required|integer',
+            'ratificado_Juez' => 'required|integer',
             ]);
     }
 }

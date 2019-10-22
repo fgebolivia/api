@@ -43,7 +43,7 @@ class JuezController extends Controller
     public function store(Request $request, $codigo)
     {
         $datos = $request->validate([
-        	//'codigo_juzgado' => 'required',
+        	'codigo_juzgado' => 'required',
         	'codigo_fud' => 'required',
             'n_documento' => 'required',
             //'complemento' => 'string',
@@ -64,10 +64,10 @@ class JuezController extends Controller
             return $this->errorResponse('Error el codigo del caso no existe',400);
         }
 
-        $juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado)->first();
+        /*$juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado)->first();
         if ($juzgado == null) {
             return $this->errorResponse('Error el codigo del Juzgado no existe',400);
-        }
+        }*/
 
         $juez = RrhhPersona::where('n_documento',$request->n_documento)->first();
         if ($juez == null) {
@@ -122,7 +122,7 @@ class JuezController extends Controller
         $agendajuez->persona_id = $juez_id;
         $agendajuez->tipo = 1; // 1 = juez, 2= fiscal
         $agendajuez->hecho_id = $caso->id;
-        //$agendajuez->juzgado_id = $juzgado->id;
+        $agendajuez->juzgado_id = $juzgado->id;
         //dd($agendajuez);
         $agendajuez->save();
 

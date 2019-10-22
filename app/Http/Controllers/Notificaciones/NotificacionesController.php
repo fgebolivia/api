@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Notificaciones;
 
+use App\Helpers\HelperRejaf;
 use App\Helpers\HelperInicioOrganoJudicial;
+use App\Helpers\HelperActividadOrgano;
 use App\Http\Controllers\Controller;
 use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
@@ -73,22 +75,34 @@ class NotificacionesController extends Controller
             ]);*/
 
             $datos = $request->validate([
-            'codigo_fud' => 'required|max:250|string',
-            //'tipo_sujeto_id' => 'required',
+            'codigo_fud' => 'required|',
+            'persona_ci' => 'required',
             ]);
         //Hecho::create($datos);
-        
-        
+
+       
+        /*    
         $hecho = Hecho::where('codigo',$request->codigo_fud)->first();
-        
         
         $esto = new HelperInicioOrganoJudicial();
         
-        $respuesta = $esto->insertFormularioUnico($hecho,'FIS-BENI1901872');//{"codigo":"201","mensaje":"Created","idJuzgado":42}
+        $respuesta = $esto->insertFormularioUnico($hecho->i4_caso_id);//{"codigo":"201","mensaje":"Created","idJuzgado":42}
 
-        $respuesta2 = $esto->inserSujetosProcesales($hecho->id,$request->codigo_fud);
+        $respuesta2 = $esto->inserSujetosProcesales($hecho->id);
 
-        return $respuesta. $respuesta2;
+        return $respuesta.$respuesta2;*/
+        
+
+        
+        $esto = new HelperRejaf();
+        $respuesta = $esto->GetRejaf($request->persona_ci,$request->codigo_fud);
+        return $respuesta;
+        
+        /*
+        $esto = new HelperActividadOrgano();
+        $respuesta = $esto->PostActividad($request->codigo_fud,$request->actividad_id);
+        return $respuesta;
+        */
         //return $this->successResponse('se inserto satisfactoriamente', 201);
     }
 }

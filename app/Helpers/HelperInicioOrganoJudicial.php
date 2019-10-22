@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
 use App\Models\Denuncia\MedidaProteccion;
 use App\Models\Denuncia\PersonaMedidasProteccion;
@@ -14,83 +15,111 @@ use App\Models\Rrhh\RrhhPersonaDesconocida;
 use App\Models\Rrhh\RrhhPersonaJuridica;
 use App\Models\UbicacionGeografica\UbgeMunicipio;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 
 class HelperInicioOrganoJudicial
 {
-    public static function insertFormularioUnico($caso, $casoId)
+    public static function insertFormularioUnico($casoId)
     {
-        $casoi4 = Caso::where('Caso',$casoId)->first();
+        try{        
+                $hecho = Hecho::where('i4_caso_id',$casoId)->first();
+                //$sql = "SELECT * FROM Caso where Caso ='".$casoId."'"; //FIS-BENI1901872
+                //$casoi4 = DB::connection('mysql')->statement($sql);
+                $casoi4 = Caso::find($casoId);//coneccion mediante la carpeta config arcivo database.php
+                //$sqlActividad = "SELECT * FROM i4bol.Actividad where Caso =". $casoi4->id."and (TipoActividad = 861 or TipoActividad = 1023)"; //FIS-BENI1901872
+                //$arrayActividades = DB::connection('mysql')->statement($sqlActividad);
+                $arrayActividades = Actividad::where('Caso',$casoi4->id)->get();//coneccion mediante arcivo database.php
 
-        $arrayActividades = Actividad::where('caso',$casoi4->id)->where('TipoActividad',861)->get();
-        $arrayDelitos =CasoDelito::where('caso',$casoi4->id)->get();
-        //dd($arrayActividades);
-        $actividades = array();
-        foreach ($arrayActividades as $key => $value ) {
-            $file_name = 'Prueba.pdf';
-            $file      = public_path('/storage/agenda'). "/" . $file_name;
-            $b64Doc = chunk_split(base64_encode(file_get_contents($file)));
+                //$sqlDelitos= "SELECT * FROM i4bol.CasoDelito where Caso =". $casoi4->id; //FIS-BENI1901872
+                //$arrayDelitos = DB::connection('mysql')->statement($sqlDelitos);
+                $arrayDelitos =CasoDelito::where('Caso',$casoi4->id)->get();//sacar del i4
 
-            $actividades []=[
-                    'idTipoActividad' => $value->TipoActividad,
-                    'codigoActividad' => $value->id,
-                    'descripcion' => $value->Actividad,
-                    'fecha' => $value->Fecha,
-                    'archivo' => $b64Doc,//base64_encode($value->Documento),
-                ];
+                //dd($arrayActividades);
+                $actividades = array();
+                foreach ($arrayActividades as $key => $value ) {
+                    $file_name = 'Prueba.pdf';
+                    $file      = public_path('/storage/agenda'). "/" . $file_name;
+                    $b64Doc = chunk_split(base64_encode(file_get_contents($file)));
+                    //$b64Doc = base64_encode(file_get_contents($file));
+
+                    $actividades []=[
+                            'idTipoActividad' => $value->TipoActividad,
+                            'codigoActividad' => $value->id,
+                            'descripcion' => $value->Actividad,
+                            'fecha' => $value->Fecha,
+                            'archivo' => $b64Doc,//base64_encode($value->Documento),
+                        ];
+                }
+
+                $delito = array();
+                $bandera= true;
+                foreach ($arrayDelitos as $row => $valor) {
+
+
+                    $delito []=[
+                            'idDelito' => $valor->Delito,
+                            'esPrincipal' => $bandera,
+                        ];
+                    $bandera= false;
+                }
+
+                $municipio = UbgeMunicipio::where('id',$hecho->municipio_id)->first();
+
+                $headers = ['Content-Type' => 'application/json',
+                        'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImZpc2NhbGlhIiwibmFtZWlkIjoiNyIsImlkWm9uYSI6IjAiLCJyb2xlIjoiV3NGaXNjYWxpYSIsIm5iZiI6MTU3MDIwNDY2MiwiZXhwIjoxNzI3ODg0NjYyLCJpYXQiOjE1NzAyMDQ2NjIsImlzcyI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyIsImF1ZCI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyJ9.J_fzQ2I4YQ3jwmWHpt0df5Uc07eS0wqHPPr2zEQaHcM'
+                        ];
+
+                 $queryParams = [
+                        'codigoUnico' => $hecho->codigo,
+                        'relato' => $hecho->relato,
+                        'direccionCaso' => $hecho->direccion,
+                        'detalleLocalizacion' => $hecho->detallelocacion,
+                        'codigoMunicipio' => $municipio->codigo,
+                        'fechaCreacionFud' => $hecho->created_at,
+                        'fechaCreacionFud' => $hecho->created_at,
+                        'longitud' => $hecho->longitude,
+                        'latitud' => $hecho->latitude,
+                        'idTipoDenuncia' => $hecho->tipo_denuncia_id,
+                        'fechaHoraInicio' => $hecho->fechahorainicio,
+                        'fechaHoraFin' => $hecho->fechahorafin,
+                        'momentoAproximado' => $hecho->aproximado,
+                        'idEtapaCaso' => $hecho->hecho_etapa_id,
+                        'idEstadoCaso' => $hecho->hecho_estado_id,
+                        'idOficinaMpSc' => $hecho->oficina_id,
+                        'idOficinaMp' => $hecho->oficina_id,
+                        'titulo' => $hecho->titulo,
+                        'quienHizo' => $hecho->quien_hizo,
+                        'queHizo' => $hecho->que_hizo,
+                        'aquienHizo' => $hecho->aquien_hizo,
+                        'comoHizo' => $hecho->como_hizo,
+                        
+
+                        'Actividad' => $actividades,
+
+                        'CasoDelito' => $delito
+                    ];
+            //dd($queryParams);
+                    //return $queryParams;
+                    $deco = json_encode($queryParams);
+
+                    $client = new Client();
+
+                    $response = $client->post('http://wseforo.organojudicial.gob.bo/api/casos',[
+                        'headers' => $headers,
+                        'body' => $deco
+                    ]);
+                return $response->getBody()->getContents();
+
+            } catch (Exception $e) {
+            return 0;
         }
-
-        $delito = array();
-        foreach ($arrayDelitos as $row => $valor) {
-            $delito []=[
-                    'idDelito' => $valor->Delito,
-                    'esPrincipal' => true,
-                ];
-        }
-
-        $municipio = UbgeMunicipio::where('id',$caso->municipio_id)->first();
-
-        $headers = ['Content-Type' => 'application/json',
-                'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImZpc2NhbGlhIiwibmFtZWlkIjoiNyIsImlkWm9uYSI6IjAiLCJyb2xlIjoiV3NGaXNjYWxpYSIsIm5iZiI6MTU3MDIwNDY2MiwiZXhwIjoxNzI3ODg0NjYyLCJpYXQiOjE1NzAyMDQ2NjIsImlzcyI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyIsImF1ZCI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyJ9.J_fzQ2I4YQ3jwmWHpt0df5Uc07eS0wqHPPr2zEQaHcM'
-                ];
-
-         $queryParams = [
-                'codigoUnico' => $caso->codigo,
-                'relato' => $caso->relato,
-                'direccionCaso' => $caso->direccion,
-                'detalleLocalizacion' => $caso->detallelocacion,
-                'codigoMunicipio' => $municipio->codigo,
-                'fechaCreacionFud' => $caso->created_at,
-                'longitud' => $caso->longitude,
-                'latitud' => $caso->latitude,
-                'idTipoDenuncia' => $caso->tipo_denuncia_id,
-                'fechaHoraInicio' => $caso->fechahorainicio,
-                'fechaHoraFin' => $caso->fechahorafin,
-                'momentoAproximado' => $caso->aproximado,
-                'idEtapaCaso' => $caso->hecho_etapa_id,
-                'idEstadoCaso' => $caso->hecho_estado_id,
-                'idOficinaMpSc' => $caso->oficina_id,
-                'titulo' => $caso->titulo,
-
-                'Actividad' => $actividades,
-
-                'CasoDelito' => $delito
-            ];
-
-            $deco = json_encode($queryParams);
-
-            $client = new Client();
-
-            $response = $client->post('http://wseforo.organojudicial.gob.bo/api/casos',[
-                'headers' => $headers,
-                'body' => $deco
-            ]);
-        return $response->getBody()->getContents();
     } 
 
 
-    public static function inserSujetosProcesales($casoId, $codigo_fud)
+    public static function inserSujetosProcesales($hecho_id)
     {
-        $hechopersona = HechoPersona::where('hecho_id',$casoId)->get();
+        $hecho = Hecho::find($hecho_id);
+        $hechopersona = HechoPersona::where('hecho_id',$hecho_id)->get();
         
         $queryParams = array();
 
@@ -172,7 +201,7 @@ class HelperInicioOrganoJudicial
 
             $client = new Client();
 
-            $response = $client->post('http://wseforo.organojudicial.gob.bo/api/sujetosProcesales/'.$codigo_fud,[
+            $response = $client->post('http://wseforo.organojudicial.gob.bo/api/sujetosProcesales/'.$hecho->codigo,[
                 'headers' => $headers,
                 'body' => $deco
             ]);

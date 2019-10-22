@@ -29,7 +29,12 @@ class User extends Authenticatable
 
         'grupo_id',
         'i4_funcionario_id',
-        'i4_funcionario_id_estado'
+        'i4_funcionario_id_estado',
+        'service_id',
+        'grand_type',
+        'access_token',
+        'refresh_token',
+        'token_expires_at'
     ];
 
     /**
@@ -38,7 +43,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'access_token', 'refresh_token', 'token_expires_at'
     ];
 
     /**
