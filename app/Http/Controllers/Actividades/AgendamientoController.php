@@ -69,25 +69,7 @@ class AgendamientoController extends Controller
 
             $juzgado1 = new HelperJuzgado();
             $respuesta = $juzgado1->GetJuzgado($request->codigo_juzgado);
-            $insertJuzgado = json_decode($respuesta);
-
-            $muni = UbgeMunicipio::where('codigo',$insertJuzgado->juzgado->codigoMunicipio)->first();
-
-            $juzgadoInsert = new Juzgado();
-
-            $juzgadoInsert->codigo_juzgado = $insertJuzgado->juzgado->id;
-            $juzgadoInsert->nombre = $insertJuzgado->juzgado->nombre;
-            $juzgadoInsert->municipio_id = $muni->id;
-            $juzgadoInsert->oficina_gestora = $insertJuzgado->juzgado->oficinaGestora;
-            $juzgadoInsert->zona = $insertJuzgado->juzgado->zona;
-            $juzgadoInsert->direccion = $insertJuzgado->juzgado->direccion;
-            $juzgadoInsert->map_latitud = $insertJuzgado->juzgado->latitud;
-            $juzgadoInsert->map_longitud = $insertJuzgado->juzgado->nombre;
-            $juzgadoInsert->edificio= $insertJuzgado->juzgado->longitud;
-            $juzgadoInsert->telefono = $insertJuzgado->juzgado->telefonos;
-            $juzgadoInsert->save();
-
-            $juzgado_id = $juzgadoInsert->id;
+            $juzgado_id = $respuesta;
 
         }else{ $juzgado_id = $juzgado->id; }
 

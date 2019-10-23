@@ -74,8 +74,8 @@ class HelperInicioOrganoJudicial
                         'relato' => $hecho->relato,
                         'direccionCaso' => $hecho->direccion,
                         'detalleLocalizacion' => $hecho->detallelocacion,
+                        //'zona' => $hecho->zona,
                         'codigoMunicipio' => $municipio->codigo,
-                        'fechaCreacionFud' => $hecho->created_at,
                         'fechaCreacionFud' => $hecho->created_at,
                         'longitud' => $hecho->longitude,
                         'latitud' => $hecho->latitude,
@@ -99,7 +99,7 @@ class HelperInicioOrganoJudicial
                         'CasoDelito' => $delito
                     ];
             //dd($queryParams);
-                    //return $queryParams;
+                  //return $queryParams;
                     $deco = json_encode($queryParams);
 
                     $client = new Client();

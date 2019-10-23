@@ -58,7 +58,7 @@ class AprobacionDocumentosController extends Controller
                 DB::statement($sql);
             }
             else{
-                DB::connection('mysql')->statement($sql);
+                DB::connection('comments')->statement($sql);
             }
             
         }else{

@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Agenda\Juzgado;
 use GuzzleHttp\Client;
 
 class HelperJuzgado
@@ -19,6 +20,26 @@ class HelperJuzgado
             'headers' => $headers,
         ]);
 
-        return $response->getBody()->getContents();
+        $respuesta = $response->getBody()->getContents();
+
+        $insertJuzgado = json_decode($respuesta);
+
+          $muni = UbgeMunicipio::where('codigo',$insertJuzgado->juzgado->codigoMunicipio)->first();
+
+            $juzgadoInsert = new Juzgado();
+
+            $juzgadoInsert->codigo_juzgado = $insertJuzgado->juzgado->id;
+            $juzgadoInsert->nombre = $insertJuzgado->juzgado->nombre;
+            $juzgadoInsert->municipio_id = $muni->id;
+            $juzgadoInsert->oficina_gestora = $insertJuzgado->juzgado->oficinaGestora;
+            $juzgadoInsert->zona = $insertJuzgado->juzgado->zona;
+            $juzgadoInsert->direccion = $insertJuzgado->juzgado->direccion;
+            $juzgadoInsert->map_latitud = $insertJuzgado->juzgado->latitud;
+            $juzgadoInsert->map_longitud = $insertJuzgado->juzgado->longitud;
+            $juzgadoInsert->edificio= $insertJuzgado->juzgado->edificio;
+            $juzgadoInsert->telefono = $insertJuzgado->juzgado->telefonos;
+            $juzgadoInsert->save();
+
+        return $juzgadoInsert->id;
    }
 }

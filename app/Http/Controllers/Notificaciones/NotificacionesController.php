@@ -75,13 +75,13 @@ class NotificacionesController extends Controller
             ]);*/
 
             $datos = $request->validate([
-            'codigo_fud' => 'required|',
+            'codigo_fud' => 'required',
             'persona_ci' => 'required',
             ]);
         //Hecho::create($datos);
 
        
-        /*    
+        /*   
         $hecho = Hecho::where('codigo',$request->codigo_fud)->first();
         
         $esto = new HelperInicioOrganoJudicial();
@@ -90,8 +90,8 @@ class NotificacionesController extends Controller
 
         $respuesta2 = $esto->inserSujetosProcesales($hecho->id);
 
-        return $respuesta.$respuesta2;*/
-        
+        return $respuesta.$respuesta2;
+        */
 
         
         $esto = new HelperRejaf();
