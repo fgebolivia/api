@@ -80,7 +80,7 @@ class HelperRejaf
       }
      	
       //dd($queryParams);
-      return $queryParams;
+      //return $queryParams;
       $deco = json_encode($queryParams);
 
               $client = new Client();
@@ -91,21 +91,36 @@ class HelperRejaf
               ]);
 
       $respuesta = $response->getBody()->getContents();
-
+      //return $respuesta;
       $respuestaRejap = json_decode($respuesta);
-
-      $file_name = uniqid('certificado_rejap', true) . ".pdf";
-      $file      = public_path('/storage/rejap/archivo') . "/" . $file_name;
-      file_put_contents($file,base64_decode($respuestaRejap->certificado));
+      if ($respuestaRejap->certificado != '') {
+        $file_name = uniqid('certificado_rejap', true) . ".pdf";
+        $file      = public_path('/storage/rejap/archivo') . "/" . $file_name;
+        file_put_contents($file,base64_decode($respuestaRejap->certificado));
+      }else{
+        $file_name = null;
+      }
+      
       
       $insertarRejap = HechoPersona::where('persona_id',$personaRejaf->id)->where('hecho_id',$fud->id)->first();
-      $insertarRejap->rejap_codigo_solicitud = $respuestaRejap->solicitud;
-      $insertarRejap->rejap_estado = $respuestaRejap->estado;
-      $insertarRejap->rejap_fecha_peticion = date('Y-m-d H:i:s');
-      $insertarRejap->rejap_fecha_recepcion = $respuestaRejap->fecha;
-      $insertarRejap->rejap_archivo = $file_name;
-      $insertarRejap->save();
+      if ($insertarRejap) {
+        $insertarRejap->rejap_codigo_solicitud = $respuestaRejap->solicitud;
+        $insertarRejap->rejap_estado = $respuestaRejap->estado;
+        $insertarRejap->rejap_fecha_peticion = date('Y-m-d H:i:s');
+        $insertarRejap->rejap_fecha_recepcion = $respuestaRejap->fecha;
+        $insertarRejap->rejap_archivo = $file_name;
+        $insertarRejap->save();
+      }else{
+        $insertarRejap = HechoPersona::where('persona_desconocida_id',$personaRejaf->id)->where('hecho_id',$fud->id)->first();
+        $insertarRejap->rejap_codigo_solicitud = $respuestaRejap->solicitud;
+        $insertarRejap->rejap_estado = $respuestaRejap->estado;
+        $insertarRejap->rejap_fecha_peticion = date('Y-m-d H:i:s');
+        $insertarRejap->rejap_fecha_recepcion = $respuestaRejap->fecha;
+        $insertarRejap->rejap_archivo = $file_name;
+        $insertarRejap->save();
+      }
+      
 
-      dd($insertarRejap);
+      //dd($insertarRejap);
    }
 }

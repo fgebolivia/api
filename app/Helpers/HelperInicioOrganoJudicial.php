@@ -6,10 +6,12 @@ use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
 use App\Models\Denuncia\MedidaProteccion;
 use App\Models\Denuncia\PersonaMedidasProteccion;
+use App\Models\Denuncia\PolDivision;
 use App\Models\Denuncia\RepresentanteLegal;
 use App\Models\Notificacion\Actividad;
 use App\Models\Notificacion\Caso;
 use App\Models\Notificacion\CasoDelito;
+use App\Models\Notificacion\Delito;
 use App\Models\Rrhh\RrhhPersona;
 use App\Models\Rrhh\RrhhPersonaDesconocida;
 use App\Models\Rrhh\RrhhPersonaJuridica;
@@ -44,9 +46,9 @@ class HelperInicioOrganoJudicial
 
                     $actividades []=[
                             'idTipoActividad' => $value->TipoActividad,
-                            'codigoActividad' => $value->id,
-                            'descripcion' => $value->Actividad,
+                            'codigo' => $value->id,
                             'fecha' => $value->Fecha,
+                            'descripcion' => $value->Actividad,
                             'archivo' => $b64Doc,//base64_encode($value->Documento),
                         ];
                 }
@@ -54,52 +56,56 @@ class HelperInicioOrganoJudicial
                 $delito = array();
                 $bandera= true;
                 foreach ($arrayDelitos as $row => $valor) {
-
+                    $del = Delito::where('id',$valor->Delito)->first();
 
                     $delito []=[
-                            'idDelito' => $valor->Delito,
+                            'idDelito' => $del->codigo,
                             'esPrincipal' => $bandera,
                         ];
                     $bandera= false;
                 }
 
                 $municipio = UbgeMunicipio::where('id',$hecho->municipio_id)->first();
+                $division = PolDivision::where('id',$hecho->division_id)->first();
 
-                $headers = ['Content-Type' => 'application/json',
+                $headers = ['Content-Type' => 'application/json;charset=UTF-8',
                         'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImZpc2NhbGlhIiwibmFtZWlkIjoiNyIsImlkWm9uYSI6IjAiLCJyb2xlIjoiV3NGaXNjYWxpYSIsIm5iZiI6MTU3MDIwNDY2MiwiZXhwIjoxNzI3ODg0NjYyLCJpYXQiOjE1NzAyMDQ2NjIsImlzcyI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyIsImF1ZCI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyJ9.J_fzQ2I4YQ3jwmWHpt0df5Uc07eS0wqHPPr2zEQaHcM'
                         ];
 
                  $queryParams = [
                         'codigoUnico' => $hecho->codigo,
+                        'idTipoDenuncia' => $hecho->tipo_denuncia_id,
+                        'idOficinaMp' => $hecho->oficina_id,
+                        'idOficinaMpSc' => $hecho->oficina_id,
+                        'idEtapaCaso' => $hecho->hecho_etapa_id,
+                        'idEstadoCaso' => $hecho->hecho_estado_id,
                         'relato' => $hecho->relato,
+                        'conducta' =>$hecho->conducta,
+                        'resultado' =>$hecho->resultado,
+                        'circunstancia' =>$hecho->circunstancia,
                         'direccionCaso' => $hecho->direccion,
+                        'zona' => $hecho->zona,
                         'detalleLocalizacion' => $hecho->detallelocacion,
-                        //'zona' => $hecho->zona,
                         'codigoMunicipio' => $municipio->codigo,
+                        'division' =>$division->nombre,
                         'fechaCreacionFud' => $hecho->created_at,
                         'longitud' => $hecho->longitude,
                         'latitud' => $hecho->latitude,
-                        'idTipoDenuncia' => $hecho->tipo_denuncia_id,
                         'fechaHoraInicio' => $hecho->fechahorainicio,
                         'fechaHoraFin' => $hecho->fechahorafin,
                         'momentoAproximado' => $hecho->aproximado,
-                        'idEtapaCaso' => $hecho->hecho_etapa_id,
-                        'idEstadoCaso' => $hecho->hecho_estado_id,
-                        'idOficinaMpSc' => $hecho->oficina_id,
-                        'idOficinaMp' => $hecho->oficina_id,
                         'titulo' => $hecho->titulo,
                         'quienHizo' => $hecho->quien_hizo,
                         'queHizo' => $hecho->que_hizo,
                         'aquienHizo' => $hecho->aquien_hizo,
-                        'comoHizo' => $hecho->como_hizo,
+                        'comoHizo' => $hecho->como_hizo,                   
                         
-
                         'Actividad' => $actividades,
 
                         'CasoDelito' => $delito
                     ];
             //dd($queryParams);
-                  //return $queryParams;
+                  return $queryParams;
                     $deco = json_encode($queryParams);
 
                     $client = new Client();
@@ -108,7 +114,18 @@ class HelperInicioOrganoJudicial
                         'headers' => $headers,
                         'body' => $deco
                     ]);
-                return $response->getBody()->getContents();
+                $respuesta = $response->getBody()->getContents();
+                
+                return $respuesta;
+                $deco = json_decode($respuesta);
+                if ($deco->codigo >= 400) {
+                    return 0;
+                }else{
+                    $hecho->jusgado_id = $deco->idJuzgado;
+                    $hecho->save();
+                    return 1;
+                }
+
 
             } catch (Exception $e) {
             return 0;
@@ -122,6 +139,10 @@ class HelperInicioOrganoJudicial
         $hechopersona = HechoPersona::where('hecho_id',$hecho_id)->get();
         
         $queryParams = array();
+
+        $fical ='Roberto Almarado';
+        $fical2 ='Almarado';
+        $fical3 ='Contreras';
 
         foreach ($hechopersona as $key => $value) {
            
@@ -141,6 +162,7 @@ class HelperInicioOrganoJudicial
                     'idGradoDiscapacidad' => $value->grado_discapacidad_id,
                     'idTipoParte' => $value->tipo_sujeto_id,
                     'idEstadoLibertad' => $value->estado_libertad_id,
+                    'idAutoidentificacion' => $value->autoidentificacion_id,
                     'fechaEstadoProcesal' => $value->fecha_estado_procesal,
                     'estadoProcesal' => $value->estado_procesal,
                     'PersonaNatural' => $personaNatural,
@@ -163,9 +185,10 @@ class HelperInicioOrganoJudicial
                     'idGradoDiscapacidad' => $value->grado_discapacidad_id,
                     'idTipoParte' => $value->tipo_sujeto_id,
                     'idEstadoLibertad' => $value->estado_libertad_id,
+                    'idAutoidentificacion' => $value->autoidentificacion_id,
                     'fechaEstadoProcesal' => $value->fecha_estado_procesal,
                     'estadoProcesal' => $value->estado_procesal,
-                    'PersonaNatural' => $personaJuridica,
+                    'personaJuridica' => $personaJuridica,
                     'MedidaProteccion' => $medidasProteccion,
                 ];
 
@@ -185,6 +208,7 @@ class HelperInicioOrganoJudicial
                     'idGradoDiscapacidad' => $value->grado_discapacidad_id,
                     'idTipoParte' => $value->tipo_sujeto_id,
                     'idEstadoLibertad' => $value->estado_libertad_id,
+                    'idAutoidentificacion' => $value->autoidentificacion_id,
                     'fechaEstadoProcesal' => $value->fecha_estado_procesal,
                     'estadoProcesal' => $value->estado_procesal,
                     'PersonaNatural' => $personaDesconocida,
@@ -192,8 +216,28 @@ class HelperInicioOrganoJudicial
                 ];
             }            
         }
+
+        $queryParams []=[
+                "idRelacionVictima"=> 1,
+                "idNivelEducacion"=> 1,
+                "idGrupoVulnerable"=> 1,
+                "idGradoDiscapacidad"=> 1,
+                "idTipoParte"=> 6,
+                "idEstadoLibertad"=> 1,
+                "idAutoidentificacion"=> 1,
+                "fechaEstadoProcesal"=> "2019-10-18",
+                "estadoProcesal"=> 0,
+                "Tercero"=> [
+                    "ci"=> "5125910",
+                    "nombres"=> $fical, 
+                    "primerApellido"=> $fical2,
+                    "segundoApellido"=> $fical3,
+                    "fechaNacimiento"=> "2000-10-25"
+                ]              
+         ];
+
         //return $queryParams;
-        $headers = ['Content-Type' => 'application/json',
+        $headers = ['Content-Type' => 'application/json;charset=UTF-8',
                 'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImZpc2NhbGlhIiwibmFtZWlkIjoiNyIsImlkWm9uYSI6IjAiLCJyb2xlIjoiV3NGaXNjYWxpYSIsIm5iZiI6MTU3MDIwNDY2MiwiZXhwIjoxNzI3ODg0NjYyLCJpYXQiOjE1NzAyMDQ2NjIsImlzcyI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyIsImF1ZCI6Imh0dHA6Ly93c2Vmb3JvLnBqLXNjci5wb2Rlcmp1ZGljaWFsLmdvdi5ibyJ9.J_fzQ2I4YQ3jwmWHpt0df5Uc07eS0wqHPPr2zEQaHcM'
                 ];
                 
@@ -225,11 +269,15 @@ class HelperInicioOrganoJudicial
     public static function getPersonaNatural($id){
 
         $persona = RrhhPersona::where('id',$id)->first();
+        $nacimiento = UbgeMunicipio::where('id',$persona->municipio_id_nacimiento)->first();
+        $residencia = UbgeMunicipio::where('id',$persona->municipio_id_residencia)->first();
         //
         return $getPersoana=[
-                'codigoMunicipioNacimiento' => $persona->municipio_id_nacimiento,
-                'codigoMunicipioResidencia' => $persona->municipio_id_residencia,
-                'ci' => $persona->n_documento,
+                'idPersonaNatural' => $persona->id,
+                'codigoMunicipioNacimiento' => $nacimiento->codigo,
+                'codigoMunicipioResidencia' => $residencia->codigo,
+                'idTipoDocumento' => $persona->tipo_documento_id,
+                'numeroDocumento' => $persona->n_documento,
                 'nombres' => $persona->nombre,
                 'primerApellido' => $persona->ap_paterno,
                 'segundoApellido' => $persona->ap_materno,
@@ -240,6 +288,7 @@ class HelperInicioOrganoJudicial
                 'domicilio' => $persona->domicilio,
                 'telefono' => $persona->telefono,
                 'celular' => $persona->celular,
+                'estadoSegip' => $persona->estado_segip,
                 'profesionOcupacion' => $persona->profesion_ocupacion,
                 'puebloOriginario' => $persona->pueblo_originario,
                 'lugarTrabajo' =>$persona->lugar_trabajo,
@@ -256,8 +305,14 @@ class HelperInicioOrganoJudicial
                 'genero' => $persona->genero,
                 'email' => $persona->email,
                 'ojos' => $persona->ojos,
+                'idIdioma' => $persona->idioma_id,
+                'idPais' => $persona->pais_id,
+                'fallecido' => false,//cambiar para hacerlo automatico
+                'mapLatitud' => $persona->map_latitud,
+                'mapLongitud' => $persona->map_longitud,
                 'ciudadanoDigital' => $persona->es_ciudadano_digital,
-                'esValida' => true,
+                'aprobadoCd' => $persona->aprobado_cd,
+                'esDesconocida' => false,
             ];
     }    
 
@@ -266,6 +321,7 @@ class HelperInicioOrganoJudicial
         $juridica = RrhhPersonaJuridica::where('id',$id)->first();
         
         $juridacaRepresentante = RepresentanteLegal::where('persona_juridica_id',$id)->orderByRaw('updated_at - created_at DESC')->first();
+        $numicipio = UbgeMunicipio::where('id',$juridica->municipio_id)->first();
         if ($juridacaRepresentante === null) {
             $perLegalCi = null;
             $nombreLegal = null;
@@ -276,12 +332,16 @@ class HelperInicioOrganoJudicial
         }
 
         return $getjuridica =[
-            'codigoMunicipio' => $juridica->municipio_id_nacimiento,
-            'codigoMunicipioResidencia' => $juridica->municipio_id_residencia,
-            'nit' => $juridica->n_documento,
-            'razonSocial' => $juridica->nombre,
-            'domicilio' => $juridica->n_documento,
-            'telefono' => $juridica->nombre,
+            'idPersonaJuridica' => $juridica->id,
+            'codigoMunicipio' => $numicipio->codigo,
+            'codigoMunicipioResidencia' => $numicipio->codigo,
+            'nit' => $juridica->nit,
+            'razonSocial' => $juridica->razon_social,
+            'domicilio' => $juridica->domicilio,
+            'telefono' => $juridica->telefono,
+            'email' => $juridica->email,
+            'mapLatitud' => $juridica->map_latitud,
+            'mapLongitud' => $juridica->map_longitud,
             'ciRepresentante' => $perLegalCi,
             'nombreRepresentante' => $nombreLegal,
         ];
@@ -290,11 +350,22 @@ class HelperInicioOrganoJudicial
     public static function getPersonaDesconocida($id){
 
         $persona = RrhhPersonaDesconocida::where('id',$id)->first();
+        $nacimiento = UbgeMunicipio::where('id',$persona->municipio_id_nacimiento)->first();
+        $residencia = UbgeMunicipio::where('id',$persona->municipio_id_residencia)->first();
+        if (!$nacimiento || !$residencia) {
+            $recide = null;
+            $naci = null;
+        }else{
+            $recide = $residencia->codigo;
+            $naci = $nacimiento->codigo;
+        }
 
         return $getPersoana=[
-                'codigoMunicipioNacimiento' => $persona->municipio_id_nacimiento,
-                'codigoMunicipioResidencia' => $persona->municipio_id_residencia,
-                'ci' => $persona->n_documento,
+                'idPersonaNatural' => $persona->id,
+                'codigoMunicipioNacimiento' => $naci,
+                'codigoMunicipioResidencia' => $recide,
+                'idTipoDocumento' => $persona->tipo_documento_id,
+                'numeroDocumento' => $persona->n_documento,
                 'nombres' => $persona->nombre,
                 'primerApellido' => $persona->ap_paterno,
                 'segundoApellido' => $persona->ap_materno,
@@ -305,6 +376,7 @@ class HelperInicioOrganoJudicial
                 'domicilio' => $persona->domicilio,
                 'telefono' => $persona->telefono,
                 'celular' => $persona->celular,
+                'estadoSegip' => $persona->estado_segip,
                 'profesionOcupacion' => $persona->profesion_ocupacion,
                 'puebloOriginario' => $persona->pueblo_originario,
                 'lugarTrabajo' =>$persona->lugar_trabajo,
@@ -321,8 +393,14 @@ class HelperInicioOrganoJudicial
                 'genero' => $persona->genero,
                 'email' => $persona->email,
                 'ojos' => $persona->ojos,
-                'ciudadanoDigital' => 0,
-                'esValida' => false,
+                'idIdioma' => $persona->idioma_id,
+                'idPais' => $persona->pais_id,
+                'fallecido' => false,//cambiar para hacerlo automatico
+                'mapLatitud' => $persona->map_latitud,
+                'mapLongitud' => $persona->map_longitud,
+                'ciudadanoDigital' => null,
+                'aprobadoCd' => null,
+                'esDesconocida' => false,
             ];
     }
         
