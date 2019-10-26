@@ -35,7 +35,7 @@ class HelperActividadOrgano
                 'fecha' => $actividad->Fecha,
                 'descripcion' => $actividad->Actividad,
                 'archivo' => $b64Doc,
-                //'archivo' => chunk_split(base64_encode($actividad->Documento)),
+                'archivo' => chunk_split(base64_encode($actividad->Documento)),
             ];
     //return $queryParams;
     $deco = json_encode($queryParams);
@@ -47,6 +47,5 @@ class HelperActividadOrgano
             'body' => $deco
         ]);
     return $response->getBody()->getContents();
-    
    }
 }
