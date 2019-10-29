@@ -44,6 +44,19 @@ class ActividadController extends Controller
      */
     public function store(Request $request)
     {
+        $datos = $request->validate([
+            'nombre' => 'required',
+
+            ]);
+
+        //$file_name = uniqid('gendamiento_audiencia', true) . ".pdf";
+        //$file      = public_path('/storage/agenda/archivo') . "/" . $file_name;
+        //file_put_contents($file,base64_decode($request->archivo_pdf));
+\Log::warning($request->archivo_pdf);
+\Log::warning($request->nombre);
+    return $this->successConection('se inserto correctamente codigo dsggfjhgfjlkhñ',201);
+
+        /*
          $datos = $request->validate([
             'codigo_fud' => 'required',
             //'persona_ci' => 'required',

@@ -47,14 +47,14 @@ class AgendamientoController extends Controller
     public function store(Request $request)
     {
         $datos = $request->validate([
-            'codigo_fud' => 'required',
-            'codigo_agendamiento' => 'required|integer',
-            'fecha_hora_inicio' => 'required|date',
-            'fecha_hora_fin' => 'required|date',
+            'codigo_fud'            => 'required',
+            'codigo_agendamiento'   => 'required|integer',
+            'fecha_hora_inicio'     => 'required|date',
+            'fecha_hora_fin'        => 'required|date',
             'codigo_tipo_audiencia' => 'required|integer',
-            'sala' => 'required|string',
-            'codigo_juzgado' => 'required|integer',
-            'archivo_pdf' => 'required|string',
+            'sala'                  => 'required|string',
+            'codigo_juzgado'        => 'required|integer',
+            'archivo_pdf'           => 'required|string',
         ]);
         $count = Agenda::where('codigo_audiencia',$request->codigo_agendamiento)->get()->count();
 
@@ -81,15 +81,15 @@ class AgendamientoController extends Controller
         $file      = public_path('/storage/agenda/archivo') . "/" . $file_name;
         file_put_contents($file,base64_decode($request->archivo_pdf));
 
-        $agenda->codigo_audiencia = $request->codigo_agendamiento;
-        $agenda->codigo_unico = $request->codigo_fud;
+        $agenda->codigo_audiencia  = $request->codigo_agendamiento;
+        $agenda->codigo_unico      = $request->codigo_fud;
         $agenda->fecha_hora_inicio = $request->fecha_hora_inicio;
-        $agenda->fecha_hora_fin = $request->fecha_hora_fin;
-        $agenda->sala = $request->sala;
-        $agenda->hecho_id = $hecho->id;
+        $agenda->fecha_hora_fin    = $request->fecha_hora_fin;
+        $agenda->sala              = $request->sala;
+        $agenda->hecho_id          = $hecho->id;
         $agenda->tipo_audiencia_id = $audienciaTipo->id;
-        $agenda->juzgado_id = $juzgado_id;
-        $agenda->estado = 0;
+        $agenda->juzgado_id        = $juzgado_id;
+        $agenda->estado            = 0;
 
         $agenda->save();
 

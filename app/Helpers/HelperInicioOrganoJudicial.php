@@ -102,7 +102,7 @@ class HelperInicioOrganoJudicial
 
                 foreach ($arrayActividades as $key => $value )
                 {
-                    $file_name = 'Prueba.pdf';
+                    $file_name = 'farruco_calma.mp3';
                     $file = public_path('/storage/agenda'). "/" . $file_name;
 
                     if (!file_exists($file))
@@ -119,7 +119,7 @@ class HelperInicioOrganoJudicial
                             'codigo'         => $value->id,
                             'fecha'          => $value->Fecha,
                             'descripcion'    => $value->Actividad,
-                            'extension'      => $value->extension,
+                            'extension'      => 'mp3',
                             'archivo'        => $b64Doc,
                     ];
                 }
