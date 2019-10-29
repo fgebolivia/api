@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MedidaProteccionResource;
 use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
+use App\Models\Denuncia\HechoPersonaMedidaProteccion;
+use App\Models\Denuncia\MedidaProteccion;
+use App\Models\Denuncia\Sujeto;
 use App\Models\Rrhh\RrhhPersona;
 use Illuminate\Http\Request;
 
@@ -78,7 +81,7 @@ class MedidasVictimaController extends Controller
      *     }
      *   }
      */
-    public function index($hecho) 
+    public function index($hecho)
     {
         $ci=  isset($_GET['ci'])?$_GET['ci']: 5;
         $reserva = Hecho::where('codigo',$hecho)->first();
@@ -99,7 +102,7 @@ class MedidasVictimaController extends Controller
         }
 
         $medidas = HechoPersona::where('id',$hechopersona->id)->first()->medidas()->Paginate(15);
-        
+
         $medidasTransFormada = MedidaProteccionResource::collection($medidas);
 
         return $medidasTransFormada;
@@ -116,7 +119,7 @@ class MedidasVictimaController extends Controller
      * @bodyParam codigo_medida_proteccion integer required Código asignado de un catálogo definido por la ley 1173
        @bodyParam tipo integer required Tipo de medida (tipo 1 para medidas de la víctima niño o niña. tipo 2 medidas para una víctima mujer )
        @bodyParam inciso integer required Inciso donde se encuentra la descrita la medida de protección de la ley 1173
-     *  
+     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Denuncia\Hecho  $hecho
      * @return \Illuminate\Http\Response
@@ -126,60 +129,83 @@ class MedidasVictimaController extends Controller
      *  "code": 201
      *  }
      */
-    public function store(Request $request, $hecho)
+    public function store(Request $request, $hecho, $id)
     {
-        $ci=  isset($_GET['ci'])?$_GET['ci']: 5;
-
-        $datos = $request->validate([
-            'codigo_medida_proteccion' => 'required|integer',
-            'tipo' => 'required|integer',
-            'inciso' => 'required|integer',
-            ]);
-
-        $persona_id = RrhhPersona::where('n_documento',$ci)->first();
-        $reserva = Hecho::where('codigo',$hecho)->first();
-
-        if ($persona_id === null) {
-            return $this->errorResponse('El carnet de identidad no exite',422);
-        };
-        if ($reserva === null) {
-            return $this->errorResponse('El caso no exite',422);
-        }
-
-        $hechopersona = HechoPersona::where('hecho_id',$reserva->id)->where('persona_id',$persona_id->id)->first();
-        dd($hechopersona);
+        return $this->errorResponse('El hecho no exite',400);
     }
 
     /**
-     * Actualizacion PUT de Medidas de Proteccion.
+     * Update the specified resource in storage.
      *
-     *  Este metodo es para registrar las Medidas de Proteccion de una Victima <br><br>
-     *  en la Url se debe colocar el ci de la persona como el numero de caso <br>
-     *  Url base acompañado del ?ci= numero de carnet<br>
-     
-     *<p><b>CAMPOS DE INSERCION EN EL POST-PERSONA NATURAL O DESCONOCIDA</b></p>
-     * @bodyParam codigo_medida_proteccion integer required Código asignado de un catálogo definido por la ley 1173
-       @bodyParam tipo integer required Tipo de medida (tipo 1 para medidas de la víctima niño o niña.
-tipo 2 medidas para una víctima mujer )
-       @bodyParam inciso integer required Inciso donde se encuentra la descrita la medida de protección de la ley 1173
-     *  
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Denuncia\Hecho  $hecho
+     * @param  int  $id
      * @return \Illuminate\Http\Response
-     * @response
-     *  {
-     *  "message": "las Medidas se Actualizaron Correctamente",
-     *  "code": 201
-     *  }
      */
-    public function update(Request $request, $hecho)
+    public function update(Request $request, $hecho, $id)
     {
-        $ci=  isset($_GET['ci'])?$_GET['ci']: 5;
-        
-        $datos = $request->validate([
-            'codigo_medida_proteccion' => 'required|integer',
-            'tipo' => 'required|integer',
-            'ratificado_Juez' => 'required|integer',
-            ]);
+        $ci=  isset($_GET['medida'])?$_GET['medida']: 5;
+    //dd($ci);
+        if (!$request->input()) {
+            return $this->errorResponse('el array esta vacio',400);
+        }
+        $getHecho = Hecho::where('codigo',$hecho)->first();
+        if ($getHecho === null)
+        {
+            return $this->errorResponse('El hecho no exite',400);
+        };
+
+        $personaHecho = HechoPersona::where('hecho_id',$getHecho->id)->where('id',$id)->first();
+        if ($personaHecho === null)
+        {
+            return $this->errorResponse('No existe la persona para este caso',400);
+        }
+
+        $medidasNatural = HechoPersonaMedidaProteccion::where('hechopersona_id',$id)->get();
+        if (!$medidasNatural) {
+            return $this->errorResponse('La persona con id'.$id.'no tiene medidas de proteccion',400);
+        }
+        $j=0;
+        foreach ($request->input() as $key)
+        {
+            $exiteMedida = MedidaProteccion::where('id',$request->input($j.'.codigo_medida_proteccion'))->where('tipo',$request->input($j.'.tipo'))->where('inciso',$request->input($j.'.inciso'))->first();
+            if($exiteMedida === null)
+            {
+                return $this->errorResponse('La medida de proteccion '.$request->input($j.'.codigo_medida_proteccion').' no existe',400);
+            }
+        }
+
+        foreach ($medidasNatural as $key)
+        {
+            $key->estado_medida = 2;
+            $key->estado =0;
+            $key->save();
+        }
+
+        $i = 0;
+        foreach ($request->input() as $key)
+        {
+
+            $medidasNatural = HechoPersonaMedidaProteccion::where('hechopersona_id',$id)->where('medidaproteccion_id',$request->input($i.'.codigo_medida_proteccion'))->first();
+
+            if ($medidasNatural) {
+                $medidasNatural->estado_medida = 1;
+                $medidasNatural->estado =1;
+                $medidasNatural->save();
+            }
+            else
+            {
+                $nuevaMedida = new HechoPersonaMedidaProteccion();
+                $nuevaMedida->estado = 1;
+                $nuevaMedida->hechopersona_id = $id;
+                $nuevaMedida->medidaproteccion_id = $request->input($i.'.codigo_medida_proteccion');
+                $nuevaMedida->estado_medida = 3;
+                $nuevaMedida->save();
+
+            }
+            $i++;
+        };
+
+        return $this->successConection('las medidas se cambiaron satisfactoriamente',201);
     }
+
 }

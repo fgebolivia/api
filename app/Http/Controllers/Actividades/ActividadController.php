@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Actividades;
 
+use App\Helpers\HelperInicioOrganoJudicial;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ActividadResource;
 use App\Models\Agenda\ActividadTriton;
@@ -19,7 +20,7 @@ use Illuminate\Http\Request;
 
 class ActividadController extends Controller
 {
-  
+
     /**
      * Metodo POST de Notificaciones
      *
@@ -39,10 +40,38 @@ class ActividadController extends Controller
      *  {
      *  "message" : "La Actividad se Inserto satisfactoriamente",
      *  "code" : 201
-     *  } 
+     *  }
      */
     public function store(Request $request)
     {
+         $datos = $request->validate([
+            'codigo_fud' => 'required',
+            //'persona_ci' => 'required',
+            ]);
+
+        $hecho = Hecho::where('codigo',$request->codigo_fud)->first();
+
+        $esto = new HelperInicioOrganoJudicial();
+
+        $respuesta = $esto->insertFormularioUnico($hecho->i4_caso_id);//{"codigo":"201","mensaje":"Created","idJuzgado":42}
+
+        //$respuesta2 = $esto->inserSujetosProcesales($hecho->id);
+
+        return $respuesta;
+        //return$respuesta2;
+
+        /*
+        $esto = new HelperRejaf();
+        $respuesta = $esto->GetRejaf($request->persona_ci,$request->codigo_fud);
+        return $respuesta;
+
+        /*
+        $esto = new HelperActividadOrgano();
+        $respuesta = $esto->PostActividad($request->codigo_fud,$request->actividad_id);
+        return $respuesta;
+        */
+    //====  ACTIVIDADES NO BORRAR =====
+        /*
         $datos = $request->validate([
             'codigo_fud' => 'required|string',
             'codigo_actividad' => 'required|integer',
@@ -78,7 +107,7 @@ class ActividadController extends Controller
         $activi->hecho_id = $caso->id;
         $activi->save();
 
-         return $this->successConection('la Actividad se Registro con Exito',201);
+         return $this->successConection('la Actividad se Registro con Exito',201);*/
 
     }
 
@@ -90,38 +119,30 @@ class ActividadController extends Controller
      */
     public function show($id)
     {
-        /*$hecho = Hecho::where('codigo',$id)->first();
-        //return $this->ShowOne($delito,200);
-        if ($hecho == null) {
-            return $this->errorResponse('Does not exists any endpoint for this URL',404);
-        }else{
-            //dd($hecho->id);
-            $hechos1 = new DelitoResource($hecho);
-            //dd($hechos1);
-            return $hechos1;
-        }*/
-        $caso = Caso::where('Caso', $id)->first();
-        if ($caso == null) {
-            return $this->errorResponse('Does not exists any endpoint for this URL',404);
-        }else{
-            //dd($caso->id);
-            $hechos1 = new ActividadResource($caso);
-            //dd($hechos1);
-            return $hechos1;
-        }
+        //==== INDEX NO BORRAR =====
+            /*$hecho = Hecho::where('codigo',$id)->first();
+            //return $this->ShowOne($delito,200);
+            if ($hecho == null) {
+                return $this->errorResponse('Does not exists any endpoint for this URL',404);
+            }else{
+                //dd($hecho->id);
+                $hechos1 = new DelitoResource($hecho);
+                //dd($hechos1);
+                return $hechos1;
+            }*/
+            /*
+            $caso = Caso::where('Caso', $id)->first();
+            if ($caso == null) {
+                return $this->errorResponse('Does not exists any endpoint for this URL',404);
+            }else{
+                //dd($caso->id);
+                $hechos1 = new ActividadResource($caso);
+                //dd($hechos1);
+                return $hechos1;
+            }*/
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.

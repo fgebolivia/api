@@ -43,19 +43,22 @@ class AgendaSuspencionController extends Controller
                    'archivo_baja_audiencia' => 'required|string'
                ]);
         $agendamiento = Agenda::where('codigo_audiencia',$request->codigo_agendamiento_audiencia)->first();
+
+        if ($agendamiento === null) {
+          return $this->errorResponse('el codigo de audiencia NO EXISTE o ESTA REPETIDO',422);
+        }
+
         $tipoCausal = TipoCausal::where('codigo_causal',$request->codigo_tipo_causal)->get()->count();
 
         if ($tipoCausal === 0) {
           return $this->errorResponse('el codigo del tipo de Causal NO EXISTE',422);
         }
-        if ($agendamiento === null) {
-          return $this->errorResponse('el codigo de audiencia NO EXISTE o ESTA REPETIDO',422);
-        }
+
 
         $agendamiento->estado = 1;
         $agendamiento->save();
 
-        
+
         $file_name = uniqid('causal_baja_audiencia', true) . ".pdf";
         $file      = public_path('/storage/agenda/archivo_suspencion') . "/" . $file_name;
         file_put_contents($file,base64_decode($request->archivo_baja_audiencia));
@@ -67,7 +70,7 @@ class AgendaSuspencionController extends Controller
         $suspencion->descripcion = $request->descripcion;
         $suspencion->save();
         $id = $suspencion->id;
-        
+
         $arch = new archivo();
         $arch->archivo = $file_name;
         $arch->causal_suspencion_id = $id;

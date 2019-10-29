@@ -186,7 +186,7 @@ class HelperRejaf
             $respuesta['api_respuesta']           = $respuestaRejap->mensaje;
             $respuesta['sw']                      = true;
             return $respuesta;
-          \Log::warning($respuesta;);
+          \Log::warning($respuesta);
       }
       catch (ClientException $e)
       {

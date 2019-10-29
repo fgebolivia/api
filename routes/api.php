@@ -40,5 +40,5 @@ Route::apiResource('v2/casos', 'Casos\CasoController')->only(['store','index','s
 
 Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->only(['store','update','index']);
 
-Route::apiResource('v2/casos/{hecho}/medidas', 'Casos\MedidasVictimaController')->only(['store','update','index']);
+Route::apiResource('v2/casos/{hecho}/medidas', 'Casos\MedidasVictimaController')->only(['update']);
 

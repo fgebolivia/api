@@ -191,7 +191,7 @@ class CasoPersonasController extends Controller
 
         $tipo=  isset($_GET['tipo'])?$_GET['tipo']: 5;
         $tipoSujeto1 = TipoSujeto::where('id',intval($tipo))->first();
-        
+
         if ($tipoSujeto1 == null) {
             return $this->errorResponse('no existe el tipo de sujeto '.$tipo,422);
         }
@@ -207,26 +207,26 @@ class CasoPersonasController extends Controller
             return $this->errorResponse('El caso es reservado no tiene acceso',401);
         }else{
             $personas = Hecho::where('codigo',$hecho)->first()->personas()->where('tipo_sujeto_id',$tipoSujeto1->id)->where('deleted',0)->orderBy('id')->get();
-            
+
             $perosonaTransform = CasoPersonaResource::collection($personas); //ok funcion corecta
-            
+
             $personasJuridica = Hecho::where('codigo',$hecho)->first()->juridica()->where('tipo_sujeto_id',$tipoSujeto1->id)->where('deleted',0)->orderBy('id')->get();
 
             $perJuridTransform = CasoJuridicaResource::collection($personasJuridica);
-            
+
             $personasDesco = Hecho::where('codigo',$hecho)->first()->personaDesconocida()->where('tipo_sujeto_id',$tipoSujeto1->id)->where('deleted',0)->orderBy('id')->get();
 
-            
+
             $perDescoTranform = CasoDesconocidaResource::collection($personasDesco);
 
             if ($personas->isNotEmpty() && $personasJuridica->isNotEmpty() && $personasDesco->isNotEmpty()) {
-                
+
                 $sujetosx = $perosonaTransform->merge($perJuridTransform);
                 $sujetosProceales = $sujetosx->merge($perDescoTranform);
 
                 return $this->showAll($sujetosProceales);
             }else
-            {   
+            {
                 if($personas->isEmpty() && $personasJuridica->isEmpty() && $personasDesco->isEmpty()){
 
                     return $this->errorResponse('no existen sujetos en esta categoria',422);
@@ -248,7 +248,7 @@ class CasoPersonasController extends Controller
                 }
             }
         }
-          
+
     }
 
     /**
@@ -296,7 +296,7 @@ class CasoPersonasController extends Controller
        @bodyParam nivel_educacion integer opcional id del catálogo del grado de educación recibida
        @bodyParam grupo_vulnerable integer opcional id del catálogo  grupo vulnerable
        @bodyParam grado_discapacidad integer opcional id del catálogo grado de discapacidad
-       @bodyParam estado_procesal integer opcional id del estado procesal en el que se encuentra actualmente 
+       @bodyParam estado_procesal integer opcional id del estado procesal en el que se encuentra actualmente
        @bodyParam fecha_estado_procesal date opcional fecha en la que  se llevo acabo el estado procesal en el que se encuentra actualment
      *
      * <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
@@ -312,7 +312,7 @@ class CasoPersonasController extends Controller
        @bodyParam ap_paterno_representante_legal string required Apellido Paterno del representante legal de la persona jurídica para validación
        @bodyParam ap_materno_representante_legal string required Apellido Materno del representante legal de la persona jurídica para validación
        @bodyParam fecha_nacimiento_representante_legal date required Fecha de nacimiento de la persona natural (Ejemplo 2019-10-24 15:30:15)
-     *  
+     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Denuncia\Hecho  $hecho
      * @return \Illuminate\Http\Response
@@ -359,13 +359,13 @@ class CasoPersonasController extends Controller
                         'nivel_educacion_id' => 'string',
                         'domicilio' => 'required|string',
                         'telefono' => 'max:250',
-                                    
+
                         'map_latitud' => 'required|numeric',
                         'map_longitud' => 'required|numeric',
                     ]);
 
                     $c_n_documento = RrhhPersona::where('n_documento', $request->n_documento)->first();
-                    
+
                     if($c_n_documento == null)
                     {
                         $persona_id = $this->guardarPersonaNatural($request,$tipo);
@@ -376,7 +376,7 @@ class CasoPersonasController extends Controller
                     }else{
                         $persona_id = $c_n_documento->id;
                     }
-                  
+
 
                     $hecho_persona->persona_id = $persona_id;
                     $hecho_id = Hecho::where('codigo',$hecho)->select('id')->first();
@@ -409,7 +409,7 @@ class CasoPersonasController extends Controller
 
                     if($nit['id']<1)
                     {
-                        
+
                         $persona_juridica_id1 = $this->guardarPersonaJuridica($request);
 
                     }else{
@@ -424,7 +424,7 @@ class CasoPersonasController extends Controller
                         'domicilio' => 'required|string',
                         'telefono' => 'max:250',
                         'municipio_id' =>'numeric',
-                                    
+
                         'map_latitud' => 'required|numeric',
                         'map_longitud' => 'required|numeric',
                     ]);
@@ -442,7 +442,7 @@ class CasoPersonasController extends Controller
                     $hecho_persona->save();
                     $id_hechopersona=$hecho_persona->id;
                     break;
-                
+
                 case 2:
                     $datos = $request->validate([
                         'nombre' => 'required|max:250|string',
@@ -468,16 +468,16 @@ class CasoPersonasController extends Controller
             else
             {
                 return $this->errorResponse('prevalidador',422);
-            }    
+            }
         }else{
-            return $this->errorResponse('los campos tipo o es_persona no son validos para este Caso '.$hecho,422);     
+            return $this->errorResponse('los campos tipo o es_persona no son validos para este Caso '.$hecho,422);
       }
     }
 
     /**
      * Metodo PUT para Actualizar los datos de un Sujeto Procesal.
      *
-     * este metodo aceptamos 2 tipos de parametros extra que son el <b>Tipo de sujeto Procesal</b> y el <b>n_documento</b> 
+     * este metodo aceptamos 2 tipos de parametros extra que son el <b>Tipo de sujeto Procesal</b> y el <b>n_documento</b>
      * <b>tipo=1 (Persona Denunciante)</b><br>
      * <b>tipo=2 (Persona Denunciado)</b><br>
      * <b>tipo=3 (Persona Victima)</b><br>
@@ -508,9 +508,9 @@ class CasoPersonasController extends Controller
         }
 
         if ($tipoSujeto1->id != $tipo && ($tipo_persona>2 || $tipo_persona<0 || $tipo_persona =='')) {
-            
+
             return $this->errorResponse('Does not exists any endpoint for this Caso '.$hecho,422);
-        
+
         }else{
 
             $hecho_persona = Sujeto::find($sujetosprocesales);
@@ -574,7 +574,7 @@ class CasoPersonasController extends Controller
     /**
      * Metodo DELETE para eliminar un Sujeto Procesal
      *
-     * este metodo aceptamos 2 tipos de parametros extra que son el <b>Tipo de sujeto Procesal</b> y el <b>n_documento</b> 
+     * este metodo aceptamos 2 tipos de parametros extra que son el <b>Tipo de sujeto Procesal</b> y el <b>n_documento</b>
      * <b>tipo=1 (Persona Denunciante)</b><br>
      * <b>tipo=2 (Persona Denunciado)</b><br>
      * <b>tipo=3 (Persona Victima)</b><br>
@@ -636,7 +636,7 @@ class CasoPersonasController extends Controller
             if($tipo  == 1){ //mando boolean llega  si es true
                 $map_latitud=$request->map_latitud;
                 $map_longitud=$request->map_longitud;
-                
+
             }
             if($tipo  == 2){ //mando boolean llega  si es true
                 $map_latitud=$request->map_latitud;
@@ -670,7 +670,7 @@ class CasoPersonasController extends Controller
                     $file_name = uniqid('certificacion_segip_', true) . ".pdf";
                     $file      = public_path('/storage/segip') . "/" . $file_name;
                     file_put_contents($file, $respuesta1['respuesta']['ReporteCertificacion']);
-                    
+
                     $persona = new RrhhPersona();
 
                     $persona->n_documento               = $request->n_documento;

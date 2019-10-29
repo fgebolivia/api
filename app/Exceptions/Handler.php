@@ -68,30 +68,30 @@ class Handler extends ExceptionHandler
         {
             return $this->convertValidationExceptionToResponse($exception, $request);
         }
-        
+
         if ($exception instanceof AuthenticationException)
         {
             return $this->unauthenticated($request, $exception);
         }
 
-        if ($exception instanceof ModelNotFoundException) 
+        if ($exception instanceof ModelNotFoundException)
         {
             $modelName =  class_basename($exception->getModel());
 
             return $this->errorResponse('no existe la instancia especificada de modelo '.$modelName.' con el id especifico',404);
         }
 
-        if ($exception instanceof NotFoundHttpException) 
+        if ($exception instanceof NotFoundHttpException)
         {
             return $this->errorResponse('Does not exists any endpoint for this URL',$exception->getStatusCode());
         }
 
-        if ($exception instanceof MethodNotAllowedHttpException) 
+        if ($exception instanceof MethodNotAllowedHttpException)
         {
             return $this->errorResponse('HTTP method does not match with any endpoint',$exception->getStatusCode());
         }
 
-        if ($exception instanceof HttpException) 
+        if ($exception instanceof HttpException)
         {
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         }

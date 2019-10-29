@@ -18,13 +18,13 @@ use Illuminate\Http\Request;
 
 class JuezController extends Controller
 {
-    
+
     /**
      * Metodo POST registro del reparto de un Juez y Jusgado de un caso.
      *
      *  en este metodo podemos insertar todo los campos referentes al Juez y el reparto<br><br>
      *  <p><b>CAMPOS DE INSERCION EN EL POST</b></p>
-     * @bodyParam codigo_fud string required el para la validacion 
+     * @bodyParam codigo_fud string required el para la validacion
        @bodyParam n_documento string required el carnet de identidad para validacion
        @bodyParam complemento string opcional el para la validacion
        @bodyParam nombre string required el nombre para la validacion
@@ -45,15 +45,16 @@ class JuezController extends Controller
         $datos = $request->validate([
         	'codigo_juzgado' => 'required',
         	'codigo_fud' => 'required',
-            'n_documento' => 'required',
+            'n_documento_juez' => 'required',
             //'complemento' => 'string',
-            'nombre' => 'required|string',
-            'ap_paterno' => 'required|string',
-            'ap_materno' => 'required|string',
-            'fecha_nacimiento' => 'required|date',
+            'nombre_juez' => 'required|string',
+            'ap_paterno_juez' => 'required|string',
+            'ap_materno_juez' => 'required|string',
+            'fecha_nacimiento_juez' => 'required|date',
         ]);
 
-        
+        dd($request->codigo_juzgado);
+
         $agenda = Agenda::where('codigo_audiencia',$codigo)->first();
         if ($agenda == null) {
         	return $this->errorResponse('Error el codigo del agendamiento de la audiencia no existe',400);
@@ -64,13 +65,30 @@ class JuezController extends Controller
             return $this->errorResponse('Error el codigo del caso no existe',400);
         }
 
-        /*$juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado)->first();
+        $juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado)->first();
         if ($juzgado == null) {
             return $this->errorResponse('Error el codigo del Juzgado no existe',400);
-        }*/
+        }
+
+        foreach ($request->input('fiscales') as $key => $value)
+        {
+            $existeFiscal = RrhhPersona::where('n_documento',$request->input('fiscales.'.$i.'.ci_fiscal'))->first();
+            if (!$existeFiscal) {
+                return $this->errorResponse('el fiscal no Existe',400);
+            }
+            $insertFiscal = new AgendaCausal();
+            $insertFiscal->agenda = $codigo;
+            $insertFiscal->persona_id = $request->input('fiscales.'.$i.'.ci_fiscal');
+            $insertFiscal->tipo = 2;
+            $insertFiscal->hecho_id = 1;
+            $insertFiscal->juzgado_id = $request->codigo_juzgado;
+            $insertFiscal->save();
+
+        }
 
         $juez = RrhhPersona::where('n_documento',$request->n_documento)->first();
-        if ($juez == null) {
+        if ($juez == null)
+        {
             $segip = new SegipClass();
             $data = [
                 'n_documento'  => $request->n_documento,
@@ -82,14 +100,14 @@ class JuezController extends Controller
             ];
 
             $respuesta1 = $segip->getCertificacionSegip($data);
-
+            //dd($respuesta1);
             if ($respuesta1['sw'] == 1) {
                 if ($respuesta1['respuesta']['EsValido'] == true && $respuesta1['respuesta']['CodigoRespuesta'] == '2')
                 {
                     $file_name = uniqid('certificacion_segip_', true) . ".pdf";
                     $file      = public_path('/storage/segip') . "/" . $file_name;
                     file_put_contents($file, $respuesta1['respuesta']['ReporteCertificacion']);
-                    
+
                     $persona = new RrhhPersona();
                     $persona->n_documento          = $request->n_documento;
                     $persona->nombre               = $request->nombre;
@@ -111,10 +129,13 @@ class JuezController extends Controller
             {
                 return $this->errorResponse('no se logro validar a la persona 2',400);
             }
-        	
+
         }else{
             $juez_id =$juez->id;
         }
+
+        $i=0;
+
 
         $agendajuez = new AgendaPersona();
 
