@@ -90,12 +90,12 @@ class Handler extends ExceptionHandler
         {
             return $this->errorResponse('HTTP method does not match with any endpoint',$exception->getStatusCode());
         }
-/*
+
         if ($exception instanceof HttpException)
         {
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         }
-*/
+
         if (config('app.debug')) {
             return parent::render($request, $exception);
         }
