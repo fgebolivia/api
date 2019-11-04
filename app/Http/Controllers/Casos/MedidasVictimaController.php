@@ -154,10 +154,22 @@ class MedidasVictimaController extends Controller
             return $this->errorResponse('El hecho no exite',400);
         };
 
-        $personaHecho = HechoPersona::where('hecho_id',$getHecho->id)->where('id',$id)->first();
+        $personaHecho = HechoPersona::where('hecho_id',$getHecho->id)
+                                    ->where('id',$id)
+                                    ->first();
         if ($personaHecho === null)
         {
-            return $this->errorResponse('No existe la persona para este caso',400);
+            return $this->errorResponse('No existe la persona para este caso o no es posible aplicar medidas de Proteccion',400);
+        }
+
+        $personaHecho->organo_medidas = 1;
+        $personaHecho->save();
+
+        if ($personaHecho->busqueda_sexo == 'F') {
+            $tipoMedidaSujeto =2;
+        }else
+        {
+            $tipoMedidaSujeto = 1;
         }
 
         $medidasNatural = HechoPersonaMedidaProteccion::where('hechopersona_id',$id)->get();
@@ -167,7 +179,7 @@ class MedidasVictimaController extends Controller
         $j=0;
         foreach ($request->input() as $key)
         {
-            $exiteMedida = MedidaProteccion::where('id',$request->input($j.'.codigo_medida_proteccion'))->where('tipo',$request->input($j.'.tipo'))->where('inciso',$request->input($j.'.inciso'))->first();
+            $exiteMedida = MedidaProteccion::where('id',$request->input($j.'.codigo_medida_proteccion'))->where('tipo',$tipoMedidaSujeto)->first();
             if($exiteMedida === null)
             {
                 return $this->errorResponse('La medida de proteccion '.$request->input($j.'.codigo_medida_proteccion').' no existe',400);
@@ -204,6 +216,8 @@ class MedidasVictimaController extends Controller
             }
             $i++;
         };
+
+        HechoPersonaMedidaProteccion::where('estado_medida',2)->where('hechopersona_id',$id)->delete();
 
         return $this->successConection('las medidas se cambiaron satisfactoriamente',201);
     }

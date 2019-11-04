@@ -53,7 +53,7 @@ class JuezController extends Controller
             'fecha_nacimiento_juez' => 'required|date',
         ]);
 
-        dd($request->codigo_juzgado);
+        //dd($request->codigo_juzgado);
 
         $agenda = Agenda::where('codigo_audiencia',$codigo)->first();
         if ($agenda == null) {
@@ -68,22 +68,6 @@ class JuezController extends Controller
         $juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado)->first();
         if ($juzgado == null) {
             return $this->errorResponse('Error el codigo del Juzgado no existe',400);
-        }
-
-        foreach ($request->input('fiscales') as $key => $value)
-        {
-            $existeFiscal = RrhhPersona::where('n_documento',$request->input('fiscales.'.$i.'.ci_fiscal'))->first();
-            if (!$existeFiscal) {
-                return $this->errorResponse('el fiscal no Existe',400);
-            }
-            $insertFiscal = new AgendaCausal();
-            $insertFiscal->agenda = $codigo;
-            $insertFiscal->persona_id = $request->input('fiscales.'.$i.'.ci_fiscal');
-            $insertFiscal->tipo = 2;
-            $insertFiscal->hecho_id = 1;
-            $insertFiscal->juzgado_id = $request->codigo_juzgado;
-            $insertFiscal->save();
-
         }
 
         $juez = RrhhPersona::where('n_documento',$request->n_documento)->first();
@@ -133,8 +117,6 @@ class JuezController extends Controller
         }else{
             $juez_id =$juez->id;
         }
-
-        $i=0;
 
 
         $agendajuez = new AgendaPersona();

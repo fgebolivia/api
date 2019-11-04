@@ -40,7 +40,7 @@ class AgendaSuspencionController extends Controller
                    'codigo_agendamiento_audiencia' => 'required|integer',
                    'codigo_tipo_causal' => 'required|integer',
                    'descripcion'=> 'required|max:100|string',
-                   'archivo_baja_audiencia' => 'required|string'
+                   'archivo_baja_audiencia' => 'required'
                ]);
         $agendamiento = Agenda::where('codigo_audiencia',$request->codigo_agendamiento_audiencia)->first();
 

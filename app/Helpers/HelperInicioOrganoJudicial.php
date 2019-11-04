@@ -119,7 +119,7 @@ class HelperInicioOrganoJudicial
                             'codigo'         => $value->id,
                             'fecha'          => $value->Fecha,
                             'descripcion'    => $value->Actividad,
-                            'extension'      => 'mp3',
+                            'extension'      => $value->extension,
                             'archivo'        => $b64Doc,
                     ];
                 }
@@ -159,7 +159,7 @@ class HelperInicioOrganoJudicial
                 'codigoUnico'        => $hecho->codigo,
                 'idTipoDenuncia'     => $tipoDenuncia_id,
                 'idOficinaMp'        => $hecho->oficina_id,
-                'idOficinaMpSc'      => $hecho->oficina_id,
+                'idOficinaMpSc'      => 273,
                 'idEtapaCaso'        => $hecho->hecho_etapa_id,
                 'idEstadoCaso'       => $hecho->hecho_estado_id,
                 'relato'             => $hecho->relato,
@@ -293,72 +293,157 @@ class HelperInicioOrganoJudicial
                 }
 
             // === CASO - FUNCIONARIO I4 ===
-                $casoFuncionario = CasoFuncionario::where('Caso',$hecho->i4_caso_id)->select('Funcionario')->first();
-                if ($casoFuncionario === null)
+                $casoFuncionario = CasoFuncionario::where('Caso', $hecho->i4_caso_id)->get();
+                if ($casoFuncionario->isEmpty())
                 {
                     $respuesta['mensaje'] = 'No exite funcionaro en este caso.';
                     \Log::warning('CASO FUNCIONARIO I4: No exite el funcionaro en este caso.');
                     return $respuesta;
                 }
 
-                // === FUNCIONARIO I4 ===
-                $funcionarioasig = Funcionario::where('id', $casoFuncionario->Funcionario)->first();
-                if ($funcionarioasig === null)
-                {
-                    $respuesta['mensaje'] = 'No exite funcionaro.';
-                    \Log::warning('FUNCIONARIO I4: No exite el funcionaro.');
-                    return $respuesta;
-                }
 
                 // === ARMADO DE JSON SUJETOS ===
-                $queryParams = array();
-                foreach ($hechopersona as $value)
-                {
-                        //===  VALIDACIONES CONVERCION DE NULL A 0 ===
-                            if ($value->relacion_victima_id === null)
-                            {
-                                $relacionVictima = 0;
-                            }else{$relacionVictima = $value->relacion_victima_id;}
-
-                            if ($value->nivel_educacion_id === null)
-                            {
-                                $nivelEducacion = 0;
-                            }else{$nivelEducacion = $value->nivel_educacion_id;}
-
-                            if ($value->grupo_vulnerable_id === null)
-                            {
-                                $grupoVulnerable = 0;
-                            }else{$grupoVulnerable = $value->grupo_vulnerable_id;}
-
-                            if ($value->grado_discapacidad_id === null)
-                            {
-                                $gradoDiscacidad = 0;
-                            }else{$gradoDiscacidad = $value->grado_discapacidad_id;}
-
-                            if ($value->tipo_sujeto_id === null)
-                            {
-                                $tipoSujeto = 0;
-                            }else{$tipoSujeto = $value->tipo_sujeto_id;}
-
-                            if ($value->autoidentificacion_id === null)
-                            {
-                                $autoIdentificacion = 0;
-                            }else{$autoIdentificacion = $value->autoidentificacion_id;}
-
-                            if ($value->estado_procesal === null)
-                            {
-                                $estadoProce = 0;
-                            }else{$estadoProce = $value->estado_procesal;}
-
-                    if ($value->persona_id != null)
+                    $queryParams = array();
+                    foreach ($hechopersona as $value)
                     {
-                        // === VALIDACIONES DE  LA PERSONA
-                            $personaNatural = self::getPersonaNatural($value->persona_id, $value->fallecida);
-                            if ($personaNatural === false)
+                            //===  VALIDACIONES CONVERCION DE NULL A 0 ===
+                                if ($value->relacion_victima_id === null)
+                                {
+                                    $relacionVictima = 0;
+                                }else{$relacionVictima = $value->relacion_victima_id;}
+
+                                if ($value->nivel_educacion_id === null)
+                                {
+                                    $nivelEducacion = 0;
+                                }else{$nivelEducacion = $value->nivel_educacion_id;}
+
+                                if ($value->grupo_vulnerable_id === null)
+                                {
+                                    $grupoVulnerable = 0;
+                                }else{$grupoVulnerable = $value->grupo_vulnerable_id;}
+
+                                if ($value->grado_discapacidad_id === null)
+                                {
+                                    $gradoDiscacidad = 0;
+                                }else{$gradoDiscacidad = $value->grado_discapacidad_id;}
+
+                                if ($value->tipo_sujeto_id === null)
+                                {
+                                    $tipoSujeto = 0;
+                                }else{$tipoSujeto = $value->tipo_sujeto_id;}
+
+                                if ($value->autoidentificacion_id === null)
+                                {
+                                    $autoIdentificacion = 0;
+                                }else{$autoIdentificacion = $value->autoidentificacion_id;}
+
+                                if ($value->estado_procesal === null)
+                                {
+                                    $estadoProce = 0;
+                                }else{$estadoProce = $value->estado_procesal;}
+
+                        if ($value->persona_id != null)
+                        {
+                            // === VALIDACIONES DE  LA PERSONA
+                                $personaNatural = self::getPersonaNatural($value->persona_id, $value->fallecida);
+                                if ($personaNatural === false)
+                                {
+                                    $respuesta['mensaje'] = 'No exite persona Natural.';
+                                    \Log::warning('METODO NOT FOUNT: getPersonaNatural return false.');
+                                    return $respuesta;
+                                }
+
+                                if ($value->es_victima === 1 || $value->tipo_sujeto_id === 3)
+                                {
+                                    $medidasProteccion = self::getMedidas($value->id);
+                                }else
+                                {
+                                    $medidasProteccion = [];
+                                }
+
+                                $estadoLibertad = HistoricoEstadoLibertad::where('hecho_persona_id', $value->id)->orderBy('fecha_hora','desc')->first();
+                                if ($estadoLibertad === null)
+                                {
+                                    $libertadEstadoId = 1;
+                                    $libertadFecha = null;
+                                    \Log::warning('METODO NOT FOUNT: HistoricoEstadoLibertad return null.');
+                                }else
+                                {
+                                    $libertadEstadoId = $estadoLibertad->estado_libertad_id;
+                                    $libertadFecha = $estadoLibertad->fecha_hora;
+                                }
+
+                            /*if ($value->tipo_sujeto_id === 4)
                             {
-                                $respuesta['mensaje'] = 'No exite persona Natural.';
-                                \Log::warning('METODO NOT FOUNT: getPersonaNatural return false.');
-                                return $respuesta;
+                                $queryParams[] = [
+                                    'idRelacionVictima'   => $relacionVictima,
+                                    'idNivelEducacion'    => $nivelEducacion,
+                                    'idGrupoVulnerable'   => $grupoVulnerable,
+                                    'idGradoDiscapacidad' => $gradoDiscacidad,
+                                    'idTipoParte'         => $tipoSujeto,
+                                    'idEstadoLibertad'    => $libertadEstadoId,
+                                    'idAutoidentificacion'=> $autoIdentificacion,
+                                    'fechaEstadoProcesal' => \Carbon\Carbon::parse($libertadFecha)->format('Y-m-d H:i:s'),
+                                    'Tercero'             => $personaNatural
+                                ];
+
+                            }else
+                            {*/
+                                $queryParams[] = [
+                                    'idRelacionVictima'   => $relacionVictima,
+                                    'idNivelEducacion'    => $nivelEducacion,
+                                    'idGrupoVulnerable'   => $grupoVulnerable,
+                                    'idGradoDiscapacidad' => $gradoDiscacidad,
+                                    'idTipoParte'         => $tipoSujeto,
+                                    'idEstadoLibertad'    => $libertadEstadoId,
+                                    'idAutoidentificacion'=> $autoIdentificacion,
+                                    'fechaEstadoProcesal' => \Carbon\Carbon::parse($libertadFecha)->format('Y-m-d H:i:s'),
+                                    'estadoProcesal'      => $estadoProce,
+                                    'PersonaNatural'      => $personaNatural,
+                                    'MedidaProteccion'    => $medidasProteccion
+                                ];
+                            //}
+
+                        }elseif ($value->persona_juridica_id != null)
+                        {
+
+                            $personaJuridica = self::getPersonaJuridica($value->persona_juridica_id);
+                            if ($personaJuridica === false)
+                            {
+                                    $respuesta['mensaje'] = 'No exite persona Juridica.';
+                                    \Log::warning('METODO NOT FOUNT: getPersonaJuridica return false.');
+                                    return $respuesta;
+                            }
+
+                            if ($value->es_victima === 1 || $value->tipo_sujeto_id === 3)
+                            {
+                                $medidasProteccion = self::getMedidas($value->id);
+                            }else
+                            {
+                                $medidasProteccion = [];
+                            }
+                            $queryParams[] = [
+                                'idRelacionVictima'   => $relacionVictima,
+                                'idNivelEducacion'    => $nivelEducacion,
+                                'idGrupoVulnerable'   => $grupoVulnerable,
+                                'idGradoDiscapacidad' => $gradoDiscacidad,
+                                'idTipoParte'         => $tipoSujeto,
+                                'idEstadoLibertad'    => 1,
+                                'idAutoidentificacion'=> $autoIdentificacion,
+                                'fechaEstadoProcesal' => \Carbon\Carbon::parse($value->fecha_estado_procesal)->format('Y-m-d H:i:s'),
+                                'estadoProcesal'      => $estadoProce,
+                                'personaJuridica'     => $personaJuridica,
+                                'MedidaProteccion'    => $medidasProteccion
+                            ];
+
+                        }elseif ($value->persona_desconocida_id != null)
+                        {
+
+                            $personaDesconocida = self::getPersonaDesconocida($value->persona_desconocida_id,$value->fallecida);
+                            if ($personaDesconocida === false) {
+                                    $respuesta['mensaje'] = 'No exite persona desconocida.';
+                                    \Log::warning('METODO NOT FOUNT: getPersonaDesconocida return false.');
+                                    return $respuesta;
                             }
 
                             if ($value->es_victima === 1 || $value->tipo_sujeto_id === 3)
@@ -381,155 +466,74 @@ class HelperInicioOrganoJudicial
                                 $libertadFecha = $estadoLibertad->fecha_hora;
                             }
 
-                        if ($value->tipo_sujeto_id === 4)
-                        {
-                            $queryParams[] = [
-                                'idRelacionVictima'   => $relacionVictima,
-                                'idNivelEducacion'    => $nivelEducacion,
-                                'idGrupoVulnerable'   => $grupoVulnerable,
-                                'idGradoDiscapacidad' => $gradoDiscacidad,
-                                'idTipoParte'         => $tipoSujeto,
-                                'idEstadoLibertad'    => $libertadEstadoId,
-                                'idAutoidentificacion'=> $autoIdentificacion,
-                                'fechaEstadoProcesal' => \Carbon\Carbon::parse($libertadFecha)->format('Y-m-d H:i:s'),
-                                'Tercero'             => $personaNatural
-                            ];
+                            /*if ($value->tipo_sujeto_id === 4)
+                            {
+                                $queryParams[] = [
+                                    'idRelacionVictima'   => $relacionVictima,
+                                    'idNivelEducacion'    => $nivelEducacion,
+                                    'idGrupoVulnerable'   => $grupoVulnerable,
+                                    'idGradoDiscapacidad' => $gradoDiscacidad,
+                                    'idTipoParte'         => $tipoSujeto,
+                                    'idEstadoLibertad'    => $libertadEstadoId,
+                                    'idAutoidentificacion'=> $autoIdentificacion,
+                                    'fechaEstadoProcesal' => \Carbon\Carbon::parse($libertadFecha)->format('Y-m-d H:i:s'),
+                                    'Tercero'             => $personaDesconocida,
+                                    'MedidaProteccion'    => $medidasProteccion
+                                ];
+                            }else
+                            {*/
+                                $queryParams[] = [
+                                    'idRelacionVictima'   => $relacionVictima,
+                                    'idNivelEducacion'    => $nivelEducacion,
+                                    'idGrupoVulnerable'   => $grupoVulnerable,
+                                    'idGradoDiscapacidad' => $gradoDiscacidad,
+                                    'idTipoParte'         => $tipoSujeto,
+                                    'idEstadoLibertad'    => $libertadEstadoId,
+                                    'idAutoidentificacion'=> $autoIdentificacion,
+                                    'fechaEstadoProcesal' => \Carbon\Carbon::parse($value->fecha_estado_procesal)->format('Y-m-d H:i:s'),
+                                    'estadoProcesal'      => $estadoProce,
+                                    'PersonaNatural'      => $personaDesconocida,
+                                    'MedidaProteccion'    => $medidasProteccion
+                                ];
+                            //}
                         }else
                         {
-                            $queryParams[] = [
-                                'idRelacionVictima'   => $relacionVictima,
-                                'idNivelEducacion'    => $nivelEducacion,
-                                'idGrupoVulnerable'   => $grupoVulnerable,
-                                'idGradoDiscapacidad' => $gradoDiscacidad,
-                                'idTipoParte'         => $tipoSujeto,
-                                'idEstadoLibertad'    => $libertadEstadoId,
-                                'idAutoidentificacion'=> $autoIdentificacion,
-                                'fechaEstadoProcesal' => \Carbon\Carbon::parse($libertadFecha)->format('Y-m-d H:i:s'),
-                                'estadoProcesal'      => $estadoProce,
-                                'PersonaNatural'      => $personaNatural,
-                                'MedidaProteccion'    => $medidasProteccion
-                            ];
+                            $respuesta['mensaje'] = 'No exite sujetos en este caso.';
+                            \Log::warning('ARMADO DE JSON PERSONAS: no exite personas.');
+                            return $respuesta;
                         }
+                    }
 
-                    }elseif ($value->persona_juridica_id != null)
+                // === ARMADO DE JSON FISCAL ASIGNADO ===
+                   foreach ($casoFuncionario as $key => $value)
+                {
+                   // === FUNCIONARIO I4 ===
+                    $funcionarioasig = Funcionario::where('Cargo', 'LIKE' ,'%ISCAL%')->where('id',$value->Funcionario)
+                                                ->first();
+                    if ($value->FechaBaja === null && $funcionarioasig != null)
                     {
-
-                        $personaJuridica = self::getPersonaJuridica($value->persona_juridica_id);
-                        if ($personaJuridica === false)
-                        {
-                                $respuesta['mensaje'] = 'No exite persona Juridica.';
-                                \Log::warning('METODO NOT FOUNT: getPersonaJuridica return false.');
-                                return $respuesta;
-                        }
-
-                        if ($value->es_victima === 1 || $value->tipo_sujeto_id === 3)
-                        {
-                            $medidasProteccion = self::getMedidas($value->id);
-                        }else
-                        {
-                            $medidasProteccion = [];
-                        }
-                        $queryParams[] = [
-                            'idRelacionVictima'   => $relacionVictima,
-                            'idNivelEducacion'    => $nivelEducacion,
-                            'idGrupoVulnerable'   => $grupoVulnerable,
-                            'idGradoDiscapacidad' => $gradoDiscacidad,
-                            'idTipoParte'         => $tipoSujeto,
-                            'idEstadoLibertad'    => 1,
-                            'idAutoidentificacion'=> $autoIdentificacion,
-                            'fechaEstadoProcesal' => \Carbon\Carbon::parse($value->fecha_estado_procesal)->format('Y-m-d H:i:s'),
-                            'estadoProcesal'      => $estadoProce,
-                            'personaJuridica'     => $personaJuridica,
-                            'MedidaProteccion'    => $medidasProteccion
+                        $queryParams []=[
+                            "idRelacionVictima"=> 0,
+                            "idNivelEducacion"=> 0,
+                            "idGrupoVulnerable"=> 0,
+                            "idGradoDiscapacidad"=> 0,
+                            "idTipoParte"=> 6,
+                            'esVictima'=> false,
+                            "idEstadoLibertad"=> 1,
+                            "idAutoidentificacion"=> 0,
+                            "fechaEstadoProcesal"=> null,
+                            "estadoProcesal"=> 0,
+                            "Tercero"=> [
+                                "ci"=> $funcionarioasig->NumDocId,
+                                "nombres"=> $funcionarioasig->Nombres,
+                                "primerApellido"=> $funcionarioasig->ApPat,
+                                "segundoApellido"=> $funcionarioasig->ApMat,
+                                "fechaNacimiento"=> $funcionarioasig->FechaNac
+                            ]
                         ];
-
-                    }elseif ($value->persona_desconocida_id != null)
-                    {
-
-                        $personaDesconocida = self::getPersonaDesconocida($value->persona_desconocida_id,$value->fallecida);
-                        if ($personaDesconocida === false) {
-                                $respuesta['mensaje'] = 'No exite persona desconocida.';
-                                \Log::warning('METODO NOT FOUNT: getPersonaDesconocida return false.');
-                                return $respuesta;
-                        }
-
-                        if ($value->es_victima === 1 || $value->tipo_sujeto_id === 3)
-                        {
-                            $medidasProteccion = self::getMedidas($value->id);
-                        }else
-                        {
-                            $medidasProteccion = [];
-                        }
-
-                        $estadoLibertad = HistoricoEstadoLibertad::where('hecho_persona_id', $value->id)->orderBy('fecha_hora','desc')->first();
-                        if ($estadoLibertad === null)
-                        {
-                            $libertadEstadoId = 1;
-                            $libertadFecha = null;
-                            \Log::warning('METODO NOT FOUNT: HistoricoEstadoLibertad return null.');
-                        }else
-                        {
-                            $libertadEstadoId = $estadoLibertad->estado_libertad_id;
-                            $libertadFecha = $estadoLibertad->fecha_hora;
-                        }
-
-                        if ($value->tipo_sujeto_id === 4)
-                        {
-                            $queryParams[] = [
-                                'idRelacionVictima'   => $relacionVictima,
-                                'idNivelEducacion'    => $nivelEducacion,
-                                'idGrupoVulnerable'   => $grupoVulnerable,
-                                'idGradoDiscapacidad' => $gradoDiscacidad,
-                                'idTipoParte'         => $tipoSujeto,
-                                'idEstadoLibertad'    => $libertadEstadoId,
-                                'idAutoidentificacion'=> $autoIdentificacion,
-                                'fechaEstadoProcesal' => \Carbon\Carbon::parse($libertadFecha)->format('Y-m-d H:i:s'),
-                                'Tercero'             => $personaDesconocida,
-                                'MedidaProteccion'    => $medidasProteccion
-                            ];
-                        }else
-                        {
-                            $queryParams[] = [
-                                'idRelacionVictima'   => $relacionVictima,
-                                'idNivelEducacion'    => $nivelEducacion,
-                                'idGrupoVulnerable'   => $grupoVulnerable,
-                                'idGradoDiscapacidad' => $gradoDiscacidad,
-                                'idTipoParte'         => $tipoSujeto,
-                                'idEstadoLibertad'    => $libertadEstadoId,
-                                'idAutoidentificacion'=> $autoIdentificacion,
-                                'fechaEstadoProcesal' => \Carbon\Carbon::parse($value->fecha_estado_procesal)->format('Y-m-d H:i:s'),
-                                'estadoProcesal'      => $estadoProce,
-                                'PersonaNatural'      => $personaDesconocida,
-                                'MedidaProteccion'    => $medidasProteccion
-                            ];
-                        }
-                    }else
-                    {
-                        $respuesta['mensaje'] = 'No exite sujetos en este caso.';
-                        \Log::warning('ARMADO DE JSON PERSONAS: no exite personas.');
-                        return $respuesta;
                     }
                 }
 
-                // === ARMADO DE JSON FISCAL ASIGNADO ===
-                $queryParams []=[
-                        "idRelacionVictima"=> 0,
-                        "idNivelEducacion"=> 0,
-                        "idGrupoVulnerable"=> 0,
-                        "idGradoDiscapacidad"=> 0,
-                        "idTipoParte"=> 6,
-                        "idEstadoLibertad"=> 1,
-                        "idAutoidentificacion"=> 0,
-                        "fechaEstadoProcesal"=> null,
-                        "estadoProcesal"=> 0,
-                        "Tercero"=> [
-                            "ci"=> $funcionarioasig->NumDocId,
-                            "nombres"=> $funcionarioasig->Nombres,
-                            "primerApellido"=> $funcionarioasig->ApPat,
-                            "segundoApellido"=> $funcionarioasig->ApMat,
-                            "fechaNacimiento"=> $funcionarioasig->FechaNac
-                        ]
-                ];
                 // === COMSUMO DEL SERVICIO ===
                 return $queryParams;
                 try
@@ -790,12 +794,16 @@ class HelperInicioOrganoJudicial
                 $pais = 0;
             }else{$pais = $persona->pais_id;}
 
+            if ($persona->tipo_documento_id === null) {
+                $tipoDocumentoId = 0;
+            }else{$tipoDocumentoId = $persona->tipo_documento_id;}
+
         // === ARMADO JSON PERSONA DESCONOCIDA ===
             return $getPersoana = [
                         'idPersonaNatural'         => $persona->id,
                         'codigoMunicipioNacimiento'=> $naci,
                         'codigoMunicipioResidencia'=> $recide,
-                        'idTipoDocumento'          => $persona->tipo_documento_id,
+                        'idTipoDocumento'          => $tipoDocumentoId,
                         'numeroDocumento'          => $persona->n_documento,
                         'nombres'                  => $persona->nombre,
                         'primerApellido'           => $persona->ap_paterno,

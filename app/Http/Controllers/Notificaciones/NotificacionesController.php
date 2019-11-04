@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Notificaciones;
 
-use App\Helpers\HelperActividadOrgano;
+use App\Helpers\HelperActividad;
+//use App\Helpers\HelperActividadOrgano;
 use App\Helpers\HelperInicioOrganoJudicial;
 use App\Helpers\HelperRejaf;
 use App\Http\Controllers\Controller;
@@ -48,20 +49,13 @@ class NotificacionesController extends Controller
     public function store(Request $request)
     {
         $datos = $request->validate([
-            'codigo_fud'               => 'required|max:250|string',
-            'codigo_tipo_notificacion' => 'required|integer',
-            'descripcion_notificacion' => 'required|string',
-            'fecha_hora_notificacion'  => 'required|date',
-            'codigo_tipo_actividad'    => 'required|integer',
-            'n_documento_Juez'         => 'required|numeric',
-            'complemento_Juez'         => 'string',
-            'nombre_Juez'              => 'required|string',
-            'ap_paterno_Juez'          => 'required|string',
-            'ap_materno_Juez'          => 'required|string',
-            'fecha_nacimiento_Juez'    => 'required|date',
-            'nombre_archivo'           => 'required|string',
-            'extencion'                => 'required|string',
-            'archivo'                  => 'required',
+            'codigo_fud'            => 'required|min:14|max:30|string',
+            'codigo_tipo_actividad' => 'required|integer',
+            'fecha_hora_actividad'  => 'required|date',
+            'descripcion_actividad' => 'required|max:120|string',
+            'nombre_archivo'        => 'required|max:255|string',
+            'extension'             => 'required|max:255|string',
+            'archivo'               => 'required',
             ]);
         // === CONSULTA CASO ===
             $caso = Caso::where('Caso',$request->codigo_fud)->select('id')->first();
@@ -71,96 +65,33 @@ class NotificacionesController extends Controller
             }
 
         //=== CONSULTA TIPO ACTIVIDAD ===
-            $tipoActivi = TipoActividad::where('idinter',$request->codigo_tipo_actividad)->select('id')->first();
+            $tipoActivi = TipoActividad::where('idinter',$request->codigo_tipo_actividad)->first();
             if (!$tipoActivi)
             {
-                return $this->errorResponse('el codigo de actividad no existe no existe en el sistema', 400);
+                return $this->errorResponse('El codigo de actividad no existe no existe en el sistema', 400);
             }
 
-        //=== CONSULTA PERSONA JUEZ ===
-            $juez = RrhhPersona::where('n_documento',$request->n_documento_Juez)->first();
-            if ($juez === null)
-            {
-                $segip = new SegipClass();
-                $data = [
-                    'n_documento'  => $request->n_documento,
-                    'complemento'  => $request->complemento,
-                    'nombre'       => $request->nombre,
-                    'ap_paterno'   => $request->ap_paterno,
-                    'ap_materno'   => $request->ap_materno,
-                    'f_nacimiento' => $request->fecha_nacimiento
-                ];
-
-            //=== CERTIFICACION SEGIP ===
-                $respuesta1 = $segip->getCertificacionSegip($data);
-                if ($respuesta1['sw'] == 1)
-                {
-                    if ($respuesta1['respuesta']['EsValido'] == true && $respuesta1['respuesta']['CodigoRespuesta'] == '2')
-                    {
-                        $file_name = uniqid('certificacion_segip_', true) . ".pdf";
-                        $file      = public_path('/storage/segip') . "/" . $file_name;
-                        file_put_contents($file, $respuesta1['respuesta']['ReporteCertificacion']);
-
-                        $persona = new RrhhPersona();
-
-                        //=== INSERTAR EN TABLA PERSONA EN RRHHPERSONA ==
-                        $persona->n_documento              = $request->n_documento;
-                        $persona->nombre                   = $request->nombre;
-                        $persona->ap_paterno               = $request->ap_paterno;
-                        $persona->ap_materno               = $request->ap_materno;
-                        $persona->f_nacimiento             = $request->fecha_nacimiento;
-                        $persona->estado_segip             = 2;
-                        $persona->nombre_completo          = $request->nombre.' '.trim($request->ap_paterno.' '.$request->ap_materno);
-                        $persona->certificacion_segip      = base64_encode($respuesta1['respuesta']['ReporteCertificacion']);
-                        $persona->certificacion_file_segip = $file_name;
-
-                        $persona->save();
-                        $juez_id =$persona->id;
-                    }else
-                    {
-                        return $this->errorResponse('no se logro validar a la persona verifique los datos',400);
-                    }
-                }
-                else
-                {
-                    return $this->errorResponse('no se logro validar a la persona 2',400);
-                }
-            }else
-            {
-
-            }
-
+            $file_name = uniqid('actividad_juez_', true) .'.'.$request->extension;
+            $file      = public_path('/storage/actividad') . "/" . $file_name;
+            file_put_contents($file,base64_decode($request->archivo));
 
        // ==== ASDGBDIJF
-            /*
-            $nuevaActividad = new Actividad();
 
-            $nuevaActividad->Fecha = $request->fecha_hora_notificacion;
-            $nuevaActividad->Actividad = $request->descripcion_notificacion;
-            $nuevaActividad->Documento = $request->archivo;//base 64 ponerlo en elfichero
-            $nuevaActividad->_Documento = $request->nombre_archivo;//nombre del documento
-            $nuevaActividad->CreatorFullName = ;
-            $nuevaActividad->Caso = ;//id caso
-            $nuevaActividad->TipoActividad = ; //id tipoactividad
-            $nuevaActividad->EstadoDocumento = 2;
-            $nuevaActividad->CalFecha = ;
-            $nuevaActividad->Asigndo = ;
-            $nuevaActividad->FechaIni = ;
-            $nuevaActividad->FechaFin = ;
-            $nuevaActividad->ActividadActualizaEstadoCaso = ;
-            $nuevaActividad->estado_triton = ;
-            $nuevaActividad->aprobado_cd = ,
-            $nuevaActividad->estado_caso_id = ;
-            $nuevaActividad->etapa_caso_id = ;
-            $nuevaActividad->fh_actividad = $request->fecha_hora_notificacion;
-            $nuevaActividad->nombre_archivo = ;
-            $nuevaActividad->extension = ;
-            $nuevaActividad->nombre = ;
-
-        */
+            $valor = [
+                'caso_id'           => $caso->id,
+                'tipo_actividad_id' => $tipoActivi->id,
+                'actividad'         => $request->descripcion_actividad,
+                'documento_nombre'  => $request->nombre_archivo,
+                'nombre_archivo'    => $file_name,
+                'extension'         => $request->extension,
+                'fh_actual'         => $request->fecha_hora_actividad,
+                'documento'         => $request->archivo,
+            ];
 
 
-        return $this->successConection('se inserto satisfactoriamente', 201);
+           $id = HelperActividad::createActividad($valor);
+
+        return $this->successConection('se inserto satisfactoriamente'.$id, 201);
 
     }
 }

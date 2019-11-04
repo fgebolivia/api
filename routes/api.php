@@ -27,18 +27,21 @@ Route::apiResource('v2/aprobaciondocumentos', 'Ciudadania\AprobacionDocumentosCo
 
 Route::apiResource('v2/connection', 'Casos\ConnectionApiController')->only(['index']);
 
-Route::apiResource('v2/rejaf', 'Actividades\RejafController')->only(['store']);
+//Route::apiResource('v2/rejaf', 'Actividades\RejafController')->only(['store']);
 
 Route::apiResource('v2/agendamiento', 'Actividades\AgendamientoController')->only(['store']);
 Route::apiResource('v2/reparto/{codigo}/juez', 'Actividades\JuezController')->only(['store']);
 Route::apiResource('v2/agendamiento/suspencion', 'Actividades\AgendaSuspencionController')->only(['store']);
+Route::apiResource('v2/actualizarjuzgado', 'Actividades\HechoJuzgadoController')->only(['store']);
 
 
 Route::apiResource('v2/notificaciones', 'Notificaciones\NotificacionesController')->only(['store']);
 
-Route::apiResource('v2/casos', 'Casos\CasoController')->only(['store','index','show']);
+//Route::apiResource('v2/casos', 'Casos\CasoController')->only(['store','index','show']);
 
-Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->only(['store','update','index']);
+//Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->only(['store','update','index']);s
 
 Route::apiResource('v2/casos/{hecho}/medidas', 'Casos\MedidasVictimaController')->only(['update']);
+
+Route::apiResource('v2/fudactualizado', 'Casos\FudActualizadoController')->only(['show']);
 

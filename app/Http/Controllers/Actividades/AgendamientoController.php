@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Actividades;
 use App\Helpers\HelperJuzgado;
 use App\Http\Controllers\Controller;
 use App\Models\Agenda\Agenda;
+use App\Models\Agenda\AgendaPersona;
 use App\Models\Agenda\Juzgado;
 use App\Models\Agenda\TipoAudiencia;
 use App\Models\Agenda\TipoCausal;
 use App\Models\Agenda\archivo;
 use App\Models\Denuncia\Hecho;
+use App\Models\Rrhh\RrhhPersona;
 use App\Models\UbicacionGeografica\UbgeMunicipio;
 use Illuminate\Http\Request;
 
@@ -58,13 +60,16 @@ class AgendamientoController extends Controller
         ]);
         $count = Agenda::where('codigo_audiencia',$request->codigo_agendamiento)->get()->count();
 
-        if ($count >1) {
+        if ($count >=1) {
             return $this->errorResponse('Error el codigo de audiencia ya existe',422);
         }
 
         $hecho = Hecho::where('codigo',$request->codigo_fud)->first();
         $audienciaTipo = TipoAudiencia::where('id',$request->codigo_tipo_audiencia)->first();
         //dd($audienciaTipo);
+
+
+
         $juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado)->first();
         if ($juzgado === null) {
 
@@ -72,7 +77,19 @@ class AgendamientoController extends Controller
             $respuesta = $juzgado1->GetJuzgado($request->codigo_juzgado);
             $juzgado_id = $respuesta;
 
-        }else{ $juzgado_id = $juzgado->id; }
+        }else
+        {
+            $juzgado_id = $juzgado->id;
+        }
+        $j=0;
+        foreach ($request->input('fiscales') as $key => $value)
+        {
+            $existeFiscal = RrhhPersona::where('n_documento',$request->input('fiscales.'.$j.'.ci_fiscal'))->first();
+            if (!$existeFiscal) {
+                return $this->errorResponse('el fiscal no Existe',400);
+            }
+            $j++;
+        }
 
         $agenda = new Agenda();
 
@@ -95,6 +112,25 @@ class AgendamientoController extends Controller
 
         $id = $agenda->id;
 
+        $i=0;
+        foreach ($request->input('fiscales') as $key => $value)
+        {
+            $existeFiscal = RrhhPersona::where('n_documento',$request->input('fiscales.'.$i.'.ci_fiscal'))->first();
+            if (!$existeFiscal) {
+                return $this->errorResponse('el fiscal no Existe',400);
+            }
+
+            $insertFiscal             = new AgendaPersona();
+            $insertFiscal->agenda_id  = $id;
+            $insertFiscal->persona_id = $existeFiscal->id;
+            $insertFiscal->tipo       = 2;
+            $insertFiscal->hecho_id   = $hecho->id;
+            $insertFiscal->juzgado_id = $juzgado_id;
+            $insertFiscal->save();
+            $i++;
+        }
+
+
         $arch = new archivo();
         $arch->archivo = $file_name;
         $arch->agendamiento_id = $id;
@@ -102,7 +138,7 @@ class AgendamientoController extends Controller
         $arch->save();
         $idarch = $arch->id;
 
-        return $this->successConection('se inserto correctamente codigo interno'.$id.' codigo archivo '.$idarch,201);
+        return $this->successConection('se inserto correctamente codigo interno '.$id.' codigo archivo '.$idarch,201);
     }
 
     /**

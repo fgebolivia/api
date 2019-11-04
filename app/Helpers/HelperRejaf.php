@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\Denuncia\Hecho;
 use App\Models\Denuncia\HechoPersona;
+use App\Models\Denuncia\HistoricoEstadoLibertad;
 use App\Models\Denuncia\PolOficina;
 use App\Models\Rrhh\RrhhPersona;
 use App\Models\Rrhh\RrhhPersonaDesconocida;
@@ -16,8 +17,8 @@ use Illuminate\Support\Facades\Log;
 
 class HelperRejaf
 {
-   public static function GetRejaf($ciPersona, $codigoFud)
-   {
+  public static function GetRejaf($ciPersona, $codigoFud)
+  {
       // === INICIALIZACION DE VARIABLES ===
             $respuesta = array(
                 'sw'            => false,
@@ -41,7 +42,7 @@ class HelperRejaf
 
           \Log::warning('CONSULTA PERSONA AL TRITON: La persona no existe.');
           $personaRejaf = RrhhPersonaDesconocida::where('n_documento',$ciPersona)->first();
-          //dd($personaDesRejaf);
+          //dd($personaRejaf);
             if ($personaRejaf->n_documento === null || $personaRejaf->nombre     === null ||
                 $personaRejaf->ap_paterno  === null || $personaRejaf->ap_materno === null   )
             {
@@ -106,17 +107,16 @@ class HelperRejaf
 
          if (!$insertarRejap)
         {
-          $respuesta['mensaje']= 'El hecho - persona no exite';
-          \Log::warning('CONSULTA HECHO - PERSONA AL TRITON: El hecho perosona no existe.');
-          $insertarRejap = HechoPersona::where('persona_desconocida_id',$personaRejaf->id)->where('hecho_id',$fud->id)->first();
-
-          if (!$insertarRejap)
-          {
-            $respuesta['mensaje'] = 'El hecho perosona desconocida no exite';
-            \Log::warning('CONSULTA HECHO - PERSONA - DESCONOCIDA AL TRITON: El hecho perosona  desconocida no existe.');
-            return $respuesta;
-          }
+          $insertarRejap = HechoPersona::where('persona_desconocida_id',$personaRejaf->id)->first();
+          //dd($insertarRejap);
+          $estadoLibertad = HistoricoEstadoLibertad::where('hecho_persona_id', $insertarRejap->id)/*->orderBy('fecha_hora','desc')*/->first();
+          dd($estadoLibertad);
         }
+        else
+        {
+          $estadoLibertad = HistoricoEstadoLibertad::where('hecho_persona_id', $insertarRejap->id)->orderBy('fecha_hora','desc')->first();
+        }
+
 
       //=== ARMADO JSON REJAP ===
 
@@ -134,9 +134,9 @@ class HelperRejaf
             'codigoDepartamento'=> $provincia->codigo_interoperar_dep,
             'codigoProvincia'   => $provincia->codigo_interoperar,
             'codigoUsuario'     => 'F'.$solicitanteRejaf->n_documento,
-            'idEstadoLibertad'  => $insertarRejap->estado_libertad_id,
+            'idEstadoLibertad'  => $estadoLibertad->estado_libertad_id,
         ];
-        //return $queryParams;
+        return $queryParams;
         $deco = json_encode($queryParams);
 
       //=== HEADER POST REJAP ===
@@ -197,5 +197,6 @@ class HelperRejaf
 
       \Log::warning($respuesta);
       return $respuesta;
-    }
+  }
+
 }
