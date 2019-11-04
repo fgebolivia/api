@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 
 class HelperJuzgado
 {
-   
+
    public static function GetJuzgado($juzgado_id)
    {
 

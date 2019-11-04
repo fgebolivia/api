@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Actividades;
 
+use App\Helpers\HelperJuzgado;
 use App\Http\Controllers\Controller;
 use App\Models\Agenda\Juzgado;
 use App\Models\Denuncia\Hecho;
@@ -35,8 +36,15 @@ class HechoJuzgadoController extends Controller
         //=== CONSULTA JUZGADO ALTA ===
             $juzgado = Juzgado::where('codigo_juzgado',$request->codigo_juzgado_nuevo)->first();
             if (!$juzgado) {
-                return $this->errorResponse('El codigo Juzgado de alta no Existe',422);
+                $juzgadoinsert = new HelperJuzgado();
+                $respuesta = $juzgadoinsert->GetJuzgado($request->codigo_juzgado_nuevo);
+                $juzgado_id = $respuesta;
             }
+            else
+            {
+                $juzgado_id =$juzgado->id;
+            }
+
             $juzgadoBaja = Juzgado::where('codigo_juzgado',$request->codigo_juzgado_baja)->first();
 
             if (!$juzgadoBaja) {
@@ -55,12 +63,12 @@ class HechoJuzgadoController extends Controller
                 $jusgadoBaja->save();
             }
         //=== INSERTAR NUEVO JUZGADO DEL ECHO ==
-            $hecho->jusgado_id = $juzgado->id;
+            $hecho->jusgado_id = $juzgado_id;
             $hecho->save();
 
             $juzgadoHecho             = new HechoJuzgado();
             $juzgadoHecho->hecho_id   = $hecho->id;
-            $juzgadoHecho->juzgado_id = $juzgado->id;
+            $juzgadoHecho->juzgado_id = $juzgado_id;
             $juzgadoHecho->motivo     = 'Cambio de Juzgado del caso en el Organo Judicial';
             $juzgadoHecho->fecha_alta = date('Y-m-d H:i:s');
             $juzgadoHecho->save();
