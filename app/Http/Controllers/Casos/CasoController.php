@@ -140,12 +140,12 @@ class CasoController extends Controller
         },
         "meta": {
             "página_actual": 1,
-            "url_primera_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos?page=1",
+            "url_primera_pagina": "http://api-dev.fiscalia.gob.bo/api/v2/casos?page=1",
             "desde": 1,
             "ultima_pagina": 58,
-            "url_ultima_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos?page=58",
-            "url_pagina_siguiente": "http://api-dev3.fiscalia.gob.bo/api/v2/casos?page=2",
-            "path": "http://api-dev3.fiscalia.gob.bo/api/v2/casos",
+            "url_ultima_pagina": "http://api-dev.fiscalia.gob.bo/api/v2/casos?page=58",
+            "url_pagina_siguiente": "http://api-dev.fiscalia.gob.bo/api/v2/casos?page=2",
+            "path": "http://api-dev.fiscalia.gob.bo/api/v2/casos",
             "por_pagina": 5,
             "purl_pagina_anterior": null,
             "a": 5,
@@ -227,9 +227,9 @@ class CasoController extends Controller
                     'que_hizo' => 'required|string',
                     'aquien_hizo' => 'required|string',
                     'como_hizo' => 'required|string',
-                    ]); 
+                    ]);
                 break;
-            
+
             default:
                 $datos = $request->validate([
                     'relato' => 'required|string',
@@ -321,7 +321,7 @@ class CasoController extends Controller
             $hechos1 = new CasoResource($hecho);
             return $hechos1;
         }
-        
+
     }
 
     /**

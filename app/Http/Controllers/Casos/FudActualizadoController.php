@@ -22,7 +22,7 @@ class FudActualizadoController extends Controller
             return $this->errorResponse('El codigo del Caso no existe',400);
         }
 
-        $file      = 'http://pruebas.local/hechocontroller/imprimirfudextendido2/'.$hecho->id;
+        $file      = 'https://triton-dev.fiscalia.gob.bo/hechocontroller/imprimirfudextendido2/'.$hecho->id;
 
         $deco = base64_encode(file_get_contents($file));
 

@@ -11,7 +11,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-        
+
         <style>
             html, body {
                 background-color: #fff;
@@ -87,10 +87,10 @@
                         <img src="image/baner.png"/>
                 </div>
                     <div class="links">
-                        <a style="background-color: #FF984C" class="btn btn-outline-secondary" href="http://api-dev3.fiscalia.gob.bo/docs"><b>Documentación API</b></a>
+                        <a style="background-color: #FF984C" class="btn btn-outline-secondary" href="http://api-dev.fiscalia.gob.bo/docs"><b>Documentación API</b></a>
                         <a style="background-color: #FF984C" class="btn btn-outline-secondary" href="http://dev4.fiscalia.gob.bo/login"><b>Web Fiscalía Triton</b></a>
                         <a style="background-color: #FF984C" class="btn btn-outline-secondary" href="https://www.fiscalia.gob.bo/"><b>Ministerio Público</b></a>
-                        <a style="background-color: #FF984C" class="btn btn-outline-secondary" href="https://c-permanente.fiscalia.gob.bo/"><b>Capacitación E.F.E.</b></a>                  
+                        <a style="background-color: #FF984C" class="btn btn-outline-secondary" href="https://c-permanente.fiscalia.gob.bo/"><b>Capacitación E.F.E.</b></a>
                     </div>
             </div>
         </div>

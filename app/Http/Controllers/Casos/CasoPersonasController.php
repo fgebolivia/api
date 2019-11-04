@@ -174,12 +174,12 @@ class CasoPersonasController extends Controller
                     "fecha_estado_procesal": null
                 }
             ],
-            "url_primera_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1&page=1",
+            "url_primera_pagina": "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1&page=1",
             "desde": 1,
             "ultima_pagina": 1,
-            "url_ultima_pagina": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1&page=1",
+            "url_ultima_pagina": "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales?tipo=1&page=1",
             "url_pagina_siguiente": null,
-            "path": "http://api-dev3.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales",
+            "path": "http://api-dev.fiscalia.gob.bo/api/v2/casos/324727/sujetosprocesales",
             "por_pagina": 5,
             "purl_pagina_anterior": null,
             "a": 4,
