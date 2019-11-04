@@ -16,7 +16,13 @@ use Illuminate\Http\Request;
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-//Route::apiResource('v2/abogados', 'Notificaciones\AbogadoController')->only(['index', 'show']);//esperar a estar enlasado realmente con el i 4
+
+
+
+
+
+
+
 //Route::apiResource('v2/hechos', 'Hechos\HechoController');
 //Route::apiResource('v1/usuarios', 'UserController');
 //Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);*/

@@ -51,6 +51,7 @@ class HechoJuzgadoController extends Controller
                 return $this->errorResponse('El codigo Juzgado para dar de baja no Existe',422);
             }
         //=== CONSULTA JUZGADO BAJA ===
+
             $jusgadoBaja = HechoJuzgado::where('juzgado_id',$juzgadoBaja->id)->where('hecho_id',$hecho->id)->first();
             if (!$jusgadoBaja) {
                 return $this->errorResponse('El codigo Juzgado hacer dado de baja no Existe',422);
@@ -63,7 +64,9 @@ class HechoJuzgadoController extends Controller
                 $jusgadoBaja->save();
             }
         //=== INSERTAR NUEVO JUZGADO DEL ECHO ==
+
             $hecho->jusgado_id = $juzgado_id;
+
             $hecho->save();
 
             $juzgadoHecho             = new HechoJuzgado();
