@@ -27,8 +27,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
-        Passport::tokensExpireIn(now()->addDays(30));
-        Passport::refreshTokensExpireIn(now()->addDays(60));
+        Passport::tokensExpireIn(now()->addMonths(60));
+        Passport::refreshTokensExpireIn(now()->addMonths(66));
 
         Passport::tokensCan([
             'aprovacion_documento' => 'Metodo Post para la Aprovacion de Documentos',
