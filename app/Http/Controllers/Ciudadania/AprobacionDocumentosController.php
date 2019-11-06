@@ -31,7 +31,7 @@ class AprobacionDocumentosController extends Controller
         $datos = $request->validate([
             'aceptado' => 'required|boolean',
             'introducido' => 'required|boolean',
-            'uuidTramite' => 'required|max:250|string',
+            'requestUuid' => 'required|max:250|string',
             'codigoOperacion' => 'max:250',//este
             'mensaje' => 'max:250|string',
             'transaction_id' => 'max:250',//este
@@ -39,15 +39,15 @@ class AprobacionDocumentosController extends Controller
             'hashDatos' => 'max:250|string',
             'ci' => 'max:250|string',
             ]);
-        $tramiteUuid = DocumentosAprobados::where('tramite_uuid',$request->uuidTramite)->first();
+        $tramiteUuid = DocumentosAprobados::where('tramite_uuid',$request->requestUuid)->first();
         if ($tramiteUuid === null) {
-                    return response()->json(['finalizado'=>false, 'message'=> 'el campo uuidTramite no exite', 'code' => 422],422);
+                    return response()->json(['finalizado'=>false, 'message'=> 'el campo requestUuid no exite', 'code' => 422],422);
                 }
         if ($request->aceptado) {
             $tramiteUuid->codigo_operacion = $request->codigoOperacion;
             $tramiteUuid->transaccion_id = $request->transaction_id;
             $tramiteUuid->fh_solicitud_agetic = date('Y-m-d H:i:s', strtotime(str_replace('/', '-',$request->fechaHoraSolicitud)));
-            $tramiteUuid->tramite_uuid = $request->uuidTramite;
+            $tramiteUuid->tramite_uuid = $request->requestUuid;
             $tramiteUuid->save();
 
             $sql ="UPDATE " . $tramiteUuid->tabla . " 
