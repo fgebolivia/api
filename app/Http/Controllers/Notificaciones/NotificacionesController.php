@@ -91,7 +91,7 @@ class NotificacionesController extends Controller
 
            $id = HelperActividad::createActividad($valor);
 
-        return $this->successConection('se inserto satisfactoriamente'.$id, 201);
+        return $this->successConection('se inserto satisfactoriamente '.$id, 201);
 
     }
 }

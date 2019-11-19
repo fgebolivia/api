@@ -64,15 +64,23 @@ return [
         ],
 
         'comments'  => [
-            'driver'     => 'mysql',
-            'host'       => env('COMMENTS_HOST', '192.168.30.20'),
-            'database'   => env('COMMENTS_DATABASE', 'i4bol'),
-            'username'   => env('COMMENTS_USERNAME', 'jserrudo'),
-            'password'   => env('COMMETNS_PASSWORD', 'lgsucresol'),
-            'charset'    => 'utf8',
-            'collation'  => 'utf8_unicode_ci',
-            'prefix'     => '',
-            'strict'     => false,
+            'driver'         => 'mysql',
+            'url'            => env('DATABASE_URL'),
+            'host'           => env('COMMENTS_HOST', ''),
+            'port'           => env('DB_PORT', ''),
+            'database'       => env('COMMENTS_DATABASE', ''),
+            'username'       => env('COMMENTS_USERNAME', ''),
+            'password'       => env('COMMETNS_PASSWORD', ''),
+            'unix_socket'    => env('DB_SOCKET', ''),
+            'charset'        => 'utf8mb4',
+            'collation'      => 'utf8mb4_unicode_ci',
+            'prefix'         => '',
+            'prefix_indexes' => true,
+            'strict'         => true,
+            'engine'         => null,
+            'options'        => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
         ],
 
         'pgsql' => [

@@ -54,24 +54,24 @@ class RrhhPersona extends Model
 
     //public $resource = CasoPersonaResource::class;
 
-    protected $hidden = [/*'certificacion_segip', */'updated_at','id','estado',/*'certificacion_file_segip',*/'fullname','idioma_id','pais_id','estado_persona','nombre_completo']; 
+    protected $hidden = ['certificacion_segip','updated_at',/*'id',*/'estado',/*'certificacion_file_segip',*/'fullname','idioma_id','pais_id','estado_persona','nombre_completo'];
     /***relaciones**///
     //todo sus oficinas, activos e inactivos
     public function oficinas(){
       return $this->belongsToMany('App\Models\UbicacionGeografica\UbgeOficina', 'persona_oficina', 'persona_id','oficina_id')
             ->get();
-    } 
+    }
 
     //Obtiene oficina actual activo de la persona
     //si no tiene ninguna, retorna null
     public function oficina(){
       return $this->belongsToMany('App\Models\UbicacionGeografica\UbgeOficina', 'persona_oficina', 'persona_id','oficina_id')
                   ->wherePivot('estado', '=', 1) //cuando es pivot se refiere a la persona_oficina
-                  ->first();                        
-    }    
+                  ->first();
+    }
 
     /********Agregados*****/
-    protected $appends = array( 
+    protected $appends = array(
         'fullname',
     );
     public function getFullnameAttribute(){ //si esta registrado geolocalizacion
