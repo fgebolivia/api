@@ -27,10 +27,10 @@ use Illuminate\Http\Request;
 //Route::apiResource('v1/usuarios', 'UserController');
 //Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);*/
 
-Route::apiResource('v2/agendaPersonal', 'metis\ValidarPersonasController')->only(['show']);
-Route::apiResource('v2/certificacion', 'metis\ConsultaSegipcontroller')->only(['show']);
+//Route::apiResource('v2/agendaPersonal', 'metis\ValidarPersonasController')->only(['show']);
+//Route::apiResource('v2/certificacion', 'metis\ConsultaSegipcontroller')->only(['show']);
 
-Route::apiResource('v2/actividad', 'Actividades\ActividadController')->only(['store']);
+//Route::apiResource('v2/actividad', 'Actividades\ActividadController')->only(['store']);
 
 Route::apiResource('v2/aprobaciondocumentos', 'Ciudadania\AprobacionDocumentosController')->only(['store']);
 
