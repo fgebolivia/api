@@ -16,6 +16,7 @@ use App\Models\Notificacion\CasoDelito;
 use App\Models\Notificacion\CasoFuncionario;
 use App\Models\Notificacion\Delito;
 use App\Models\Notificacion\Funcionario;
+use App\Models\Notificacion\TipoActividad;
 use App\Models\Rrhh\RrhhPersona;
 use App\Models\Rrhh\RrhhPersonaDesconocida;
 use App\Models\Rrhh\RrhhPersonaJuridica;
@@ -55,12 +56,14 @@ class HelperInicioOrganoJudicial
 
             // === ARRAY DE ACTIVIDADES ===
                 $arrayActividades = Actividad::where('Caso',$casoi4->id)->get();
+                //dd($arrayActividades);
                 if ($arrayActividades->isEmpty())
                 {
                     $respuesta['mensaje'] = 'No exite actividades.';
                     \Log::warning('CONSULTA ACTIVIDADES I4: No exite actividades.');
                     return $respuesta;
                 }
+
 
             // === ARRAY DELITOS ===
                 $arrayDelitos =CasoDelito::leftJoin("Delito AS del", "del.id", "=", "CasoDelito.Delito")
@@ -102,7 +105,7 @@ class HelperInicioOrganoJudicial
 
                 foreach ($arrayActividades as $key => $value )
                 {
-                    $file_name = 'farruco_calma.mp3';
+                    /*$file_name = 'farruco_calma.mp3';
                     $file = public_path('/storage/agenda'). "/" . $file_name;
 
                     if (!file_exists($file))
@@ -112,15 +115,16 @@ class HelperInicioOrganoJudicial
                         return $respuesta;
                     }
 
-                    $b64Doc = base64_encode(file_get_contents($file));
+                    $b64Doc = base64_encode(file_get_contents($file));*/
+                    $actividadTipo = TipoActividad::where('id',$value->TipoActividad)->first();
 
                     $actividades[] = [
-                            'idTipoActividad'=> $value->TipoActividad,
+                            'idTipoActividad'=> $actividadTipo->idinter,
                             'codigo'         => $value->id,
                             'fecha'          => $value->Fecha,
                             'descripcion'    => $value->Actividad,
                             'extension'      => $value->extension,
-                            'archivo'        => $b64Doc,
+                            'archivo'        => 'DOCUMENTO EN BASE 64',//$b64Doc,
                     ];
                 }
 
@@ -262,7 +266,6 @@ class HelperInicioOrganoJudicial
 
         \Log::warning($respuesta);
         return $respuesta;
-
     }
 
     public static function inserSujetosProcesales($hecho_id)

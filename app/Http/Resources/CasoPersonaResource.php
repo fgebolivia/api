@@ -72,7 +72,7 @@ class CasoPersonaResource extends JsonResource
         }else{
             $Discapacidad = GradoDiscapacidad::where('id',$complementoHechoPersona->grado_discapacidad_id)->first()->nombre;
         }
-        
+
 
         return [
             'es_persona_valida'=>$this->estado_persona,

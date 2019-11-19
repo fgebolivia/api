@@ -56,23 +56,23 @@ class ActividadController extends Controller
             ]);
 
         $hecho = Hecho::where('codigo',$request->codigo_fud)->first();
-        /*
+
         $esto = new HelperInicioOrganoJudicial();
 
-        //$respuesta = $esto->insertFormularioUnico($hecho->i4_caso_id);//{"codigo":"201","mensaje":"Created","idJuzgado":42}
+        $respuesta = $esto->insertFormularioUnico($hecho->i4_caso_id);//{"codigo":"201","mensaje":"Created","idJuzgado":42}
 
-        $respuesta2 = $esto->inserSujetosProcesales($hecho->id);
+        //$respuesta2 = $esto->inserSujetosProcesales($hecho->id);
 
-        //return $respuesta;
-        return $respuesta2;
-        */
+        return $respuesta;
+        //return $respuesta2;
+
 
         /*
         $esto = new HelperRejaf();
         $respuesta = $esto->GetRejaf($request->persona_ci,$request->codigo_fud);
         return $respuesta;
         */
-
+        /*
         $esto = new AbogadosOrganoHelper();
         $respuesta = $esto->postAbogado($hecho->id);
         return $respuesta;
