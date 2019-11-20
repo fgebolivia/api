@@ -36,15 +36,22 @@ class ConsultaSegipcontroller extends Controller
         //dd($persona->isEmpty());
         if ($persona->isEmpty())
         {
-            if ($request->complemento == '')
+            if ($request->complemento != '')
             {
-                return $request->nombre;
+                $personacomple = RrhhPersona::where('n_documento',$id.'-'.$request->complemento)->get();
+
+            }
+            if ($personacomple->isEmpty()) {
+                # code...
+
+
+
             }
             else
             {
-                $persona = RrhhPersona::where('n_documento',$id.'-'.$request->complemento)->get();
                 $perosonaTransform = CertificacionPersonaComplementoResource::collection($persona);
             }
+
         }
         else
         {

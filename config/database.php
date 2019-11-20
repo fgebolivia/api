@@ -70,7 +70,7 @@ return [
             'port'           => env('DB_PORT', '3306'),
             'database'       => env('COMMENTS_DATABASE', 'forge'),
             'username'       => env('COMMENTS_USERNAME', 'forge'),
-            'password'       => env('COMMETNS_PASSWORD', ''),
+            'password'       => env('COMMENTS_PASSWORD', ''),
             'unix_socket'    => env('DB_SOCKET', ''),
             'charset'        => env('DB_CHARSET_MY', 'utf8mb4'),
             'collation'      => env('DB_COLLATION_MY', 'utf8mb4_unicode_ci'),
