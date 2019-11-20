@@ -52,7 +52,6 @@ class ConsultaSegipcontroller extends Controller
             $perosonaTransform = CertificacionPersonaResource::collection($persona);
         };
 
-        //return $perosonaTransform;
     }
 
     /**
