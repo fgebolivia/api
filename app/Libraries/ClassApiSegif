@@ -5,9 +5,6 @@ use Exception;
 
 class ClassApiSegif
 {
-    function __construct()
-    {
-    }
 
     public function getCertificacionSegipApi($data)
     {
@@ -18,7 +15,7 @@ class ClassApiSegif
             );
 
             $error1 = FALSE;
-
+            dd($data);
         // === OPERACION ===
             try
             {
@@ -27,14 +24,14 @@ class ClassApiSegif
                 ];
 
                 $cliente = new \SoapClient(env('SEGIP_RUTA'), $params);
-                
+
                 $parametros = array(
-                    'pCodigoInstitucion'       => 'personas/certificacion/13546619'),
-                    'pUsuario'                 => env('SEGIPAPI_USUARIO'),
-                    'pContrasenia'             => env('SEGIPAPI_CONTRASENIA'),
-                    'pClaveAccesoUsuarioFinal' => env('SEGIPAPI_TOKEN'),
+                    'pCodigoInstitucion'       => env('SEGIP_CODIGO_INSTITUCION'),
+                    'pUsuario'                 => env('SEGIP_USUARIO'),
+                    'pContrasenia'             => env('SEGIP_CONTRASENIA'),
+                    'pClaveAccesoUsuarioFinal' => env('SEGIP_CLAVE_ACCESO_USUARIO_FINAL'),
                     'pNumeroAutorizacion'      => '',
-                    'pNumeroDocumento'         => $data['N'],
+                    'pNumeroDocumento'         => $data['n_documento'],
                     'pComplemento'             => $data['complemento'],
                     'pNombre'                  => $data['nombre'],
                     'pPrimerApellido'          => $data['ap_paterno'],

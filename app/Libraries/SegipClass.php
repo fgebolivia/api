@@ -27,13 +27,13 @@ class SegipClass
                     'encoding' => 'UTF-8'
                 ];
 
-                $cliente = new \SoapClient('http://172.27.104.3:86/ServicioExternoInstitucion.svc?singleWsdl', $params);
-                //dd($cliente);
+                $cliente = new \SoapClient(env('SEGIP_RUTA'), $params);
+
                 $parametros = array(
-                    'pCodigoInstitucion'       => 4,//env('SEGIP_CODIGO_INSTITUCION'),
-                    'pUsuario'                 => 'pablo.corral',//env('SEGIP_USUARIO'),
-                    'pContrasenia'             => 'Corral2018',//env('SEGIP_CONTRASENIA'),
-                    'pClaveAccesoUsuarioFinal' => 'P33638371',//env('SEGIP_CLAVE_ACCESO_USUARIO_FINAL'),
+                    'pCodigoInstitucion'       => env('SEGIP_CODIGO_INSTITUCION'),
+                    'pUsuario'                 => env('SEGIP_USUARIO'),
+                    'pContrasenia'             => env('SEGIP_CONTRASENIA'),
+                    'pClaveAccesoUsuarioFinal' => env('SEGIP_CLAVE_ACCESO_USUARIO_FINAL'),
                     'pNumeroAutorizacion'      => '',
                     'pNumeroDocumento'         => $data['n_documento'],
                     'pComplemento'             => $data['complemento'],
@@ -44,7 +44,7 @@ class SegipClass
                 );
 
                 $respuesta_soap1 = (array) $cliente->ConsultaDatoPersonaCertificacion($parametros);
-                //dd($respuesta_soap1);
+
                 $respuesta_soap = (array) $respuesta_soap1["ConsultaDatoPersonaCertificacionResult"];
             }
             catch (Exception $e)
