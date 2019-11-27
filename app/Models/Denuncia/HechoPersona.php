@@ -39,5 +39,10 @@ class HechoPersona extends Model
     public function medidas()
     {
         return $this->hasMany('App\Models\Denuncia\PersonaMedidasProteccion', 'hechopersona_id');
-    } 
+    }
+
+    public function hechos1()
+    {
+        return $this->belongsToMany('App\Models\Denuncia\Hecho', 'hecho_id');
+    }
 }

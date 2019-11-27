@@ -46,7 +46,7 @@ Route::apiResource('v2/actualizarjuzgado', 'Actividades\HechoJuzgadoController')
 
 Route::apiResource('v2/notificaciones', 'Notificaciones\NotificacionesController')->only(['store']);
 
-//Route::apiResource('v2/casos', 'Casos\CasoController')->only(['store','index','show']);
+Route::apiResource('v2/casos', 'Casos\CasoController')->only(['show']);
 
 //Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->only(['store','update','index']);s
 

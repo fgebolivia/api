@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Casos;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CasoResource;
+use App\Http\Resources\CasoSujetoResource;
 use App\Models\Denuncia\Hecho;
+use App\Models\Denuncia\HechoPersona;
 use App\Models\Denuncia\TipoDenuncia;
+use App\Models\Rrhh\RrhhPersona;
 use App\Models\UbicacionGeografica\UbgeMunicipio;
 use Illuminate\Http\Request;
 
@@ -151,8 +154,8 @@ class CasoController extends Controller
             "a": 5,
             "total": 287
         }
-    }
-     */
+     }
+    */
     public function index()
     {
         $hechos = Hecho::where('reserva',0)->Paginate(5);
@@ -309,19 +312,22 @@ class CasoController extends Controller
             "titulo": "xxxx",
             "delito_principal": null
         }
-    }
-     */
+     }
+    */
     public function show($id)
     {
-        $hecho = Hecho::where('codigo', $id)->where('reserva',0)->first();
-        if ($hecho == null) {
-            return $this->errorResponse('Does not exists any endpoint for this URL',404);
-        }else{
-            //dd($hecho);
-            $hechos1 = new CasoResource($hecho);
-            return $hechos1;
-        }
+        $persona = RrhhPersona::where('n_documento',$id)->first();
+        $hecho = HechoPersona::where('persona_id',$persona->id)->select('hecho_id')->get();
 
+        $data = array();
+
+        foreach ($hecho as $key => $value)
+        {
+           $caso =  Hecho::where('id',$value->hecho_id)->first();
+           $transforma = new CasoSujetoResource();
+           $data[] = $transforma->TranformarCaso($caso);
+        }
+       return $data;
     }
 
     /**
