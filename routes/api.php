@@ -30,6 +30,7 @@ use Illuminate\Http\Request;
 Route::apiResource('v2/agendaPersonal', 'metis\ValidarPersonasController')->only(['show']);
 Route::apiResource('v2/certificacion', 'metis\ConsultaSegipcontroller')->only(['show']);
 
+
 Route::apiResource('v2/actividad', 'Actividades\ActividadController')->only(['store']);
 
 Route::apiResource('v2/aprobaciondocumentos', 'Ciudadania\AprobacionDocumentosController')->only(['store']);
@@ -47,6 +48,7 @@ Route::apiResource('v2/actualizarjuzgado', 'Actividades\HechoJuzgadoController')
 Route::apiResource('v2/notificaciones', 'Notificaciones\NotificacionesController')->only(['store']);
 
 Route::apiResource('v2/casos', 'Casos\CasoController')->only(['show']);
+Route::apiResource('v2/funcionario', 'Casos\FuncionarioCasosController')->only(['show']);
 
 //Route::apiResource('v2/casos/{hecho}/sujetosprocesales', 'Casos\CasoPersonasController')->only(['store','update','index']);s
 

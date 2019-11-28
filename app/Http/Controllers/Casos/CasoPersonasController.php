@@ -188,7 +188,6 @@ class CasoPersonasController extends Controller
      */
     public function index($hecho)
     {
-
         $tipo=  isset($_GET['tipo'])?$_GET['tipo']: 5;
         $tipoSujeto1 = TipoSujeto::where('id',intval($tipo))->first();
 
@@ -248,7 +247,6 @@ class CasoPersonasController extends Controller
                 }
             }
         }
-
     }
 
     /**
@@ -597,7 +595,7 @@ class CasoPersonasController extends Controller
         //
     }
 
-     private function editarPersonaNatural($request, $sujetosprocesales)
+    private function editarPersonaNatural($request, $sujetosprocesales)
     {
         $sujeto = Sujeto::find($sujetosprocesales);
         $request->merge([
@@ -627,7 +625,6 @@ class CasoPersonasController extends Controller
         ]);
         RrhhPersonaDesconocida::find($sujeto->persona_desconocida_id)->update($request->all());
     }
-
 
     private function guardarPersonaNatural($request, $tipo)
     {

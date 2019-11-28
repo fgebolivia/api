@@ -17,6 +17,12 @@ class CasoFuncionario extends Model
     protected $fillable = [
         'id',
         'version',
+        'FechaAlta',
+        'FechaBaja',
+        'Notas',
+        'Caso',
+        'Funcionario',
+        'TipoAsignacion'
     ];
     protected $guarded  = [];
 }

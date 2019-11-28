@@ -112,6 +112,7 @@ class ConsultaSegipcontroller extends Controller
         {
             $persona = RrhhPersona::where('n_documento',$id)->get();
             $perosonaTransform = CertificacionPersonaResource::collection($persona);
+
         };
         return $perosonaTransform;
     }
