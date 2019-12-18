@@ -316,6 +316,12 @@ class CasoController extends Controller
     */
     public function show($id)
     {
+
+        $caso =  Hecho::where('codigo',$id)->first();
+           $transforma = new CasoSujetoResource();
+           return $transforma->TranformarCaso($caso);
+
+        /*
         $persona = RrhhPersona::where('n_documento',$id)->first();
         $hecho = HechoPersona::where('persona_id',$persona->id)->select('hecho_id')->get();
 
@@ -327,7 +333,8 @@ class CasoController extends Controller
            $transforma = new CasoSujetoResource();
            $data[] = $transforma->TranformarCaso($caso);
         }
-       return $data;
+
+       return $data;*/
     }
 
     /**

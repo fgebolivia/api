@@ -12,10 +12,10 @@ class Hecho extends Model
 
     protected $fillable = [
         'tipo_denuncia_id',          //ok
-        'municipio_id',             //ok 
+        'municipio_id',             //ok
         'user_id',                  //ok auth
         'oficina_id',               //oficina de la persona
-        'estado',   
+        'estado',
         'codigo',
         'relato',                   //ok verbal
         'conducta',
@@ -45,11 +45,11 @@ class Hecho extends Model
     public function municipio()
     {
       return $this->belongsTo('App\Models\UbicacionGeografica\UbgeMunicipio','municipio_id');
-    } 
+    }
     public function denuncia()
     {
       return $this->belongsTo('App\Models\Denuncia\TipoDenuncia','tipo_denuncia_id');
-    } 
+    }
 
     public function archivos()
     {
@@ -59,7 +59,7 @@ class Hecho extends Model
     public function personas()
     {
         return $this->belongsToMany('App\Models\Rrhh\RrhhPersona', 'pol_hechopersona',  'hecho_id', 'persona_id');
-    } 
+    }
 
     public function juridica()
     {

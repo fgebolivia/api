@@ -20,16 +20,14 @@ class FuncionarioCasosController extends Controller
      */
     public function show($id)
     {
-        //\Log::warning(env('COMMENTS_USERNAME'));
-        //$hecho = Caso::where('Caso',$id)->first();
-        //dd($hecho);
         $funci = CasoFuncionario::where('Funcionario',$id)->select('Caso')->get();
 
         $data = array ();
         foreach ($funci as $key)
         {
             $caso = Hecho::where('i4_caso_id',$key->Caso)->first();
-            if ($caso) {
+            if ($caso)
+             {
                 $transforma = new CasoSujetoResource();
                 $data[] = $transforma->TranformarCaso($caso);
             }

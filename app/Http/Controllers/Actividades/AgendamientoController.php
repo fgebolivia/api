@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Actividades;
 
 use App\Helpers\HelperJuzgado;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AgendasCasoResource;
+use App\Http\Resources\AgendasResource;
 use App\Models\Agenda\Agenda;
 use App\Models\Agenda\AgendaPersona;
 use App\Models\Agenda\Juzgado;
@@ -13,6 +15,7 @@ use App\Models\Agenda\archivo;
 use App\Models\Denuncia\Hecho;
 use App\Models\Rrhh\RrhhPersona;
 use App\Models\UbicacionGeografica\UbgeMunicipio;
+use App\User;
 use Illuminate\Http\Request;
 
 /**
@@ -22,6 +25,33 @@ use Illuminate\Http\Request;
 
 class AgendamientoController extends Controller
 {
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $fecha_del = isset($_GET['fecha_del'])?$_GET['fecha_del']: 5;
+        $fecha_al  = isset($_GET['fecha_al'])?$_GET['fecha_al']: 5;
+        $userId    = isset($_GET['persona_id'])?$_GET['persona_id']: 5;
+
+        $usuario = User::Where('id',$userId)->where('i4_funcionario_id','!=',null)->select('id','name','email','persona_id')->first();
+        $personaAgenda = RrhhPersona::where('id',$usuario->persona_id)->first();
+        $agendasPersonas = AgendaPersona::where('persona_id',$usuario->persona_id)->where('eforo',1)->get();
+
+        $casoAgenTranform =  array();
+
+        foreach ($agendasPersonas as $key) {
+            $agenda = AgendasResource::tranformarAgenda($key, $fecha_del, $fecha_al);
+            if ($agenda) {
+                $casoAgenTranform[] = $agenda;
+            }
+        }
+
+        return $casoAgenTranform;
+    }
     /**
      * Metodo POST para la insercion del Agendamiento de las Audiencias.
      *
@@ -147,31 +177,8 @@ class AgendamientoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($PersonaId)
     {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return AgendasCasoResource::tranformarAgenda($PersonaId);
     }
 }
