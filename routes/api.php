@@ -27,6 +27,8 @@ use Illuminate\Http\Request;
 //Route::apiResource('v1/usuarios', 'UserController');
 //Route::apiResource('v2/sujetosProcesales', 'Hechos\HechoPersonaController')->only(['show','store']);*/
 
+Route::apiResource('v2/medidasaprencion', 'Migraciones\EstadoProcesalController')->only(['index']);
+
 Route::apiResource('v2/casoDircabi', 'Hechos\HechoController')->only(['show']);
 
 
